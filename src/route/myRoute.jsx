@@ -25,6 +25,7 @@ import ProductsPage from "../pages/Products/ProducsPage";
 import ProductView from "../Components/Product/ProductView";
 import { LoginForm } from "../Components/Buyer/LoginForm";
 import { RegisterForm } from "../Components/Buyer/RegisterForm";
+import ImageUpload from "../Components/Seller/ProductUpload.jsx/ImageUpload";
 
 const myRoute = createBrowserRouter(
     createRoutesFromElements(
@@ -46,6 +47,7 @@ const myRoute = createBrowserRouter(
 
            <Route path="/buyerlogin" element={<LoginForm/>} />
             <Route path="/buyerreg" element={<RegisterForm/>} />
+            <Route path="/imageupload" element={<ImageUpload/>} />
         </>
     )
 )

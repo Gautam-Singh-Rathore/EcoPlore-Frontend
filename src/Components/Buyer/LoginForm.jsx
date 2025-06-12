@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logo from "../../assets/Images/logo.png";
 import toast from 'react-hot-toast';
-import axiosInstance from '../../utils/axiosInstance';
+import axiosInstance from '../../api/axiosInstance';
+import MyLoader from '../../utils/MyLoader';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useState(true);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,6 +37,7 @@ export function LoginForm() {
       toast.error(error?.response?.data?.msg || 'Login failed');
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-50">
@@ -110,6 +113,11 @@ export function LoginForm() {
           Login as Seller
         </button>
       </div>
+      {
+        isLoading && (
+            <MyLoader/>
+        )
+      }
     </div>
   );
 }

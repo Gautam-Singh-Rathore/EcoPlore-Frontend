@@ -1,6 +1,7 @@
 import React from "react";
 import IP from "../../assets/Images/Category Images/Indoor Plant/IP 3.jpeg";
 import ProductCard from "../../Components/Product/ProductCard";
+import MyLoader from "../../utils/MyLoader";
 
 const demoProducts = [
   {
@@ -62,11 +63,14 @@ const demoProducts = [
 
 const ProductsPage = () => {
   return (
+    <>
     <div className="flex flex-col gap-2 px-2">
       {demoProducts.map((product) => (
         <ProductCard product={product} key={product.id} />
+        
       ))}
     </div>
+    </>
   );
 };
 

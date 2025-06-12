@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@progress/kendo-licensing": "^1.6.0",
+    "@progress/kendo-react-indicators": "^11.0.0",
+    "@progress/kendo-react-intl": "^11.0.0",
+    "@progress/kendo-theme-default": "^11.0.2",
     "@tailwindcss/vite": "^4.1.4",
     "axios": "^1.9.0",
     "lucide-react": "^0.503.0",
