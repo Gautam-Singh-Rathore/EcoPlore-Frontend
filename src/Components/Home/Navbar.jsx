@@ -50,14 +50,14 @@ export default function Navbar(){
                
               <button
                 type="button"
-                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none cursor-pointer focus:ring-4  font-medium rounded-full text-sm px-4 py-1.5"
+                className="hidden md:block  lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none cursor-pointer  font-medium rounded-full text-sm px-4 py-1.5"
                 onClick={()=> navigate("/login")}
               >
                 Login
               </button>
               <button
                 type="button"
-                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 cursor-pointer font-medium rounded-full text-sm px-4 py-1.5"
+                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none  cursor-pointer font-medium rounded-full text-sm px-4 py-1.5"
                  onClick={()=>{navigate("/register-seller")}}
               >
                 Be a Seller

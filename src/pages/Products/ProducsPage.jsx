@@ -3,74 +3,70 @@ import IP from "../../assets/Images/Category Images/Indoor Plant/IP 3.jpeg";
 import ProductCard from "../../Components/Product/ProductCard";
 import MyLoader from "../../utils/MyLoader";
 
-const demoProducts = [
+const sampleProducts = [
   {
-    id: 1,
-    title: "Motorola G85 5G (Cobalt Blue, 128 GB)",
-    category: "Mobile",
-    price: "₹15,999",
-    image: "https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg",
-    description:
-      "Motorola G85 5G features a vibrant 6.67-inch Full HD+ 120Hz pOLED display, powerful Snapdragon 6s Gen 3 processor, 8GB RAM, and 128GB storage. Capture stunning photos with a 50MP OIS dual camera and enjoy all-day battery life with a 5000mAh battery. A sleek, reliable choice for everyday performance."
+    id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
+    name: 'Eco-friendly Water Bottle',
+    imageUrl: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
+    price: 299.99,
+    noOfUnits: 5,
+    description: 'A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A sustainable, reusable water bottle made from BPA-free materials.',
+    subCategoryName: 'Kitchen Essentials',
   },
   {
-    id: 2,
-    title: "Samsung Galaxy M14 (Smoky Teal, 128 GB)",
-    category: "Mobile",
-    price: "₹13,499",
-    image: "https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg",
-    description:
-      "Samsung Galaxy M14 offers a large 6.6-inch PLS LCD display, Exynos 1330 processor, 6GB RAM, and 128GB storage. Great for streaming and multitasking with a long-lasting 6000mAh battery."
+    id: '7c9e6679-7425-40de-944b-e07fc1f90ae7',
+    name: 'Wireless Earbuds',
+    imageUrl: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
+    price: 1499.49,
+    noOfUnits: 20,
+    description: 'A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.Experience high-quality sound with these comfortable and compact wireless earbuds.',
+    subCategoryName: 'Electronics',
   },
   {
-    id: 3,
-    title: "Redmi Note 12 (Frosted Green, 128 GB)",
-    category: "Mobile",
-    price: "₹14,999",
-    image: "https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg",
-    description:
-      "Redmi Note 12 features a 120Hz AMOLED display, Snapdragon 685 processor, and 5000mAh battery. Designed for smooth performance and photography enthusiasts."
+    id: '9f1b1c2a-f6c1-4d4f-99da-3e58a437f12c',
+    name: 'Yoga Mat',
+    imageUrl: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
+    price: 899.00,
+    noOfUnits: 8,
+    description: 'A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.',
+    subCategoryName: 'Fitness',
   },
   {
-    id: 4,
-    title: "Realme Narzo N55 (Prime Blue, 128 GB)",
-    category: "Mobile",
-    price: "₹10,999",
-    image: "https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg",
-    description:
-      "Realme Narzo N55 boasts a 6.72-inch display, MediaTek Helio G88 processor, and fast charging 5000mAh battery, perfect for everyday tasks."
+    id: 'f47ac10b-58cc-4372-a567-0e02b2c3d179',
+    name: 'Eco-friendly Water Bottle',
+    imageUrl: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
+    price: 299.99,
+    noOfUnits: 5,
+    description: 'A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A sustainable, reusable water bottle made from BPA-free materials.',
+    subCategoryName: 'Kitchen Essentials',
   },
   {
-    id: 5,
-    title: "iQOO Z7 5G (Norwegian Blue, 128 GB)",
-    category: "Mobile",
-    price: "₹16,999",
-    image: "https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg",
-    description:
-      "iQOO Z7 5G brings a powerful MediaTek Dimensity 920 processor, AMOLED display, and 64MP OIS camera for high performance and crisp shots."
+    id: '7c9e6679-7025-40de-944b-e07fc1f90ae7',
+    name: 'Wireless Earbuds',
+    imageUrl: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
+    price: 1499.49,
+    noOfUnits: 20,
+    description: 'A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.Experience high-quality sound with these comfortable and compact wireless earbuds.',
+    subCategoryName: 'Electronics',
   },
   {
-    id: 6,
-    title: "OnePlus Nord CE 3 Lite (Pastel Lime, 128 GB)",
-    category: "Mobile",
-    price: "₹19,999",
-    image: "https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg",
-    description:
-      "OnePlus Nord CE 3 Lite features a 108MP camera, 67W SUPERVOOC charging, and 120Hz display for an ultra-smooth experience."
+    id: '9f1b1c2a-f6c1-4d4k-99da-3e58a437f12c',
+    name: 'Yoga Mat',
+    imageUrl: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
+    price: 899.00,
+    noOfUnits: 8,
+    description: 'A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.A premium yoga mat with excellent grip and cushioning for all your workouts.',
+    subCategoryName: 'Fitness',
   }
-
 ];
 
 const ProductsPage = () => {
   return (
-    <>
-    <div className="flex flex-col gap-2 px-2">
-      {demoProducts.map((product) => (
-        <ProductCard product={product} key={product.id} />
-        
+    <div className="flex flex-col gap-4">
+      {sampleProducts.map(product => (
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
-    </>
   );
 };
 
