@@ -45,7 +45,7 @@ import { useState } from 'react';
               <img
                 src={product.imageUrl}
                 alt={product.name}
-                className="w-full h-30 sm:h-36 object-contain rounded mt-6"
+                className="flex-shrink-0 w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw]"
               />
 
               {/* "Items left" or placeholder to maintain symmetry */}
