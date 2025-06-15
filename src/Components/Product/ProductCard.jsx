@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div
-      className="w-full pr-2 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200 relative   "
+      className="w-full pr-2 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px]  border-gray-200 relative   "
     >
       {/* Wishlist Icon in Top Right */}
       <button
