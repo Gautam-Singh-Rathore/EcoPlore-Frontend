@@ -15,6 +15,7 @@ import Profile from "../pages/Home/Profile";
 import AddProduct from "../pages/Products/AddProduct";
 import Cart from "../pages/Home/Cart";
 import Wishlist from "../pages/Home/Wishlist";
+import SellerLogin from "../Components/Seller/SellerSignin";
 
 
 const myRoute = createBrowserRouter(
@@ -28,6 +29,7 @@ const myRoute = createBrowserRouter(
          <Route path="1" element={<SellerRegister2/>} />
          <Route path="2" element={<SellerRegister3/>} />
        </Route>
+       <Route path='/sellerlogin' element={<SellerLogin/>} />
          
          <Route path="/products" element={<App/>} >
           <Route index element={<ProductsPage/>} />
