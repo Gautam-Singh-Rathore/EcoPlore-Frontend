@@ -28,6 +28,7 @@ import { RegisterForm } from "../Components/Buyer/RegisterForm";
 import ImageUpload from "../Components/Seller/ProductUpload/ImageUpload";
 import AvatarCard from "../Components/Profile/AvatarCard";
 import Profile from "../pages/Home/Profile";
+import AddProduct from "../pages/Products/AddProduct";
 
 const myRoute = createBrowserRouter(
     createRoutesFromElements(
@@ -49,7 +50,7 @@ const myRoute = createBrowserRouter(
 
            <Route path="/buyerlogin" element={<LoginForm/>} />
             <Route path="/buyerreg" element={<RegisterForm/>} />
-            <Route path="/imageupload" element={<ImageUpload/>} />
+            <Route path="/addproduct" element={<AddProduct/>} />
             <Route path="/profile" element={<Profile/>} />
         </>
     )
