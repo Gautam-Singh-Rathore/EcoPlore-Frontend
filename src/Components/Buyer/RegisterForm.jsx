@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/Images/logo.png";
 import toast from "react-hot-toast";
 import axiosInstance from "../../api/axiosInstance";
+import MyLoader from '../../utils/MyLoader';
 
 export function RegisterForm() {
   const navigate = useNavigate();
@@ -13,10 +14,11 @@ export function RegisterForm() {
   const [mobile, setmobile] = useState("");
   const [password, setpassword] = useState("");
   const [confirmpassword, setconfirmpassword] = useState("");
+    const [isLoading , setIsLoading] = useState(false);
 
   const handleregister = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     // Field validation
     if (
       !firstName ||
@@ -27,17 +29,20 @@ export function RegisterForm() {
       !confirmpassword
     ) {
       toast.error("All fields are required!");
+      setIsLoading(false);
       return;
     }
 
     // Password match check
     if (password !== confirmpassword) {
       toast.error("Passwords do not match.");
+      setIsLoading(false);
       return;
     }
 
       console.log("Starting Login")
     try {
+      setIsLoading(true);
       const response = await axiosInstance.post("/auth/customer/signup", {
         firstName,
         lastName,
@@ -58,14 +63,18 @@ export function RegisterForm() {
       setmobile("");
       setpassword("");
       setconfirmpassword("");
-
+       setIsLoading(false);
       navigate('/login');
     } catch (error) {
+      
       if (error.response && error.response.data && error.response.data.msg) {
         toast.error(error.response.data.msg);
       } else {
         toast.error("Something went wrong. Please try again.");
-      }
+      } 
+    }
+    finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -187,6 +196,11 @@ export function RegisterForm() {
           Become a Seller
         </button>
       </div>
+      {
+        isLoading && (
+            <MyLoader/>
+        )
+      }
     </div>
   );
 }

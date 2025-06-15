@@ -14,13 +14,15 @@ export function LoginForm() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (!email || !password) {
       toast.error('Email and password are required!');
+      setIsLoading(false);
       return;
     }
 
     try {
+      setIsLoading(true)
       const response = await axiosInstance.post('/auth/login', {
         email,
         password
@@ -34,8 +36,11 @@ export function LoginForm() {
       setPassword('');
       navigate('/');
     } catch (error) {
+      
       toast.error(error?.response?.data?.msg || 'Login failed');
-    }
+    } finally {
+    setIsLoading(false); // ensures loading is always turned off
+  }
   };
 
 
