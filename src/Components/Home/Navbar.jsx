@@ -42,12 +42,19 @@ export default function Navbar(){
             <div className="flex items-center gap-5 text-xl md:text-2xl lg:text-3xl">
               <VscAccount />
               <BsCart3 />
-              <FaRegHeart />
+              {/* <FaRegHeart /> */}
+               
               <button
                 type="button"
                 className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-4 py-1.5"
               >
-                Become a Seller
+                Login
+              </button>
+              <button
+                type="button"
+                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-4 py-1.5"
+              >
+                Be a Seller
               </button>
             </div>
           </div>
