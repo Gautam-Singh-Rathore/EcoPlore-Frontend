@@ -22,7 +22,7 @@ import { FaChevronDown } from 'react-icons/fa';
 // for large screens
   export const CategoryGrid = ({category}) => {
     return (
-      <div key={category.index} className="relative group text-center">
+      <div key={category.index} className="relative group text-center cursor-pointer">
       {/* <img
         src={category.img}
         alt={category.name}
@@ -34,11 +34,11 @@ import { FaChevronDown } from 'react-icons/fa';
       </div>
 
       {/* Dropdown on hover */}
-      <div className="absolute left-1/2 -translate-x-1/2 mt-2 hidden group-hover:flex flex-col bg-white  rounded-sm shadow-lg z-10 min-w-[140px] py-2">
+      <div className="absolute left-1/2 -translate-x-1/2  hidden group-hover:flex flex-col bg-white  rounded-sm shadow-lg z-10 min-w-[140px] py-2">
         {category.subcategories.map((sub, i) => (
           <button
             key={i}
-            className="px-4 py-2 text-left hover:bg-[#f7f9f7] text-sm"
+            className="px-4 py-2 text-left hover:bg-[#f7f9f7] text-sm cursor-pointer text-gray-700"
           >
             {sub}
           </button>
