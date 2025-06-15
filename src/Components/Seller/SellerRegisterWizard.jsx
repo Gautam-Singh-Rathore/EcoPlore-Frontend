@@ -56,14 +56,14 @@ const SellerRegisterWizard = () => {
   const steps = {
     1: (
       <>
-        <input
+        {/* <input
   name="fullName"
   value={formData.fullName}
   onChange={handleChange}
   placeholder="Full Name"
   type="text"
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-/>
+/> */}
 
 <input
   name="email"
@@ -173,7 +173,7 @@ const SellerRegisterWizard = () => {
 
           <input
   name="fullname"
-  value={formData.accountNo}
+  value={formData.fullName}
   onChange={handleChange}
   placeholder="Your Full Name"
   type="text"
@@ -205,8 +205,8 @@ const SellerRegisterWizard = () => {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg relative">
         {/* Logo and Back */}
         <div className="absolute top-4 left-4">
-          {step > 1 && (
-            <button onClick={goBack} className="text-green-600 hover:text-green-800">
+          {step >= 1 && (
+            <button onClick={goBack} className="text-green-600 hover:text-green-800 cursor-pointer">
               <ArrowLeft />
             </button>
           )}
@@ -226,7 +226,7 @@ const SellerRegisterWizard = () => {
           <button
             type="button"
             onClick={goNext}
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300"
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 cursor-pointer"
           >
             {step === 3 ? "Submit" : "Next"}
           </button>
