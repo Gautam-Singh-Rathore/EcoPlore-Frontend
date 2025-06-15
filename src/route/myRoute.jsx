@@ -1,20 +1,6 @@
 
 import App from "../App";
 
-// export default const myRoute = createBrowserRouter([
-//     {
-//         path: "/",
-//         element: <App/>,
-//         children :[
-//             {
-//                 path: "/",
-//                 element: 
-//             }
-//         ]
-//     }
-// ]);
-
-// import  Layout  from '../Layouts/Layout'
 import SellerRegister1 from '../pages/Seller/SellerRegister1'
 import React from 'react'
 import { createBrowserRouter, createRoutesFromElements, Outlet, Route } from 'react-router-dom'
@@ -25,10 +11,11 @@ import ProductsPage from "../pages/Products/ProducsPage";
 import ProductView from "../Components/Product/ProductView";
 import { LoginForm } from "../Components/Buyer/LoginForm";
 import { RegisterForm } from "../Components/Buyer/RegisterForm";
-import ImageUpload from "../Components/Seller/ProductUpload/ImageUpload";
-import AvatarCard from "../Components/Profile/AvatarCard";
 import Profile from "../pages/Home/Profile";
 import AddProduct from "../pages/Products/AddProduct";
+import Cart from "../pages/Home/Cart";
+import Wishlist from "../pages/Home/Wishlist";
+
 
 const myRoute = createBrowserRouter(
     createRoutesFromElements(
@@ -52,6 +39,8 @@ const myRoute = createBrowserRouter(
             <Route path="/buyerreg" element={<RegisterForm/>} />
             <Route path="/addproduct" element={<AddProduct/>} />
             <Route path="/profile" element={<Profile/>} />
+            <Route path='/cart' element={<Cart/>} />
+            <Route path='/wishlist' element={<Wishlist/>} />
         </>
     )
 )

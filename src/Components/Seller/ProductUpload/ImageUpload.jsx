@@ -66,7 +66,7 @@ const ImageUpload = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full space-y-4">
+    <div className="flex flex-col items-center justify-center w-full space-y-4 px-4 py-4">
          {loading && <MyLoader/>}
       <label
         htmlFor="dropzone-file"
