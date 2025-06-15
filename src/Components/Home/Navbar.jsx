@@ -5,9 +5,13 @@ import { BsCart3 } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Navbar(){
+
+    const navigate = useNavigate();
+
     return (
         <div className=" py-4 sm:py-6 px-4  ">
           {/* Top Section */}
@@ -17,8 +21,8 @@ export default function Navbar(){
               <div className="text-4xl block sm:hidden">
                 <IoReorderThreeOutline />
               </div>
-              <img src={logo} alt="GreenPlore" width={50} height={50} />
-              <div className="font-semibold text-lg md:text-2xl lg:text-3xl ">GreenPlore</div>
+              <img src={logo} alt="GreenPlore" width={50} height={50}  />
+              <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div>
             </div>
     
             {/* Searchbar - show only on medium and above */}
@@ -27,7 +31,7 @@ export default function Navbar(){
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-green-500 "
+                  className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md  outline-none "
                 />
                 <button
                   type="submit"
@@ -46,13 +50,15 @@ export default function Navbar(){
                
               <button
                 type="button"
-                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-4 py-1.5"
+                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none cursor-pointer focus:ring-4  font-medium rounded-full text-sm px-4 py-1.5"
+                onClick={()=> navigate("/login")}
               >
                 Login
               </button>
               <button
                 type="button"
-                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-4 py-1.5"
+                className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 cursor-pointer font-medium rounded-full text-sm px-4 py-1.5"
+
               >
                 Be a Seller
               </button>

@@ -16,6 +16,7 @@ import AddProduct from "../pages/Products/AddProduct";
 import Cart from "../pages/Home/Cart";
 import Wishlist from "../pages/Home/Wishlist";
 import SellerLogin from "../Components/Seller/SellerSignin";
+import SellerRegisterWizard from "../Components/Seller/SellerRegisterWizard"
 
 
 const myRoute = createBrowserRouter(
@@ -24,12 +25,13 @@ const myRoute = createBrowserRouter(
         <Route path='/' element={<Home/>} > 
         </Route>
 
-       <Route path="/seller" element={<App/>} >
+       {/* <Route path="/seller" element={<App/>} >
          <Route index  element={<SellerRegister1/>} />
          <Route path="1" element={<SellerRegister2/>} />
          <Route path="2" element={<SellerRegister3/>} />
-       </Route>
-       <Route path='/sellerlogin' element={<SellerLogin/>} />
+       </Route> */}
+       <Route path="/register-seller" element={<SellerRegisterWizard/>} />
+       <Route path='/seller-login' element={<SellerLogin/>} />
          
          <Route path="/products" element={<App/>} >
           <Route index element={<ProductsPage/>} />
@@ -37,8 +39,8 @@ const myRoute = createBrowserRouter(
       
          <Route path="product"  element={<ProductView/>}/>
 
-           <Route path="/buyerlogin" element={<LoginForm/>} />
-            <Route path="/buyerreg" element={<RegisterForm/>} />
+           <Route path="/login" element={<LoginForm/>} />
+            <Route path="/register" element={<RegisterForm/>} />
             <Route path="/addproduct" element={<AddProduct/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path='/cart' element={<Cart/>} />

@@ -10,7 +10,7 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const [isLoading , setIsLoading] = useState(true);
+  const [isLoading , setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,18 +21,18 @@ export function LoginForm() {
     }
 
     try {
-      const response = await axiosInstance.post('/api', {
+      const response = await axiosInstance.post('/auth/login', {
         email,
         password
       });
 
-      toast.success('Signin Success!');
+      if(response.status==200){
+        toast.success('User Logged In');
+      }
+      
       setEmail('');
       setPassword('');
-      // Set token/cookie here if needed
-
-      // Navigate to dashboard/home
-      // navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       toast.error(error?.response?.data?.msg || 'Login failed');
     }
@@ -66,7 +66,7 @@ export function LoginForm() {
           />
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300"
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 cursor-pointer"
           >
             LOG IN
           </button>
@@ -75,18 +75,18 @@ export function LoginForm() {
         {/* Links */}
         <div className="flex justify-between items-center text-sm text-green-600 mt-4">
           <Link to="#" className="hover:underline">Forgot your password?</Link>
-          <Link to="/" className="hover:underline">Create Account</Link>
+          <Link to="/register" className="hover:underline">Create Account</Link>
         </div>
 
         {/* Divider */}
-        <div className="flex items-center my-4">
+        {/* <div className="flex items-center my-4">
           <hr className="flex-grow border-green-300" />
           <span className="mx-2 text-green-500">or</span>
           <hr className="flex-grow border-green-300" />
-        </div>
+        </div> */}
 
         {/* Google Button */}
-        <button
+        {/* <button
           className="w-full flex items-center justify-center border border-slate-300 text-green-700 py-2 rounded-lg hover:bg-blue-400 hover:text-white transition duration-300"
         >
           <img
@@ -95,7 +95,7 @@ export function LoginForm() {
             className="mr-2"
           />
           Login with Google
-        </button>
+        </button> */}
 
         {/* Divider */}
         <div className="flex items-center my-4">
