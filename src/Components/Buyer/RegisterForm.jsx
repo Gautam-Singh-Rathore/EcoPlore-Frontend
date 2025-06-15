@@ -179,7 +179,7 @@ export function RegisterForm() {
         {/* Become a Greenplore seller */}
         <button
           onClick={() => {
-            navigate("/sellerregister1");
+            navigate("/register-seller");
           }}
           type="submit"
           className="w-full flex cursor-pointer items-center justify-center border border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
