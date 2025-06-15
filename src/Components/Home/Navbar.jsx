@@ -6,9 +6,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 
 export default function Navbar(){
+    const {userId} = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -18,9 +21,9 @@ export default function Navbar(){
           <div className="flex justify-between items-center">
             {/* Left icons */}
             <div className="flex items-center gap-2">
-              <div className="text-4xl block sm:hidden">
+              {/* <div className="text-4xl block sm:hidden">
                 <IoReorderThreeOutline />
-              </div>
+              </div> */}
               <img className="cursor-pointer" src={logo} alt="GreenPlore" width={50} height={50} onClick={()=>{()=>{navigate('/')}}} />
               <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div>
             </div>
@@ -44,17 +47,25 @@ export default function Navbar(){
     
             {/* Right icons */}
             <div className="flex items-center gap-5 text-xl md:text-2xl lg:text-3xl">
-              <VscAccount className="hover:text-green-700 cursor-pointer  "  onClick={()=>{navigate("/profile")}} />
+              {/* <VscAccount className="hover:text-green-700 cursor-pointer  "  onClick={()=>{navigate("/profile")}} /> */}
               <BsCart3  className="hover:text-green-700 cursor-pointer " onClick={()=>{navigate("/cart")}}/>
-              {/* <FaRegHeart /> */}
+              <FaRegHeart className="hover:text-green-700 cursor-pointer  lg:mx-2"  onClick={()=>{navigate("/wishlist")}}/>
                
-              <button
+               {
+                userId==null ?
+                (
+                  <button
                 type="button"
                 className="hidden md:block  lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none cursor-pointer  font-medium rounded-full text-sm px-4 py-1.5"
                 onClick={()=> navigate("/login")}
               >
                 Login
               </button>
+                ) : (
+                  <VscAccount className="hover:text-green-700 cursor-pointer lg:mx-2 "  onClick={()=>{navigate("/profile")}} />
+                )
+               }
+              
               <button
                 type="button"
                 className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none  cursor-pointer font-medium rounded-full text-sm px-4 py-1.5"

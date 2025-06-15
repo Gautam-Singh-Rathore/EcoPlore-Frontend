@@ -3,6 +3,7 @@ import logo from "../../assets/Images/logo.png";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 
 const SellerRegisterWizard = () => {
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ const SellerRegisterWizard = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/seller/signup",
+      const response = await axiosInstance.post(
+        "/auth/seller/signup",
         formData
       );
       console.log("✅ Registered successfully:", response.data);
