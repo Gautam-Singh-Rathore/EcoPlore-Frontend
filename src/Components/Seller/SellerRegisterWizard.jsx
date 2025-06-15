@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import logo from "../../assets/Images/logo.png";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SellerRegisterWizard = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -54,28 +56,146 @@ const SellerRegisterWizard = () => {
   const steps = {
     1: (
       <>
-        <input name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" type="text" />
-        <input name="email" value={formData.email} onChange={handleChange} placeholder="Email" type="email" />
-        <input name="mobileNo" value={formData.mobileNo} onChange={handleChange} placeholder="Phone Number" type="tel" />
-        <input name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Company Name" type="text" />
-        <input name="GSTNumber" value={formData.GSTNumber} onChange={handleChange} placeholder="GST Number" type="text" />
-        <input name="password" value={formData.password} onChange={handleChange} placeholder="Password" type="password" />
+        <input
+  name="fullName"
+  value={formData.fullName}
+  onChange={handleChange}
+  placeholder="Full Name"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="email"
+  value={formData.email}
+  onChange={handleChange}
+  placeholder="Email"
+  type="email"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="mobileNo"
+  value={formData.mobileNo}
+  onChange={handleChange}
+  placeholder="Phone Number"
+  type="tel"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="companyName"
+  value={formData.companyName}
+  onChange={handleChange}
+  placeholder="Company Name"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="GSTNumber"
+  value={formData.GSTNumber}
+  onChange={handleChange}
+  placeholder="GST Number"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="password"
+  value={formData.password}
+  onChange={handleChange}
+  placeholder="Password"
+  type="password"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
       </>
     ),
     2: (
       <>
-        <input name="buildingNo" value={formData.buildingNo} onChange={handleChange} placeholder="Building No" />
-        <input name="street" value={formData.street} onChange={handleChange} placeholder="Street" />
-        <input name="landmark" value={formData.landmark} onChange={handleChange} placeholder="Landmark" />
-        <input name="city" value={formData.city} onChange={handleChange} placeholder="City" />
-        <input name="pinCode" value={formData.pinCode} onChange={handleChange} placeholder="Pin Code" />
-        <input name="state" value={formData.state} onChange={handleChange} placeholder="State" />
+<input
+  name="buildingNo"
+  value={formData.buildingNo}
+  onChange={handleChange}
+  placeholder="Building No"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="street"
+  value={formData.street}
+  onChange={handleChange}
+  placeholder="Street"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="landmark"
+  value={formData.landmark}
+  onChange={handleChange}
+  placeholder="Landmark"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="city"
+  value={formData.city}
+  onChange={handleChange}
+  placeholder="City"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="pinCode"
+  value={formData.pinCode}
+  onChange={handleChange}
+  placeholder="Pin Code"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="state"
+  value={formData.state}
+  onChange={handleChange}
+  placeholder="State"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
       </>
     ),
     3: (
       <>
-        <input name="accountNo" value={formData.accountNo} onChange={handleChange} placeholder="Account Number" />
-        <input name="IFSCCode" value={formData.IFSCCode} onChange={handleChange} placeholder="IFSC Code" />
+
+          <input
+  name="fullname"
+  value={formData.accountNo}
+  onChange={handleChange}
+  placeholder="Your Full Name"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>    
+        <input
+  name="accountNo"
+  value={formData.accountNo}
+  onChange={handleChange}
+  placeholder="Account Number"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
+
+<input
+  name="IFSCCode"
+  value={formData.IFSCCode}
+  onChange={handleChange}
+  placeholder="IFSC Code"
+  type="text"
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+/>
       </>
     )
   };
@@ -93,7 +213,7 @@ const SellerRegisterWizard = () => {
         </div>
 
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
+          <img onClick={()=>{navigate("/")}} src={logo} alt="Logo" className="w-10 h-10 mr-2 cursor-pointer" />
           <h1 className="text-2xl font-bold text-green-700">
             {step === 1 ? "Register as Seller" : step === 2 ? "Pickup Address" : "Bank Details"}
           </h1>

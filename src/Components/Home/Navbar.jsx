@@ -21,7 +21,7 @@ export default function Navbar(){
               <div className="text-4xl block sm:hidden">
                 <IoReorderThreeOutline />
               </div>
-              <img src={logo} alt="GreenPlore" width={50} height={50}  />
+              <img className="cursor-pointer" src={logo} alt="GreenPlore" width={50} height={50} onClick={()=>{()=>{navigate('/')}}} />
               <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div>
             </div>
     
@@ -44,8 +44,8 @@ export default function Navbar(){
     
             {/* Right icons */}
             <div className="flex items-center gap-5 text-xl md:text-2xl lg:text-3xl">
-              <VscAccount />
-              <BsCart3 />
+              <VscAccount className="hover:text-green-700 cursor-pointer  "  onClick={()=>{navigate("/profile")}} />
+              <BsCart3  className="hover:text-green-700 cursor-pointer " onClick={()=>{navigate("/cart")}}/>
               {/* <FaRegHeart /> */}
                
               <button
@@ -58,7 +58,7 @@ export default function Navbar(){
               <button
                 type="button"
                 className="hidden md:block lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 cursor-pointer font-medium rounded-full text-sm px-4 py-1.5"
-
+                 onClick={()=>{navigate("/register-seller")}}
               >
                 Be a Seller
               </button>

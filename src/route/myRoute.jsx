@@ -1,12 +1,12 @@
 
 import App from "../App";
 
-import SellerRegister1 from '../pages/Seller/SellerRegister1'
+// import SellerRegister1 from '../pages/Seller/SellerRegister1'
 import React from 'react'
 import { createBrowserRouter, createRoutesFromElements, Outlet, Route } from 'react-router-dom'
 import Home from "../pages/Home/Home";
-import SellerRegister2 from "../pages/Seller/SellerRegister2";
-import SellerRegister3 from "../pages/Seller/SellerRegister3";
+// import SellerRegister2 from "../pages/Seller/SellerRegister2";
+// import SellerRegister3 from "../pages/Seller/SellerRegister3";
 import ProductsPage from "../pages/Products/ProducsPage";
 import ProductView from "../Components/Product/ProductView";
 import { LoginForm } from "../Components/Buyer/LoginForm";
@@ -45,6 +45,8 @@ const myRoute = createBrowserRouter(
             <Route path="/profile" element={<Profile/>} />
             <Route path='/cart' element={<Cart/>} />
             <Route path='/wishlist' element={<Wishlist/>} />
+         
+
         </>
     )
 )

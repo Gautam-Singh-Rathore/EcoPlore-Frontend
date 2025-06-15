@@ -60,7 +60,7 @@ export function LoginForm({heading}) {
         {/* Links */}
         <div className="flex justify-between items-center text-sm text-green-600 mt-4">
           <Link to="#" className="hover:underline">Forgot your password?</Link>
-          <Link to="/sellerregister1" className="hover:underline">Register as Seller</Link>
+          <Link to="/register-seller" className="hover:underline">Register as Seller</Link>
         </div>
       </div>
     </div>

@@ -44,7 +44,7 @@ export function LoginForm() {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         {/* Logo and Heading */}
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
+          <img onClick={()=>{navigate('/')}} src={logo} alt="Logo" className="w-10 h-10 mr-2 cursor-pointer " />
           <h1 className="text-2xl font-bold text-green-700">Login to GreenPlore</h1>
         </div>
 
@@ -106,7 +106,7 @@ export function LoginForm() {
 
         {/* Seller Login */}
         <button
-          onClick={() => navigate("/sellerlogin")}
+          onClick={() => navigate("/seller-login")}
           type="button"
           className="w-full flex items-center justify-center border border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
         >
