@@ -45,7 +45,7 @@ export function LoginForm() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">
+    <div className="min-h-screen flex items-center justify-center bg-green-50">  
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         {/* Logo and Heading */}
         <div className="flex items-center justify-center mb-6">
