@@ -1,136 +1,271 @@
-import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import logo from "../../assets/Images/logo.png";
 import axios from "axios";
 import toast from "react-hot-toast";
 import MyLoader from "../../utils/MyLoader";
+import axiosInstance from "../../api/axiosInstance";
 
 const AddProduct = () => {
-  const categories = ["Electronics", "Clothing", "Books"];
-  const subcategories = ["Mobiles", "Laptops", "Headphones"];
+  // Categories and Subcategories (Dummy Data)
+  const [categories] = useState([
+    { id: 1, name: "Personal Care" },
+    { id: 2, name: "Kitchen" },
+    { id: 3, name: "Home Decore" },
+    { id: 4, name: "Planters" },
+    { id: 5, name: "Fashion" },
+  ]);
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const [subcategories] = useState([
+    { id: 1, name: "Mobile" },
+    { id: 2, name: "Laptop" },
+    { id: 3, name: "Camera" },
+  ]);
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
-  return (
-    <div className="relative px-4 py-8">
-      {" "}
-      {/* Increased py for space */}
-      {/* Cross Icon */}
-      <div className="absolute top-4 right-4 z-10">
-        <button
-          type="button"
-          className="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2"
-          aria-label="Close"
-        >
-          &#10005;
-        </button>
-      </div>
-      <div className="px-4 py-2">
-        <label
-          htmlFor="message"
-          className="block mb-1 text-sm font-medium text-gray-900"
-        >
-          <div className="text-xl font-bold text-slate-700 md:text-2xl lg:text-3xl">
-            {" "}
-            Name
-          </div>
-        </label>
-        <input
-          type="text"
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter Name of Your Product"
-        ></input>
-      </div>
-      <div className="px-4 py-2">
-        <label
-          htmlFor="price"
-          className="block mb-1 text-sm font-medium text-gray-900"
-        >
-          <div className="text-xl font-bold text-slate-700 md:text-2xl lg:text-3xl">
-            Price
-          </div>
-        </label>
-        <input
-          type="number"
-          id="price"
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-          placeholder="Enter Price of Your Product"
-        />
-      </div>
-      <div className="px-4 py-2">
-        <label
-          htmlFor="message"
-          className="block mb-1 text-sm font-medium text-gray-900"
-        >
-          <div className="text-xl font-bold text-slate-700 md:text-2xl lg:text-3xl">
-            {" "}
-            Description
-          </div>
-        </label>
-        <textarea
-          id="message"
-          rows={4}
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter Description of Your Product"
-        ></textarea>
-      </div>
-      <div className="px-4 py-2">
-        <label
-          htmlFor="message"
-          className="block mb-1 text-sm font-medium text-gray-900"
-        >
-          <div className="text-xl font-bold text-slate-700 md:text-2xl lg:text-3xl">
-            {" "}
-            No of Units
-          </div>
-        </label>
-        <input
-          type="number"
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter No of Units"
-        ></input>
-      </div>
-      <div className="px-4 py-2">
-        <label
-          htmlFor="message"
-          className="block mb-1 text-sm font-medium text-gray-900"
-        >
-          <div className="text-xl font-bold text-slate-700 md:text-2xl lg:text-3xl">
-            {" "}
-            Details
-          </div>
-        </label>
-        <textarea
-          id="message"
-          rows={4}
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Enter Details of Your Product"
-        ></textarea>
-      </div>
-      <div>
-        <Dropdown
-          label="Category"
-          options={categories}
-          selectedValue={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        />
+  // Product Form States
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [units, setUnits] = useState("");
+  const [details, setDetails] = useState("");
 
-        <Dropdown
-          label="Subcategory"
-          options={subcategories}
-          selectedValue={selectedSubcategory}
-          onChange={(e) => setSelectedSubcategory(e.target.value)}
-        />
-      </div>
-      <div>
-        {" "}
-        <ImageUpload />{" "}
-      </div>
-      <div className="px-4 py-2">
+  // Image Upload States
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Clean up generated URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      selectedImages.forEach(file => URL.revokeObjectURL(file.preview));
+    };
+  }, [selectedImages]);
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml"];
+
+    const validFiles = files.filter((file) => validTypes.includes(file.type));
+    const invalidFiles = files.filter((file) => !validTypes.includes(file.type));
+
+    if (invalidFiles.length > 0) {
+      setError("Only SVG, PNG, JPG, or GIF files are allowed.");
+      toast.error("Invalid file type selected!");
+    } else {
+      setError("");
+    }
+
+    // Limit the number of files (optional)
+    if (validFiles.length > 5) {
+      toast.error("You can upload up to 5 images only.");
+      return;
+    }
+
+    // Add preview URL to each file for display
+    const filesWithPreview = validFiles.map((file) => ({
+      ...file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setSelectedImages(filesWithPreview);
+  };
+
+  const handleUpload = async () => {
+    if (selectedImages.length === 0) {
+      toast.error("Please select and upload images before submitting!");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const uploadedImageUrls = await Promise.all(
+        selectedImages.map(async (file) => {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "greenplore_unsigned");
+
+          const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dbkbync4n/image/upload",
+            formData
+          );
+          return response.data.secure_url;
+        })
+      );
+
+      const successfulUploads = uploadedImageUrls.filter((url) => url !== null);
+
+      if (successfulUploads.length === 0) {
+        toast.error("Image upload failed!");
+        return;
+      }
+
+      // Construct final product object
+      const productData = {
+        name,
+        imageUrls: successfulUploads,
+        price: price ? parseFloat(price) : 0,
+        description,
+        noOfUnits: units ? parseInt(units) : 0,
+        details,
+        categoryId: selectedCategory ? parseInt(selectedCategory) : null,
+        subCategoryId: selectedSubcategory ? parseInt(selectedSubcategory) : null,
+      };
+
+      const response = await axiosInstance.post("/products", productData);
+      toast.success("Product added successfully!");
+      console.log(response.data);
+
+      // Reset Form
+      setName("");
+      setPrice("");
+      setDescription("");
+      setUnits("");
+      setDetails("");
+      setSelectedCategory("");
+      setSelectedSubcategory("");
+      setSelectedImages([]);
+    } catch (error) {
+      console.error("Error adding product:", error);
+      toast.error("Failed to add product.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    const fileToRemove = selectedImages[index];
+    URL.revokeObjectURL(fileToRemove.preview); // clean up
+    const updatedImages = [...selectedImages];
+    updatedImages.splice(index, 1);
+    setSelectedImages(updatedImages);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-green-50">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg relative">
+        {/* Close Button (Non-functional placeholder) */}
+        <div className="absolute top-4 right-4 z-10">
+          <button
+            type="button"
+            onClick={() => console.log("Close button clicked!")}
+            className="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2"
+            aria-label="Close"
+          >
+            &#10005;
+          </button>
+        </div>
+
+        {/* Logo & Heading */}
+        <div className="flex items-center justify-center mb-6">
+          <img src={logo} alt="Logo" className="w-10 h-10 mr-2 cursor-pointer" />
+          <h1 className="text-2xl font-bold text-green-700">Add Product</h1>
+        </div>
+
+        {/* Form Fields */}
+        {[
+          { label: "Name", value: name, setValue: setName, type: "text", placeholder: "Enter Product Name" },
+          { label: "Price", value: price, setValue: setPrice, type: "number", placeholder: "Enter Product Price" },
+          { label: "No of Units", value: units, setValue: setUnits, type: "number", placeholder: "Enter No of Units" },
+        ].map(({ label, value, setValue, type, placeholder }) => (
+          <div className="px-4 py-2" key={label}>
+            <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
+            <input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              type={type}
+              placeholder={placeholder}
+              className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        ))}
+
+        {/* Description */}
+        {[
+          { label: "Description", value: description, setValue: setDescription },
+          { label: "Details", value: details, setValue: setDetails },
+        ].map(({ label, value, setValue }) => (
+          <div className="px-4 py-2" key={label}>
+            <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
+            <textarea
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              rows={4}
+              placeholder={`Enter ${label} of Your Product`}
+              className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+        ))}
+
+        {/* Category & Subcategory Dropdowns */}
+        {[{ label: "Category", value: selectedCategory, setValue: setSelectedCategory, options: categories },
+          { label: "Subcategory", value: selectedSubcategory, setValue: setSelectedSubcategory, options: subcategories }]
+          .map(({ label, value, setValue, options }) => (
+            <div className="px-4 py-2" key={label}>
+              <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
+              <select
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              >
+                <option value="">Select {label}</option>
+                {options.map((option) => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))}
+              </select>
+            </div>
+          ))}
+
+        {/* Image Upload Section */}
+        <div className="flex flex-col items-center justify-center w-full space-y-4 px-4 py-4">
+          {loading && <MyLoader />}
+          <label
+            htmlFor="dropzone-file"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+          >
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg className="w-8 h-8 mb-4 text-gray-500" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5A5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+              </svg>
+              <p className="mb-2 text-sm text-gray-500">
+                <span className="font-semibold">Click to upload</span> or drag and drop
+              </p>
+              <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 5 files)</p>
+            </div>
+            <input id="dropzone-file" type="file" multiple className="hidden" onChange={handleFileChange} />
+          </label>
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
+          <div className="flex flex-wrap gap-4 mt-4">
+            {selectedImages.map((file, index) => (
+              <div key={index} className="relative w-32 h-32">
+                <img
+                  src={file.preview}
+                  alt={`preview ${index}`}
+                  className="w-full h-full object-cover rounded-lg border border-gray-300"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 hover:bg-red-600"
+                >
+                  &times;
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <button
+          onClick={handleUpload}
           type="submit"
-          className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-8"
+          disabled={loading}
+          className={`w-full bg-green-600 text-white py-3 mt-6 rounded-lg hover:bg-green-700 transition duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          Submit
+          {loading ? "Uploading..." : "Submit"}
         </button>
       </div>
     </div>
@@ -138,185 +273,3 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
-
-const ImageUpload = () => {
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [error, setError] = useState("");
-  const [uploadedUrls, setUploadedUrls] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleFileChange = async (e) => {
-    const files = Array.from(e.target.files);
-    const validTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/gif",
-      "image/svg+xml",
-    ];
-
-    const validFiles = files.filter((file) => validTypes.includes(file.type));
-    const invalidFiles = files.filter(
-      (file) => !validTypes.includes(file.type)
-    );
-
-    if (invalidFiles.length > 0) {
-      setError("Only SVG, PNG, JPG, or GIF files are allowed.");
-      toast.error("Image upload failed!");
-    } else {
-      setError("");
-    }
-
-    const previews = validFiles.map((file) => URL.createObjectURL(file));
-    setSelectedImages(previews);
-
-    setLoading(true);
-    // Upload each valid file to Cloudinary
-    const uploadedImageUrls = await Promise.all(
-      validFiles.map(async (file) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "greenplore_unsigned"); // Replace with your unsigned preset
-
-        try {
-          const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/dbkbync4n/image/upload", // Replace with your Cloud name
-            formData
-          );
-          toast.success("Image uploaded successfully!");
-          return response.data.secure_url; // Cloudinary URL
-        } catch (err) {
-          console.error("Upload error:", err);
-          toast.error("Image upload failed!");
-          return null;
-        }
-      })
-    );
-
-    setLoading(false);
-    // Filter successful uploads
-    const successfulUploads = uploadedImageUrls.filter((url) => url !== null);
-
-    setUploadedUrls(successfulUploads);
-  };
-
-  const handleRemoveImage = (index) => {
-    const updatedPreviews = [...selectedImages];
-    const updatedUploadedUrls = [...uploadedUrls];
-    updatedPreviews.splice(index, 1);
-    updatedUploadedUrls.splice(index, 1);
-    setSelectedImages(updatedPreviews);
-    setUploadedUrls(updatedUploadedUrls);
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center w-full space-y-4 px-4 py-4">
-      {loading && <MyLoader />}
-      <label
-        htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-      >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <svg
-            className="w-8 h-8 mb-4 text-gray-500"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 16"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5
-              5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0
-              0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-            />
-          </svg>
-          <p className="mb-2 text-sm text-gray-500">
-            <span className="font-semibold">Click to upload</span> or drag and
-            drop
-          </p>
-          <p className="text-xs text-gray-500">
-            SVG, PNG, JPG or GIF (MAX. 800x400px)
-          </p>
-        </div>
-        <input
-          id="dropzone-file"
-          type="file"
-          multiple
-          className="hidden"
-          onChange={handleFileChange}
-        />
-      </label>
-
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-
-      <div className="flex flex-wrap gap-4 mt-4">
-        {selectedImages.map((image, index) => (
-          <div key={index} className="relative w-32 h-32">
-            <img
-              src={image}
-              alt={`preview ${index}`}
-              className="w-full h-full object-cover rounded-lg border border-gray-300"
-            />
-            <button
-              type="button"
-              onClick={() => handleRemoveImage(index)}
-              className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 hover:bg-red-600"
-            >
-              &times;
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Uploaded URLs (Cloudinary links) */}
-
-      {uploadedUrls.length > 0 && (
-        <div className="mt-4 w-full">
-          <h3 className="text-lg font-semibold mb-2">Uploaded Image URLs:</h3>
-          <ul className="list-disc list-inside">
-            {uploadedUrls.map((url, index) => (
-              <li key={index} className="text-blue-500 break-all">
-                <a href={url} target="_blank" rel="noopener noreferrer">
-                  {url}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const Dropdown = ({ label, options, selectedValue, onChange }) => {
-  return (
-    <div className="px-4 py-2">
-      <label
-        htmlFor={label.toLowerCase()}
-        className="block mb-1 text-sm font-medium text-gray-900"
-      >
-        <div className="text-xl font-bold text-slate-700 md:text-2xl lg:text-3xl">
-          {label}
-        </div>
-      </label>
-      <select
-        id={label.toLowerCase()}
-        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-        value={selectedValue}
-        onChange={onChange}
-      >
-        <option value="" disabled>
-          Select {label}
-        </option>
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};

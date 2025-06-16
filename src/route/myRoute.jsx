@@ -18,7 +18,7 @@ import Wishlist from "../pages/Home/Wishlist";
 import SellerLogin from "../Components/Seller/SellerSignin";
 import SellerRegisterWizard from "../Components/Seller/SellerRegisterWizard"
 import SellerProfile from "../pages/Seller/SellerProfile";
-import AddProduct1 from "../pages/Products/AddProduct1";
+
 
 
 const myRoute = createBrowserRouter(
@@ -48,7 +48,7 @@ const myRoute = createBrowserRouter(
             <Route path='/cart' element={<Cart/>} />
             <Route path='/wishlist' element={<Wishlist/>} />
             <Route path='seller-profile' element={<SellerProfile/>} />
-            <Route path='ap1' element={<AddProduct1/>} />
+          
          
 
         </>
