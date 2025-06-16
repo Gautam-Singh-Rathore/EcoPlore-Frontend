@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import WishlistCard from '../../Components/Wishlistcard';
+import Header from '../../Components/Home/Header';
 
 const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([
@@ -40,13 +41,18 @@ const Wishlist = () => {
 
   return (
     <div>
-      {wishlistItems.map((item) => (
+      <div className='mb-12'>
+                <Header  heading="Wishlist"/>
+                </div>
+       <div >
+       {wishlistItems.map((item) => (
         <WishlistCard
           key={item.id}
           product={item}
           onRemove={() => handleRemove(item.id)}
         />
       ))}
+       </div>
     </div>
   );
 };

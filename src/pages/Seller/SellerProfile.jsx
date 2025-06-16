@@ -36,7 +36,7 @@ const SellerProfile = () => {
     <div className='flex h-screen bg-slate-50'>
       
       {/* Left Sidebar */}
-      <div className='bg-white h-full w-full sm:w-1/3 max-w-sm pb-4  '>
+      <div className='bg-white h-full w-full lg:w-1/3  pb-4  '>
       <SellerAvatarCard
         companyName="EcoPlore Pvt Ltd"
         gst="27AAACB1234C1Z5"
@@ -56,7 +56,7 @@ const SellerProfile = () => {
       </div>
 
       {/* Right Content Area - Only visible on sm and above */}
-      <div className='hidden sm:block w-2/3 p-6'>
+      <div className='hidden lg:block w-2/3 p-4'>
         {renderPage()}
       </div>
     </div>

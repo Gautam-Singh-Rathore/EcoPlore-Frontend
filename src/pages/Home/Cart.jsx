@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CartCard from '../../Components/CartCard';
+import Header from '../../Components/Home/Header';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([
@@ -76,7 +77,11 @@ const Cart = () => {
   };
 
   return (
-    <div className="p-4">
+    <div >
+          <div className='mb-12'>
+          <Header  heading="Cart"/>
+          </div>
+      <div >
       {cartItems.map((product) => (
         <CartCard
           key={product.id}
@@ -87,6 +92,7 @@ const Cart = () => {
           onRemove={() => handleRemove(product.id)}
         />
       ))}
+      </div>
     </div>
   );
 };

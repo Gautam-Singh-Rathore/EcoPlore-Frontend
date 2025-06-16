@@ -31,10 +31,10 @@ const Profile = () => {
   };
 
   return (
-    <div className='flex h-screen bg-slate-50'>
+    <div className='flex h-screen bg-slate-50 overflow-hidden'>
       
-      {/* Left Sidebar */}
-      <div className='bg-white h-full w-full sm:w-1/3 max-w-sm pb-4  '>
+      {/* Left Sidebar - Fixed and Non-Scrollable */}
+      <div className='bg-white h-full w-full lg:w-1/3 pb-4 overflow-hidden'>
         <AvatarCard
           firstName="Gaurav"
           lastName="Rawat"
@@ -42,7 +42,7 @@ const Profile = () => {
           email="gaurav@example.com"
           createdAt="2024-06-16"
         />
-        
+  
         <div className="flex items-center justify-center p-4 px-2 gap-2">
           <BoxCard icon={Package} label="Orders" onClick={() => setSelectedPage('orders')} />
           <BoxCard icon={Heart} label="Wishlist" onClick={() => setSelectedPage('wishlist')} />
@@ -51,11 +51,12 @@ const Profile = () => {
         <OptionsCard label="Address" onClick={() => setSelectedPage('address')} />
         <OptionsCard label="Logout" onClick={() => navigate("/logout")} />
       </div>
-
-      {/* Right Content Area - Only visible on sm and above */}
-      <div className='hidden sm:block w-2/3 p-6'>
+  
+      {/* Right Content Area - Scrollable only on md and above */}
+      <div className='hidden lg:block w-2/3 p-4 overflow-y-auto h-full'>
         {renderPage()}
       </div>
+  
     </div>
   );
 }

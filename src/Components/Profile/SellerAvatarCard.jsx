@@ -3,7 +3,7 @@ const SellerAvatarCard = ({ companyName, gst, email, createdAt }) => {
     const initials = `${companyName[0] || ''}`;
   
     return (
-      <div className="relative bg-white rounded-lg shadow-md w-full p-4 pt-28 sm:px-6 md:px-8">
+      <div className="relative bg-white rounded-lg shadow-md w-full p-4 pt-28 ">
         
         {/* Avatar Circle at Top Center */}
         <div className="absolute -top-0 mt-2 left-1/2 transform -translate-x-1/2">
@@ -23,14 +23,15 @@ const SellerAvatarCard = ({ companyName, gst, email, createdAt }) => {
   
           {/* Right Side: GST Number */}
           <div className="text-right">
-            <p className="text-base text-gray-700">{gst}</p>
+            <p className="text-lg text-gray-700">{gst}</p>
+            <p className="text-sm text-slate-500">Created on: {createdAt}</p>
           </div>
         </div>
   
-        {/* Bottom Right: Date of Creation */}
+        {/* Bottom Right: Date of Creation 
         <div className="absolute bottom-2 right-4">
-          <p className="text-xs text-slate-400">Created on: {createdAt}</p>
-        </div>
+         
+        </div> */}
       </div>
     );
   };

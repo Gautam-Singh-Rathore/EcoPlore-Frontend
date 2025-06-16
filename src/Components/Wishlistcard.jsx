@@ -19,7 +19,7 @@ const WishlistCard = ({ product, onRemove }) => {
         </h2>
         <p className="text-gray-500">{product.category}</p>
         <div className="text-xl sm:text-2xl font-bold text-gray-900">
-          ₹ {product.price}
+          ₹{product.price}
         </div>
         <div className="line-clamp-4">{product.description}</div>
 
@@ -37,4 +37,4 @@ const WishlistCard = ({ product, onRemove }) => {
   );
 };
 
-export default WishlistCard;
+export default WishlistCard;        
