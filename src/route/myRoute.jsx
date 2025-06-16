@@ -17,6 +17,7 @@ import Cart from "../pages/Home/Cart";
 import Wishlist from "../pages/Home/Wishlist";
 import SellerLogin from "../Components/Seller/SellerSignin";
 import SellerRegisterWizard from "../Components/Seller/SellerRegisterWizard"
+import SellerProfile from "../pages/Seller/SellerProfile";
 
 
 const myRoute = createBrowserRouter(
@@ -45,6 +46,7 @@ const myRoute = createBrowserRouter(
             <Route path="/profile" element={<Profile/>} />
             <Route path='/cart' element={<Cart/>} />
             <Route path='/wishlist' element={<Wishlist/>} />
+            <Route path='seller-profile' element={<SellerProfile/>} />
          
 
         </>
