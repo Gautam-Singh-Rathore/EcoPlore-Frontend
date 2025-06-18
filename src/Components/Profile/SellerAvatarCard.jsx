@@ -16,8 +16,8 @@ const SellerAvatarCard = ({ companyName, gst, email,mobile, createdAt }) => {
       
           <div className="flex flex-col items-center justify-center gap-0.5" >
             <h2 className="text-lg font-bold">{companyName}</h2>
-            <p className="text-slate-500 text-sm">Email : {email}</p>
-            <p className="text-lg text-gray-700">Mobile No : {mobile}</p>
+            <p className="text-gray-700 text-md">Email : {email}</p>
+            <p className="text-md text-gray-700">Mobile No : {mobile}</p>
             <p className="text-lg text-gray-700">GST No : {gst}</p>
             <p className="text-sm text-slate-500">Created on: {createdAt}</p>
           </div>
