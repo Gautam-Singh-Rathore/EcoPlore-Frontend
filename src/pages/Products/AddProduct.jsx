@@ -4,8 +4,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import MyLoader from "../../utils/MyLoader";
 import axiosInstance from "../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+  const navigate = useNavigate();
+
   // Categories and Subcategories (Dummy Data)
   const [categories] = useState([
     { id: 1, name: "Personal Care" },
@@ -72,6 +75,10 @@ const AddProduct = () => {
   };
 
   const handleUpload = async () => {
+    if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory ) {
+      toast.error("All fields are required!");
+      return;
+    }
     if (selectedImages.length === 0) {
       toast.error("Please select and upload images before submitting!");
       return;
@@ -141,16 +148,16 @@ const AddProduct = () => {
     updatedImages.splice(index, 1);
     setSelectedImages(updatedImages);
   };
-
+      
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg relative">
+    <div className=" w-full min-h-screen flex items-center justify-center bg-green-50  ">
+      <div className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] 2xl:w-[50%] mx-auto bg-white p-8 rounded-2xl shadow-lg relative py-6 sm:py-8 md:py-10 lg:py-12 ">
         {/* Close Button (Non-functional placeholder) */}
         <div className="absolute top-4 right-4 z-10">
           <button
             type="button"
-            onClick={() => console.log("Close button clicked!")}
-            className="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2"
+            onClick={() => navigate("/seller-profile")}
+            className="text-black bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:outline-none rounded-full  text-sm p-3"
             aria-label="Close"
           >
             &#10005;
@@ -159,8 +166,8 @@ const AddProduct = () => {
 
         {/* Logo & Heading */}
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="Logo" className="w-10 h-10 mr-2 cursor-pointer" />
-          <h1 className="text-2xl font-bold text-green-700">Add Product</h1>
+          <img src={logo} alt="Logo" className="w-10 h-10 md:w-12 md:h-12 lg:h-14 lg:w-14 mr-2 cursor-pointer" />
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-700 ">Add Product</h1>
         </div>
 
         {/* Form Fields */}
@@ -263,7 +270,7 @@ const AddProduct = () => {
           onClick={handleUpload}
           type="submit"
           disabled={loading}
-          className={`w-full bg-green-600 text-white py-3 mt-6 rounded-lg hover:bg-green-700 transition duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-full bg-green-600 cursor-pointer text-white py-3 mt-6 rounded-lg hover:bg-green-700 transition duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           {loading ? "Uploading..." : "Submit"}
         </button>

@@ -4,10 +4,10 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
   return (
     <div
       key={product.id}
-      className="w-full p-4 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200"
+      className="w-full  lg:w-[80%] xl:w-[70%] 2xl:w-[60%] mx-auto p-4 pt-6 flex justify-center items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200"
     >
       {/* Product Image */}
-      <div className="flex-shrink-0 w-[20vw]">
+      <div className="flex w-[20vw]">
         <img
           src={product.image}
           alt={product.title}
@@ -32,14 +32,14 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={onDecrease}
-              className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
+              className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
             >
               -
             </button>
             <span className="text-lg font-semibold">{quantity}</span>
             <button
               onClick={onIncrease}
-              className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
+              className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
             >
               +
             </button>
@@ -48,7 +48,7 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
           {/* Remove Button */}
           <button
             onClick={onRemove}
-            className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+            className="bg-red-500 text-white px-4 py-1 cursor-pointer rounded hover:bg-red-600"
           >
             Remove
           </button>
@@ -57,5 +57,4 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
     </div>
   );
 };
-
 export default CartCard;

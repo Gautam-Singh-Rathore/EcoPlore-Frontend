@@ -23,35 +23,27 @@ import SellerProfile from "../pages/Seller/SellerProfile";
 
 const myRoute = createBrowserRouter(
     createRoutesFromElements(
-       <>
-        <Route path='/' element={<Home/>} > 
-        </Route>
+<>
+      {/* Routes WITHOUT Header & Footer */}
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/register" element={<RegisterForm />} />
+      <Route path="/seller-login" element={<SellerLogin />} />
+      <Route path="/register-seller" element={<SellerRegisterWizard />} />
+      <Route path="cart" element={<Cart />} />
+      <Route path="wishlist" element={<Wishlist />} />
+      <Route path="addproduct" element={<AddProduct />} />
+      <Route path="seller-profile" element={<SellerProfile />} />
+      <Route path="profile" element={<Profile />} />
 
-       {/* <Route path="/seller" element={<App/>} >
-         <Route index  element={<SellerRegister1/>} />
-         <Route path="1" element={<SellerRegister2/>} />
-         <Route path="2" element={<SellerRegister3/>} />
-       </Route> */}
-       <Route path="/register-seller" element={<SellerRegisterWizard/>} />
-       <Route path='/seller-login' element={<SellerLogin/>} />
-         
-         <Route path="/products" element={<App/>} >
-          <Route index element={<ProductsPage/>} />
-          </Route>
+      {/* Routes WITH Header & Footer via App */}
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="products" element={<ProductsPage />} />
+        <Route path="product" element={<ProductView />} />
+       
       
-         <Route path="product"  element={<ProductView/>}/>
-
-           <Route path="/login" element={<LoginForm/>} />
-            <Route path="/register" element={<RegisterForm/>} />
-            <Route path="/addproduct" element={<AddProduct/>} />
-            <Route path="/profile" element={<Profile/>} />
-            <Route path='/cart' element={<Cart/>} />
-            <Route path='/wishlist' element={<Wishlist/>} />
-            <Route path='seller-profile' element={<SellerProfile/>} />
-          
-         
-
-        </>
+      </Route>
+    </>
     )
 )
 

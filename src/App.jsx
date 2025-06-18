@@ -6,16 +6,17 @@ import Footer from './Components/Home/Footer'
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
+
   return (
-    <div>
-      {/* header  */}
-       <Top/>
-       <Navbar/>
-      <Outlet/>
-      <Footer/>
-      {/* footer  */}
-    </div>
-  )
-}
+    <>
+    <Top />
+    <Navbar/>
+    <main className="min-h-screen pt-38 md:pt-30">
+      <Outlet />  {/* All nested routes will render here */}
+    </main>
+    <Footer />
+  </>
+  );
+};
 
 export default App

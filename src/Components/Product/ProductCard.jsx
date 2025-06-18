@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div
-      className="w-full pr-2 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px]  border-gray-200 relative   "
+      className="w-full md:w-[80%] lg:w-[60%] mx-auto pr-2 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px]  border-gray-200 relative   "
     >
       {/* Wishlist Icon in Top Right */}
       <button
@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
     alt={product.name}
     className="w-full h-auto rounded-xl object-cover"
   />
-</div>
+</div> 
 
       {/* Product Details */}
       <div className="flex flex-col gap-2 flex-grow w-[60vw]">

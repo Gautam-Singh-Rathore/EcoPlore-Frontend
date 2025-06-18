@@ -60,6 +60,7 @@ export function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email"
+            required
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
@@ -67,6 +68,7 @@ export function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
+            required
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <button
@@ -92,7 +94,7 @@ export function LoginForm() {
 
         {/* Google Button */}
         {/* <button
-          className="w-full flex items-center justify-center border border-slate-300 text-green-700 py-2 rounded-lg hover:bg-blue-400 hover:text-white transition duration-300"
+          className="w-full flex items-center justify-center border cursor-pointer border-slate-300 text-green-700 py-2 rounded-lg hover:bg-blue-400 hover:text-white transition duration-300"
         >
           <img
             src="https://img.icons8.com/color/24/000000/google-logo.png"
@@ -113,7 +115,7 @@ export function LoginForm() {
         <button
           onClick={() => navigate("/seller-login")}
           type="button"
-          className="w-full flex items-center justify-center border border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
+          className="w-full flex items-center justify-center border cursor-pointer border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
         >
           Login as Seller
         </button>

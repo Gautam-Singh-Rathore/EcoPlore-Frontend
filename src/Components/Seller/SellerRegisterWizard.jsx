@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../../assets/Images/logo.png";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
+import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 
@@ -41,7 +42,8 @@ const SellerRegisterWizard = () => {
       alert("Seller registered!");
     } catch (error) {
       console.error("❌ Registration failed:", error);
-      alert("Registration failed. Check console for details.");
+      toast.error(error?.response?.data?.msg || "Registration failed." )
+      
     }
   };
 
@@ -49,9 +51,28 @@ const SellerRegisterWizard = () => {
     if (step > 1) setStep(step - 1);
   };
 
+  const validateStep = () => {
+    if (step === 1) {
+      return formData.email && formData.password && formData.companyName && formData.GSTNumber && formData.mobileNo;
+    } else if (step === 2) {
+      return formData.buildingNo && formData.street && formData.landmark && formData.city && formData.pinCode && formData.state;
+    } else if (step === 3) {
+      return formData.fullName && formData.accountNo && formData.IFSCCode;
+    }
+    return false;
+  };
+  
   const goNext = () => {
-    if (step < 3) setStep(step + 1);
-    else handleSubmit();
+    if (!validateStep()) {
+      toast.error("Please fill all fields before proceeding.")
+      return;
+    }
+  
+    if (step < 3) {
+      setStep(step + 1);
+    } else {
+      handleSubmit();
+    }
   };
 
   const steps = {
@@ -72,7 +93,8 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Email"
   type="email"
-  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+  required
+  className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 "
 />
 
 <input
@@ -81,6 +103,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Phone Number"
   type="tel"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -90,6 +113,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Company Name"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -99,6 +123,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="GST Number"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -108,8 +133,11 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Password"
   type="password"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
+
+ 
       </>
     ),
     2: (
@@ -120,6 +148,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Building No"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -129,6 +158,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Street"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -138,6 +168,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Landmark"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -147,6 +178,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="City"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -156,6 +188,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Pin Code"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -165,6 +198,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="State"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
       </>
@@ -173,11 +207,12 @@ const SellerRegisterWizard = () => {
       <>
 
           <input
-  name="fullname"
+  name="fullName"
   value={formData.fullName}
   onChange={handleChange}
   placeholder="Your Full Name"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />    
         <input
@@ -186,6 +221,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="Account Number"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
 
@@ -195,6 +231,7 @@ const SellerRegisterWizard = () => {
   onChange={handleChange}
   placeholder="IFSC Code"
   type="text"
+  required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
       </>
@@ -206,7 +243,7 @@ const SellerRegisterWizard = () => {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg relative">
         {/* Logo and Back */}
         <div className="absolute top-4 left-4">
-          {step >= 1 && (
+          {step > 1 && (
             <button onClick={goBack} className="text-green-600 hover:text-green-800 cursor-pointer">
               <ArrowLeft />
             </button>
@@ -231,7 +268,28 @@ const SellerRegisterWizard = () => {
           >
             {step === 3 ? "Submit" : "Next"}
           </button>
+
+          {step === 1 && (
+  <>
+    {/* Divider */}
+    <div className="flex items-center my-4">
+      <hr className="flex-grow border-green-300" />
+      <span className="mx-2 text-green-500">or</span>
+      <hr className="flex-grow border-green-300" />
+    </div>
+
+    {/* Seller Login */}
+    <button
+      onClick={() => navigate("/seller-login")}
+      type="button"
+      className="w-full flex items-center justify-center border cursor-pointer border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
+    >
+      Login as Seller
+    </button>
+  </>
+)}
         </form>
+        
       </div>
     </div>
   );

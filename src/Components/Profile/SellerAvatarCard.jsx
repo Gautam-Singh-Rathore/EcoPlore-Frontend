@@ -1,9 +1,9 @@
-const SellerAvatarCard = ({ companyName, gst, email, createdAt }) => {
+const SellerAvatarCard = ({ companyName, gst, email,mobile, createdAt }) => {
     // Calculate initials from companyName
     const initials = `${companyName[0] || ''}`;
   
     return (
-      <div className="relative bg-white rounded-lg shadow-md w-full p-4 pt-28 ">
+      <div className="relative bg-white rounded-lg w-full p-4 pt-28 ">
         
         {/* Avatar Circle at Top Center */}
         <div className="absolute -top-0 mt-2 left-1/2 transform -translate-x-1/2">
@@ -13,20 +13,16 @@ const SellerAvatarCard = ({ companyName, gst, email, createdAt }) => {
         </div>
   
         {/* Content Below Avatar */}
-        <div className="flex justify-between items-start mt-4">
-          
-          {/* Left Side: Company Name and Email */}
-          <div>
+      
+          <div className="flex flex-col items-center justify-center gap-0.5" >
             <h2 className="text-lg font-bold">{companyName}</h2>
-            <p className="text-slate-500 text-sm">{email}</p>
-          </div>
-  
-          {/* Right Side: GST Number */}
-          <div className="text-right">
-            <p className="text-lg text-gray-700">{gst}</p>
+            <p className="text-slate-500 text-sm">Email : {email}</p>
+            <p className="text-lg text-gray-700">Mobile No : {mobile}</p>
+            <p className="text-lg text-gray-700">GST No : {gst}</p>
             <p className="text-sm text-slate-500">Created on: {createdAt}</p>
           </div>
-        </div>
+  
+         
   
         {/* Bottom Right: Date of Creation 
         <div className="absolute bottom-2 right-4">
@@ -34,6 +30,6 @@ const SellerAvatarCard = ({ companyName, gst, email, createdAt }) => {
         </div> */}
       </div>
     );
-  };
+  };    
   
   export default SellerAvatarCard;

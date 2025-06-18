@@ -17,9 +17,10 @@ const AddressPage = () => <div>Address Page Content</div>;
 
 
 const Profile = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedPage, setSelectedPage] = useState('orders');
-  
+
+
   const renderPage = () => {
     switch (selectedPage) {
       case 'orders': return <OrdersPage />;
@@ -30,10 +31,18 @@ const Profile = () => {
     }
   };
 
+  const handleNavigation = (page) => {
+    if (window.innerWidth < 1024) { // mobile device
+      navigate(`/${page}`);
+    } else { // large screen
+      setSelectedPage(page);
+    }
+  };
+
   return (
     <div className='flex h-screen bg-slate-50 overflow-hidden'>
-      
-      {/* Left Sidebar - Fixed and Non-Scrollable */}
+
+      {/* Left Sidebar */}
       <div className='bg-white h-full w-full lg:w-1/3 pb-4 overflow-hidden'>
         <AvatarCard
           firstName="Gaurav"
@@ -42,23 +51,23 @@ const Profile = () => {
           email="gaurav@example.com"
           createdAt="2024-06-16"
         />
-  
+
         <div className="flex items-center justify-center p-4 px-2 gap-2">
-          <BoxCard icon={Package} label="Orders" onClick={() => setSelectedPage('orders')} />
-          <BoxCard icon={Heart} label="Wishlist" onClick={() => setSelectedPage('wishlist')} />
+          <BoxCard icon={Package} label="Orders" onClick={() => handleNavigation('orders')} />
+          <BoxCard icon={Heart} label="Wishlist" onClick={() => handleNavigation('wishlist')} />
         </div>
-        <OptionsCard label="Cart" onClick={() => setSelectedPage('cart')} />
-        <OptionsCard label="Address" onClick={() => setSelectedPage('address')} />
+        <OptionsCard label="Cart" onClick={() => handleNavigation('cart')} />
+        <OptionsCard label="Address" onClick={() => handleNavigation('address')} />
         <OptionsCard label="Logout" onClick={() => navigate("/logout")} />
       </div>
-  
-      {/* Right Content Area - Scrollable only on md and above */}
+
+      {/* Right Content Area - only visible on large screens */}
       <div className='hidden lg:block w-2/3 p-4 overflow-y-auto h-full'>
         {renderPage()}
       </div>
-  
+
     </div>
   );
-}
+};
 
 export default Profile

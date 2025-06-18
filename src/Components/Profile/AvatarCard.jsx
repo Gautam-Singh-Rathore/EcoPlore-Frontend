@@ -3,7 +3,7 @@ const AvatarCard = ({ firstName, lastName, mobile, email, createdAt }) => {
   const initials = `${firstName[0] || ''}${lastName[0] || ''}`;
 
   return (
-    <div className="relative bg-white rounded-lg shadow-md w-full p-4 pt-28  "> {/* increased pt-16 to pt-28 */}
+    <div className="relative bg-white rounded-lg  w-full   p-4 pt-28  "> {/* increased pt-16 to pt-28 */}
       
       {/* Avatar Circle at Top Center */}
       <div className="absolute -top-0 mt-2 left-1/2 transform -translate-x-1/2"> {/* Adjusted to -top-12 for perfect alignment */}
@@ -13,20 +13,14 @@ const AvatarCard = ({ firstName, lastName, mobile, email, createdAt }) => {
       </div>
   
       {/* Content Below Avatar */}
-      <div className="flex justify-between items-start mt-4">
-        
-        {/* Left Side: Name and Email */}
-        <div>
+      
+        <div className="flex flex-col items-center justify-center gap-0.5">
           <h2 className="text-lg font-bold">{firstName} {lastName}</h2>
-          <p className="text-slate-500 text-sm">{email}</p>
-        </div>
-  
-        {/* Right Side: Mobile Number */}
-        <div className="text-right">
-          <p className="text-lg text-gray-700">{mobile}</p>
+          <p className="text-slate-500 text-sm">Email : {email}</p>
+          <p className="text-lg text-gray-700">Mobile No : {mobile}</p>
           <p className="text-sm text-slate-500">Created on: {createdAt}</p>
         </div>
-      </div>
+  
   
       {/* Bottom Right: Date of Creation
       <div className="absolute bottom-2 right-4">

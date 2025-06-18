@@ -82,31 +82,37 @@ export function RegisterForm() {
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         {/* Logo and Heading */}
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
+          <img src={logo} alt="Logo" onClick={()=>{navigate('/')}}  className="w-10 h-10 mr-2 cursor-pointer" />
           <h1 className="text-2xl font-bold text-green-700">
             Register as Buyer
           </h1>
         </div>
 
         {/* Input Fields */}
-        <form className="space-y-4">
+        <form  onSubmit={handleregister} className="space-y-4">
+           
           <input
+           required
             onChange={(e) => {
               setfirstName(e.target.value);
             }}
             type="text"
             placeholder="First Name"
+         
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
+           required
             onChange={(e) => {
               setlastName(e.target.value);
             }}
             type="text"
             placeholder="Last Name"
+    
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
+           required
             onChange={(e) => {
               setemail(e.target.value);
             }}
@@ -115,6 +121,7 @@ export function RegisterForm() {
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
+             required
             onChange={(e) => {
               setmobile(e.target.value);
             }}
@@ -124,6 +131,7 @@ export function RegisterForm() {
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 appearance-none "
           />
           <input
+           required
             onChange={(e) => {
               setpassword(e.target.value);
             }}
@@ -132,16 +140,18 @@ export function RegisterForm() {
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <input
+           required
             onChange={(e) => {
               setconfirmpassword(e.target.value);
             }}
             type="password"
             placeholder="Confirm Password"
+           
             className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           <button
-            onClick={handleregister}
-            type="button"
+             
+            type="submit"
             className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 cursor-pointer"
           >
             Register
@@ -190,7 +200,7 @@ export function RegisterForm() {
           onClick={() => {
             navigate("/register-seller");
           }}
-          type="submit"
+          type="button"
           className="w-full flex cursor-pointer items-center justify-center border border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
         >
           Become a Seller

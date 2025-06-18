@@ -11,11 +11,11 @@ const Header = ({ heading }) => {
   };
 
   return (
-    <header className="fixed top-0 w-full flex items-center bg-slate-50 px-2 sm:px-4 md:px-6 lg-px-12 py-1.5 z-50 ">
+    <header className="fixed top-0 w-full flex items-center  bg-white px-2 sm:px-4 md:px-6 lg-px-12 py-1.5 z-50 ">
       {/* Back Button */}
       <button
         onClick={handleBack}
-        className="p-1 rounded-full hover:bg-green-200 transition duration-200"
+        className="p-1 cursor-pointer rounded-full hover:bg-green-200 transition duration-200"
       >
         <ArrowLeft className="w-6 h-6 text-green-700" />
       </button>

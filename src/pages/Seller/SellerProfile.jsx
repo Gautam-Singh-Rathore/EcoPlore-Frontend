@@ -4,6 +4,7 @@ import SellerAvatarCard from '../../Components/Profile/SellerAvatarCard'
 import OptionsCard from '../../Components/Profile/OptionsCard'
 import BoxCard from '../../Components/Profile/BoxCard'
 import { UserPen, ChartColumn  } from 'lucide-react';
+import AddProduct from '../Products/AddProduct'
 
 
 
@@ -28,38 +29,50 @@ const SellerProfile = () => {
       case 'manageOrders': return <ManageOrdersPage />;
       case 'manageProducts': return <ManageProductsPage />;
       case 'manageProfile': return <ManageProfilePage />;
+      case 'addproduct' : return <AddProduct/>
       default: return <div>Select an option</div>;
+    }
+  };
+
+  const handleNavigation = (page) => {
+    if (window.innerWidth < 1024) { // mobile device
+      navigate(`/${page}`);
+    } else { // large screen
+      setSelectedPage(page);
     }
   };
 
   return (
     <div className='flex h-screen bg-slate-50'>
-      
+  
       {/* Left Sidebar */}
-      <div className='bg-white h-full w-full lg:w-1/3  pb-4  '>
-      <SellerAvatarCard
-        companyName="EcoPlore Pvt Ltd"
-        gst="27AAACB1234C1Z5"
-        email="support@ecoplore.com"
-        createdAt="2024-06-16"
-      />
-        
+      <div className='bg-white h-full w-full lg:w-1/3 pb-4 overflow-hidden'>
+        <SellerAvatarCard
+          companyName="EcoPlore Pvt Ltd"
+          gst="27AAACB1234C1Z5"
+          email="support@ecoplore.com"
+          mobile="7898957389"
+          createdAt="2024-06-16"
+        />
+  
         <div className="flex items-center justify-center p-4 px-2 gap-2">
-  <BoxCard icon={UserPen} label="Profile" onClick={() => setSelectedPage('profile')} />
-  <BoxCard icon={ChartColumn} label="Analytics" onClick={() => setSelectedPage('analytics')} />
-</div>
-
-<OptionsCard label="Manage Orders" onClick={() => setSelectedPage('manageOrders')} />
-<OptionsCard label="Manage Products" onClick={() => setSelectedPage('manageProducts')} />
-<OptionsCard label="Manage Profile" onClick={() => setSelectedPage('manageProfile')} />
-<OptionsCard label="Logout" onClick={() => navigate("/logout")} />
-      </div>
-
-      {/* Right Content Area - Only visible on sm and above */}
-      <div className='hidden lg:block w-2/3 p-4'>
+          <BoxCard icon={UserPen} label="Profile" onClick={() => handleNavigation('profile')} />
+          <BoxCard icon={ChartColumn} label="Analytics" onClick={() => handleNavigation('analytics')} />
+        </div>
+  
+        <OptionsCard label="Manage Orders" onClick={() => handleNavigation('manageOrders')} />
+        <OptionsCard label="Add Product" onClick={() => handleNavigation('addproduct')} />
+        <OptionsCard label="Manage Products" onClick={() => handleNavigation('manageProducts')} />
+        <OptionsCard label="Manage Profile" onClick={() => handleNavigation('manageProfile')} />
+        <OptionsCard label="Logout" onClick={() => handleNavigation('logout')} />
+      </div> {/* End of Left Sidebar */}
+  
+      {/* Right Content Area - only visible on large screens */}
+      <div className='hidden lg:block w-2/3 p-4 overflow-y-auto h-full'>
         {renderPage()}
       </div>
-    </div>
+  
+    </div>  // Main flex container end
   );
 }
 

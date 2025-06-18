@@ -16,7 +16,7 @@ export default function Navbar(){
     const navigate = useNavigate();
 
     return (
-        <div className=" py-4 sm:py-6 px-4  ">
+        <div className=" fixed w-full z-50 py-4 mt-9 sm:py-6 px-4 bg-white ">
           {/* Top Section */}
           <div className="flex justify-between items-center">
             {/* Left icons */}
@@ -24,7 +24,7 @@ export default function Navbar(){
               {/* <div className="text-4xl block sm:hidden">
                 <IoReorderThreeOutline />
               </div> */}
-              <img className="cursor-pointer" src={logo} alt="GreenPlore" width={50} height={50} onClick={()=>{()=>{navigate('/')}}} />
+              <img className="cursor-pointer"  onClick={()=> navigate("/")} src={logo} alt="GreenPlore" width={50} height={50}  />
               <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div>
             </div>
     
@@ -38,7 +38,7 @@ export default function Navbar(){
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-600 text-white rounded-r-md hover:bg-green-700"
+                  className="px-4 py-2 bg-green-600 text-white rounded-r-md hover:bg-green-700 cursor-pointer "
                 >
                   <BsSearch/>
                 </button>

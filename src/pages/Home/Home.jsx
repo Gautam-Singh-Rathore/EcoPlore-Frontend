@@ -148,14 +148,14 @@ export const CategoryGridPage = () => {
 const Home = () => {
     return (
         <div className='bg-[#f7f9f7]' >
-            <Top/>
-            <Navbar/>
+            
+          
             <CategorySliderPage/>
             <CategoryGridPage/>
             <ImageSlider/>
               <ProductsPage />
               <ProductsPage />
-            <Footer/>
+
     
         </div>
       )

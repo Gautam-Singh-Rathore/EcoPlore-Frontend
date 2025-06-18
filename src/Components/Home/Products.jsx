@@ -17,7 +17,7 @@ import { useState } from 'react';
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
           {products[0]?.subCategoryName}
         </h2>
-        <button className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline">
+        <button className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline cursor-pointer">
           View All
         </button>
       </div>
@@ -32,7 +32,7 @@ import { useState } from 'react';
               {/* Heart icon */}
               <button
                 onClick={() => toggleWishlist(product.id)}
-                className="absolute  right-1"
+                className="absolute  right-1 cursor-pointer"
               >
                 {wishlist.includes(product.id) ? (
                   <Heart className="text-green-500" fill="green" size={18} />
