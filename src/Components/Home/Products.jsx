@@ -12,7 +12,7 @@ import { useState } from 'react';
     );
   };
   return (
-    <div className="px-1 md:px-10 py-6 bg-white">
+    <div className="px-2 md:px-10 py-6 bg-white">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
           {products[0]?.subCategoryName}
