@@ -18,6 +18,7 @@ import Wishlist from "../pages/Home/Wishlist";
 import SellerLogin from "../Components/Seller/SellerSignin";
 import SellerRegisterWizard from "../Components/Seller/SellerRegisterWizard"
 import SellerProfile from "../pages/Seller/SellerProfile";
+import ProductViewPage from "../pages/Products/ProductViewPage";
 
 
 
@@ -39,8 +40,8 @@ const myRoute = createBrowserRouter(
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
         <Route path="products" element={<ProductsPage />} />
-        <Route path="product" element={<ProductView />} />
-       
+        <Route path="productview" element={<ProductViewPage />} />
+        
       
       </Route>
     </>
