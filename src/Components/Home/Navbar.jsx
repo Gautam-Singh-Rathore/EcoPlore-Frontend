@@ -11,7 +11,7 @@ import { UserContext } from "../../context/UserContext";
 
 
 export default function Navbar(){
-    const {userId} = useContext(UserContext);
+    const {userId , userRole } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -62,7 +62,13 @@ export default function Navbar(){
                 Login
               </button>
                 ) : (
-                  <VscAccount className="hover:text-green-700 cursor-pointer lg:mx-2 "  onClick={()=>{navigate("/profile")}} />
+                  <VscAccount className="hover:text-green-700 cursor-pointer lg:mx-2 "  
+                  onClick={()=>{
+                    if(userRole=="CUSTOMER")
+                      navigate("/profile")
+                    else if(userRole=="SELLER")
+                      navigate("/seller-profile");
+                  }} />
                 )
                }
               

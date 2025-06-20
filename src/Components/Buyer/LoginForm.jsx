@@ -105,20 +105,20 @@ export function LoginForm() {
         </button> */}
 
         {/* Divider */}
-        <div className="flex items-center my-4">
+        {/* <div className="flex items-center my-4">
           <hr className="flex-grow border-green-300" />
           <span className="mx-2 text-green-500">or</span>
           <hr className="flex-grow border-green-300" />
-        </div>
+        </div> */}
 
         {/* Seller Login */}
-        <button
+        {/* <button
           onClick={() => navigate("/seller-login")}
           type="button"
           className="w-full flex items-center justify-center border cursor-pointer border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
         >
           Login as Seller
-        </button>
+        </button> */}
       </div>
       {
         isLoading && (

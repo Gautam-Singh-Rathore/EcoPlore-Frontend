@@ -39,7 +39,8 @@ const SellerRegisterWizard = () => {
         formData
       );
       console.log("✅ Registered successfully:", response.data);
-      alert("Seller registered!");
+      toast.success("Seller registered!");
+      navigate("/");
     } catch (error) {
       console.error("❌ Registration failed:", error);
       toast.error(error?.response?.data?.msg || "Registration failed." )
@@ -280,7 +281,7 @@ const SellerRegisterWizard = () => {
 
     {/* Seller Login */}
     <button
-      onClick={() => navigate("/seller-login")}
+      onClick={() => navigate("/login")}
       type="button"
       className="w-full flex items-center justify-center border cursor-pointer border-slate-300 text-green-700 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
     >

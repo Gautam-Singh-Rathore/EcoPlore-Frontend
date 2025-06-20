@@ -9,21 +9,10 @@ import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
   const navigate = useNavigate();
 
-  // Categories and Subcategories (Dummy Data)
-  const [categories] = useState([
-    { id: 1, name: "Personal Care" },
-    { id: 2, name: "Kitchen" },
-    { id: 3, name: "Home Decore" },
-    { id: 4, name: "Planters" },
-    { id: 5, name: "Fashion" },
-  ]);
+  // Categories and Subcategories
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-
-  const [subcategories] = useState([
-    { id: 1, name: "Mobile" },
-    { id: 2, name: "Laptop" },
-    { id: 3, name: "Camera" },
-  ]);
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
   // Product Form States
@@ -38,44 +27,76 @@ const AddProduct = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Fetch categories on mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axiosInstance.get("public/category/all");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Failed to load categories.");
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  // Fetch subcategories when a category is selected
+  useEffect(() => {
+    if (selectedCategory) {
+      const fetchSubcategories = async () => {
+        try {
+          const response = await axiosInstance.get(`public/category/${selectedCategory}/get`);
+          setSubcategories(response.data);
+        } catch (error) {
+          console.error("Error fetching subcategories:", error);
+          toast.error("Failed to load subcategories.");
+        }
+      };
+      fetchSubcategories();
+    } else {
+      setSubcategories([]); // Clear subcategories if no category is selected
+    }
+  }, [selectedCategory]);
+
   // Clean up generated URLs to prevent memory leaks
   useEffect(() => {
     return () => {
-      selectedImages.forEach(file => URL.revokeObjectURL(file.preview));
+      selectedImages.forEach((file) => URL.revokeObjectURL(file.preview));
     };
   }, [selectedImages]);
 
   const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml"];
+  const files = Array.from(e.target.files);
+  const validTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml"];
 
-    const validFiles = files.filter((file) => validTypes.includes(file.type));
-    const invalidFiles = files.filter((file) => !validTypes.includes(file.type));
+  const validFiles = files.filter((file) => validTypes.includes(file.type));
+  const invalidFiles = files.filter((file) => !validTypes.includes(file.type));
 
-    if (invalidFiles.length > 0) {
-      setError("Only SVG, PNG, JPG, or GIF files are allowed.");
-      toast.error("Invalid file type selected!");
-    } else {
-      setError("");
-    }
+  if (invalidFiles.length > 0) {
+    setError("Only SVG, PNG, JPG, or GIF files are allowed.");
+    toast.error("Invalid file type selected!");
+    return;
+  }
 
-    // Limit the number of files (optional)
-    if (validFiles.length > 5) {
-      toast.error("You can upload up to 5 images only.");
-      return;
-    }
+  // Append only up to 5 files
+  const totalFiles = [...selectedImages, ...validFiles];
+  if (totalFiles.length > 5) {
+    toast.error("You can upload up to 5 images only.");
+    return;
+  }
 
-    // Add preview URL to each file for display
-    const filesWithPreview = validFiles.map((file) => ({
-      ...file,
-      preview: URL.createObjectURL(file),
-    }));
+  const filesWithPreview = validFiles.map((file) => ({
+    ...file,
+    preview: URL.createObjectURL(file),
+  }));
 
-    setSelectedImages(filesWithPreview);
-  };
+  setSelectedImages((prev) => [...prev, ...filesWithPreview]);
+};
+
 
   const handleUpload = async () => {
-    if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory ) {
+    if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory) {
       toast.error("All fields are required!");
       return;
     }
@@ -87,6 +108,7 @@ const AddProduct = () => {
     setLoading(true);
 
     try {
+      console.log("Images uploaded started ....................................");
       const uploadedImageUrls = await Promise.all(
         selectedImages.map(async (file) => {
           const formData = new FormData();
@@ -108,6 +130,8 @@ const AddProduct = () => {
         return;
       }
 
+      console.log("Images uploaded ....................................");
+
       // Construct final product object
       const productData = {
         name,
@@ -119,8 +143,9 @@ const AddProduct = () => {
         categoryId: selectedCategory ? parseInt(selectedCategory) : null,
         subCategoryId: selectedSubcategory ? parseInt(selectedSubcategory) : null,
       };
+      console.log("API BODY :" + productData);
 
-      const response = await axiosInstance.post("/products", productData);
+      const response = await axiosInstance.post("/private/product/add", productData);
       toast.success("Product added successfully!");
       console.log(response.data);
 
@@ -148,67 +173,59 @@ const AddProduct = () => {
     updatedImages.splice(index, 1);
     setSelectedImages(updatedImages);
   };
-      
+
   return (
-    <div className=" w-full min-h-screen flex items-center justify-center bg-green-50  ">
-      <div className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] 2xl:w-[50%] mx-auto bg-white p-8 rounded-2xl shadow-lg relative py-6 sm:py-8 md:py-10 lg:py-12 ">
-        {/* Close Button (Non-functional placeholder) */}
+    <div className="w-full min-h-screen flex items-center justify-center bg-green-50">
+      <div className="w-full md:w-[80%] lg:w-[70%] xl:w-[60%] 2xl:w-[50%] mx-auto bg-white p-8 rounded-2xl shadow-lg relative py-6 sm:py-8 md:py-10 lg:py-12">
         <div className="absolute top-4 right-4 z-10">
           <button
             type="button"
             onClick={() => navigate("/seller-profile")}
-            className="text-black bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:outline-none rounded-full  text-sm p-3"
+            className="text-black bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:outline-none rounded-full text-sm p-3"
             aria-label="Close"
           >
             &#10005;
           </button>
         </div>
 
-        {/* Logo & Heading */}
         <div className="flex items-center justify-center mb-6">
           <img src={logo} alt="Logo" className="w-10 h-10 md:w-12 md:h-12 lg:h-14 lg:w-14 mr-2 cursor-pointer" />
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-700 ">Add Product</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-700">Add Product</h1>
         </div>
 
         {/* Form Fields */}
-        {[
-          { label: "Name", value: name, setValue: setName, type: "text", placeholder: "Enter Product Name" },
+        {[{ label: "Name", value: name, setValue: setName, type: "text", placeholder: "Enter Product Name" },
           { label: "Price", value: price, setValue: setPrice, type: "number", placeholder: "Enter Product Price" },
-          { label: "No of Units", value: units, setValue: setUnits, type: "number", placeholder: "Enter No of Units" },
-        ].map(({ label, value, setValue, type, placeholder }) => (
-          <div className="px-4 py-2" key={label}>
-            <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
-            <input
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              type={type}
-              placeholder={placeholder}
-              className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        ))}
+          { label: "No of Units", value: units, setValue: setUnits, type: "number", placeholder: "Enter No of Units" }].map(({ label, value, setValue, type, placeholder }) => (
+            <div className="px-4 py-2" key={label}>
+              <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
+              <input
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                type={type}
+                placeholder={placeholder}
+                className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
+          ))}
 
-        {/* Description */}
-        {[
-          { label: "Description", value: description, setValue: setDescription },
-          { label: "Details", value: details, setValue: setDetails },
-        ].map(({ label, value, setValue }) => (
-          <div className="px-4 py-2" key={label}>
-            <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
-            <textarea
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              rows={4}
-              placeholder={`Enter ${label} of Your Product`}
-              className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
-          </div>
-        ))}
+        {[{ label: "Description", value: description, setValue: setDescription },
+          { label: "Details", value: details, setValue: setDetails }].map(({ label, value, setValue }) => (
+            <div className="px-4 py-2" key={label}>
+              <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
+              <textarea
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                rows={4}
+                placeholder={`Enter ${label} of Your Product`}
+                className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
+          ))}
 
         {/* Category & Subcategory Dropdowns */}
         {[{ label: "Category", value: selectedCategory, setValue: setSelectedCategory, options: categories },
-          { label: "Subcategory", value: selectedSubcategory, setValue: setSelectedSubcategory, options: subcategories }]
-          .map(({ label, value, setValue, options }) => (
+          { label: "Subcategory", value: selectedSubcategory, setValue: setSelectedSubcategory, options: subcategories }].map(({ label, value, setValue, options }) => (
             <div className="px-4 py-2" key={label}>
               <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
               <select
