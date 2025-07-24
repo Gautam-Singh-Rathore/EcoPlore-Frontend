@@ -67,33 +67,56 @@ const AddProduct = () => {
   }, [selectedImages]);
 
   const handleFileChange = (e) => {
-  const files = Array.from(e.target.files);
-  const validTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml"];
+    const files = Array.from(e.target.files);
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/svg+xml"];
 
-  const validFiles = files.filter((file) => validTypes.includes(file.type));
-  const invalidFiles = files.filter((file) => !validTypes.includes(file.type));
+    const validFiles = files.filter((file) => validTypes.includes(file.type));
+    const invalidFiles = files.filter((file) => !validTypes.includes(file.type));
 
-  if (invalidFiles.length > 0) {
-    setError("Only SVG, PNG, JPG, or GIF files are allowed.");
-    toast.error("Invalid file type selected!");
-    return;
-  }
+    if (invalidFiles.length > 0) {
+      setError("Only SVG, PNG, JPG, or GIF files are allowed.");
+      toast.error("Invalid file type selected!");
+      return;
+    }
 
-  // Append only up to 5 files
-  const totalFiles = [...selectedImages, ...validFiles];
-  if (totalFiles.length > 5) {
-    toast.error("You can upload up to 5 images only.");
-    return;
-  }
+    // Append only up to 5 files
+    const totalFiles = [...selectedImages, ...validFiles];
+    if (totalFiles.length > 5) {
+      toast.error("You can upload up to 5 images only.");
+      return;
+    }
 
-  const filesWithPreview = validFiles.map((file) => ({
-    ...file,
-    preview: URL.createObjectURL(file),
-  }));
+    const filesWithPreview = validFiles.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
 
-  setSelectedImages((prev) => [...prev, ...filesWithPreview]);
-};
+    setSelectedImages((prev) => [...prev, ...filesWithPreview]);
+    setError("");
+  };
 
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "greenplore_unsigned");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dbkbync4n/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error(`Failed to upload image: ${file.name}`);
+      return null;
+    }
+  };
 
   const handleUpload = async () => {
     if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory) {
@@ -101,54 +124,41 @@ const AddProduct = () => {
       return;
     }
     if (selectedImages.length === 0) {
-      toast.error("Please select and upload images before submitting!");
+      toast.error("Please select at least one image!");
       return;
     }
 
     setLoading(true);
 
     try {
-      console.log("Images uploaded started ....................................");
-      const uploadedImageUrls = await Promise.all(
-        selectedImages.map(async (file) => {
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("upload_preset", "greenplore_unsigned");
-
-          const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/dbkbync4n/image/upload",
-            formData
-          );
-          return response.data.secure_url;
-        })
+      // Upload all images to Cloudinary
+      const uploadPromises = selectedImages.map((imageObj) => 
+        uploadImageToCloudinary(imageObj.file)
       );
- 
-      const successfulUploads = uploadedImageUrls.filter((url) => url !== null);
+
+      const uploadedImageUrls = await Promise.all(uploadPromises);
+      const successfulUploads = uploadedImageUrls.filter(url => url !== null);
 
       if (successfulUploads.length === 0) {
-        toast.error("Image upload failed!");
+        toast.error("Failed to upload all images. Please try again.");
         return;
       }
-     
-        console.log(successfulUploads)
-      console.log("Images uploaded ....................................");
 
       // Construct final product object
       const productData = {
         name,
         imageUrls: successfulUploads,
-        price: price ? parseFloat(price) : 0,
+        price: parseFloat(price),
         description,
-        noOfUnits: units ? parseInt(units) : 0,
+        noOfUnits: parseInt(units),
         details,
-        categoryId: selectedCategory ? parseInt(selectedCategory) : null,
-        subCategoryId: selectedSubcategory ? parseInt(selectedSubcategory) : null,
+        categoryId: parseInt(selectedCategory),
+        subCategoryId: parseInt(selectedSubcategory),
       };
-      console.log("API BODY :" + productData);
 
+      // Submit product data to your backend
       const response = await axiosInstance.post("/private/product/add", productData);
       toast.success("Product added successfully!");
-      console.log(response.data);
 
       // Reset Form
       setName("");
@@ -161,7 +171,7 @@ const AddProduct = () => {
       setSelectedImages([]);
     } catch (error) {
       console.error("Error adding product:", error);
-      toast.error("Failed to add product.");
+      toast.error(error.response?.data?.message || "Failed to add product.");
     } finally {
       setLoading(false);
     }
@@ -286,7 +296,7 @@ const AddProduct = () => {
 
         <button
           onClick={handleUpload}
-          type="submit"
+          type="button"
           disabled={loading}
           className={`w-full bg-green-600 cursor-pointer text-white py-3 mt-6 rounded-lg hover:bg-green-700 transition duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >

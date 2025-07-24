@@ -5,7 +5,6 @@ import ImageSlider from '../../Components/Home/ImageSlider';
 import { CategoryGrid,CategorySlider } from '../../Components/Home/Catagories';
 import Products from '../../Components/Home/Products';
 import Footer from '../../Components/Home/Footer';
-
 import PC from "../../assets/Images/Category Images/Personal Care/PC 3.jpeg"
 import HD from "../../assets/Images/Category Images/Home Decor/HD 1.jpeg"
 import IP from "../../assets/Images/Category Images/Indoor Plant/IP 3.jpeg"
@@ -134,9 +133,10 @@ export const CategoryGridPage = () => {
   };
 
 
+
   // Products
 
-  export function ProductsPage() {
+  export function ProductsPage1() {
     return (
       <div>
         <Products  products={sampleProducts} />
@@ -144,6 +144,7 @@ export const CategoryGridPage = () => {
     );
   }
 
+  
 
 const Home = () => {
     return (
@@ -153,10 +154,8 @@ const Home = () => {
             <CategorySliderPage/>
             <CategoryGridPage/>
             <ImageSlider/>
-              <ProductsPage />
-              <ProductsPage />
-
-    
+              <ProductsPage1 />
+      
         </div>
       )
 }
