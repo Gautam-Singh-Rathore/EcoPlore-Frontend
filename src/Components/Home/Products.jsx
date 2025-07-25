@@ -1,10 +1,12 @@
 import React from 'react'
 import { Heart } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
   
   export default function Products({ products }) {
     const [wishlist, setWishlist] = useState([]);
+    const navigate = useNavigate();
 
   const toggleWishlist = (id) => {
     setWishlist((prev) =>
@@ -26,7 +28,8 @@ import { useState } from 'react';
         {products.map((product) => (
           <div
             key={product.id}
-            className="flex-shrink-0 w-36 sm:w-44 md:w-52 bg-white rounded-lg text-center pb-6 relative  hover:shadow-md transition duration-300 p-2"
+            className="flex-shrink-0 cursor-pointer w-36 sm:w-44 md:w-52 bg-white rounded-lg text-center pb-6 relative  hover:shadow-lg  duration-300 p-2 hover:scale-105 transition-all"
+            onClick={()=> {navigate(`/product/${product.id}`)}}
           >
             <div className="relative">
               {/* Heart icon */}

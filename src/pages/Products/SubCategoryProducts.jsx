@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import IP from "../../assets/Images/Category Images/Indoor Plant/IP 3.jpeg";
 import ProductCard from "../../Components/Product/ProductCard";
 import MyLoader from "../../utils/MyLoader";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 
-const ProductsPage = () => {
+const SubCategoryProducts = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const fetchData = async() => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(`public/product/category/${id}`);
+      const response = await axiosInstance.get(`public/product/sub_category/${id}`);
       if (response.status == 200) {
         setData(response.data);
         console.log(data);
@@ -41,4 +41,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default SubCategoryProducts;

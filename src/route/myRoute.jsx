@@ -12,7 +12,7 @@ import ProductView from "../Components/Product/ProductView";
 import { LoginForm } from "../Components/Buyer/LoginForm";
 import { RegisterForm } from "../Components/Buyer/RegisterForm";
 import Profile from "../pages/Home/Profile";
-
+import SubCategoryProducts from "../pages/Products/SubCategoryProducts";
 import Cart from "../pages/Home/Cart";
 import Wishlist from "../pages/Home/Wishlist";
 import SellerLogin from "../Components/Seller/SellerSignin";
@@ -39,8 +39,10 @@ const myRoute = createBrowserRouter(
       {/* Routes WITH Header & Footer via App */}
       <Route path="/" element={<App />}>
         <Route index element={<Home />} />
-        <Route path="products" element={<ProductsPage />} />
-        <Route path="productview" element={<ProductViewPage />} />
+        <Route path="products/category/:id" element={<ProductsPage />} />
+        <Route path="products/sub-category/:id" element={<SubCategoryProducts />} />
+        
+        <Route path="product/:id" element={<ProductViewPage />} />
         
       
       </Route>

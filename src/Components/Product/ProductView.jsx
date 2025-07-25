@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 const ProductView = ({ product }) => {
-  const [selectedImage, setSelectedImage] = useState(product.images?.[0] || '');
+  const [selectedImage, setSelectedImage] = useState(product.images?.[0] || null);
 
   if (!product.images || product.images.length === 0) {
     return <p className="text-gray-500">No images available</p>;

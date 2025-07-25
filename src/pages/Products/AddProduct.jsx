@@ -119,10 +119,10 @@ const AddProduct = () => {
   };
 
   const handleUpload = async () => {
-    // if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory) {
-    //   toast.error("All fields are required!");
-    //   return;
-    // }
+    if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory) {
+      toast.error("All fields are required!");
+      return;
+    }
     if (selectedImages.length === 0) {
       toast.error("Please select at least one image!");
       return;

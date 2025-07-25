@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Heart } from 'lucide-react'; // Assuming you use lucide-react icons
+import { Heart } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const [wishlist, setWishlist] = useState([]);
+  const navigate = useNavigate();
 
   const toggleWishlist = (id) => {
     setWishlist((prev) =>
@@ -12,7 +14,8 @@ const ProductCard = ({ product }) => {
 
   return (
     <div
-      className="w-full md:w-[80%] lg:w-[60%] mx-auto pr-2 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px]  border-gray-200 relative   "
+      className="w-full md:w-[80%] lg:w-[60%] mx-auto pr-2 pt-6 flex justify-between items-start gap-4 sm:flex-nowrap border-t-[1px]  border-gray-200 relative cursor-pointer hover:scale-105 transition-all hover:bg-gray-100 p-3 rounded-lg "
+      onClick={()=>{navigate(`/product/${product.id}`)}}
     >
       {/* Wishlist Icon in Top Right */}
       <button
