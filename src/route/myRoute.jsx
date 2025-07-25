@@ -19,7 +19,7 @@ import SellerLogin from "../Components/Seller/SellerSignin";
 import SellerRegisterWizard from "../Components/Seller/SellerRegisterWizard"
 import SellerProfile from "../pages/Seller/SellerProfile";
 import ProductViewPage from "../pages/Products/ProductViewPage";
-import AddProduct1 from "../pages/Products/AddProduct1";
+import AddProduct from "../pages/Products/AddProduct";
 
 
 const myRoute = createBrowserRouter(
@@ -32,7 +32,7 @@ const myRoute = createBrowserRouter(
       <Route path="/register-seller" element={<SellerRegisterWizard />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/addproduct" element={<AddProduct1 />} />
+      <Route path="/addproduct" element={<AddProduct/>} />
       <Route path="/seller-profile" element={<SellerProfile />} />
       <Route path="/profile" element={<Profile />} />
 
