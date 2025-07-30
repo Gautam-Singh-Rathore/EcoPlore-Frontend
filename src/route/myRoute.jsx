@@ -28,7 +28,7 @@ const myRoute = createBrowserRouter(
       {/* Routes WITHOUT Header & Footer */}
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
-      {/* <Route path="/seller-login" element={<SellerLogin />} /> */}
+      <Route path="/seller-login" element={<SellerLogin />} />
       <Route path="/register-seller" element={<SellerRegisterWizard />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/wishlist" element={<Wishlist />} />

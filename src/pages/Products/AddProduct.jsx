@@ -21,6 +21,10 @@ const AddProduct = () => {
   const [description, setDescription] = useState("");
   const [units, setUnits] = useState("");
   const [details, setDetails] = useState("");
+  const [height, setHeight] = useState("");
+  const [length, setLength] = useState("");
+  const [width, setWidth] = useState("");
+  const [weight, setWeight] = useState("");
 
   // Image Upload States
   const [selectedImages, setSelectedImages] = useState([]);
@@ -119,7 +123,7 @@ const AddProduct = () => {
   };
 
   const handleUpload = async () => {
-    if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory) {
+    if (!name || !price || !description || !units || !details || !selectedCategory || !selectedSubcategory || !height || !width || !length || !weight) {
       toast.error("All fields are required!");
       return;
     }
@@ -154,6 +158,10 @@ const AddProduct = () => {
         details,
         categoryId: parseInt(selectedCategory),
         subCategoryId: parseInt(selectedSubcategory),
+        height : parseFloat(height),
+        length : parseFloat(length),
+        width : parseFloat(width),
+        weight : parseFloat(weight)
       };
 
       // Submit product data to your backend
@@ -207,7 +215,12 @@ const AddProduct = () => {
         {/* Form Fields */}
         {[{ label: "Name", value: name, setValue: setName, type: "text", placeholder: "Enter Product Name" },
           { label: "Price", value: price, setValue: setPrice, type: "number", placeholder: "Enter Product Price" },
-          { label: "No of Units", value: units, setValue: setUnits, type: "number", placeholder: "Enter No of Units" }].map(({ label, value, setValue, type, placeholder }) => (
+          { label: "No of Units", value: units, setValue: setUnits, type: "number", placeholder: "Enter No of Units" },
+           { label: "Height", value: height, setValue: setHeight, type: "number", placeholder: "Enter Product Height in cm" },
+            { label: "Width", value: width, setValue: setWidth, type: "number", placeholder: "Enter Product Width in cm" },
+            { label: "Length", value: length, setValue: setLength, type: "number", placeholder: "Enter Product Length in cm" },
+            { label: "Weight", value: weight, setValue: setWeight, type: "number", placeholder: "Enter Product Weight in gm" },
+        ].map(({ label, value, setValue, type, placeholder }) => (
             <div className="px-4 py-2" key={label}>
               <label className="block mb-1 text-xl font-bold text-slate-700">{label}</label>
               <input

@@ -22,9 +22,10 @@ const Header = ({ heading }) => {
 
       {/* Logo */}
       <img
+        onClick={()=>{navigate("/")}}
         src={logo}
         alt="Logo"
-        className="w-10 h-10 sm:mx-3 md:w-12 md:h-12"
+        className="w-10 h-10 sm:mx-3 md:w-12 md:h-12 cursor-pointer"
       />
 
       {/* Heading */}
