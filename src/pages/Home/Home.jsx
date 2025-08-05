@@ -2,6 +2,7 @@
 import ImageSlider from '../../Components/Home/ImageSlider';
 import Products from '../../Components/Home/Products';
 import { CategoriesContainer } from './CategoriesContainer';
+import CategoryProducts from './CategoryProducts';
 
 
 
@@ -67,6 +68,7 @@ const sampleProducts = [
   // Products
 
   export function ProductsPage1() {
+    
     return (
       <div>
         <Products  products={sampleProducts} />
@@ -82,7 +84,7 @@ const Home = () => {
             
             <CategoriesContainer/>
             <ImageSlider/>
-              <ProductsPage1 />
+             <CategoryProducts/>
       
         </div>
       )

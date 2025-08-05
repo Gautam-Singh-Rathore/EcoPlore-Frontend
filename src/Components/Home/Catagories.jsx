@@ -2,13 +2,18 @@ import { FaChevronDown } from 'react-icons/fa';
 import axiosInstance from '../../api/axiosInstance';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 // for Mobile
 
+
   export const CategorySlider = ({category}) => {
+    const navigate = useNavigate();
+
     return (
       <div
+      onClick={navigate(`products/category/${category.id}`)}
       key={category.index}
       className="flex flex-col items-center justify-center min-w-[80px] text-center"
     >
@@ -26,6 +31,8 @@ import toast from 'react-hot-toast';
 // for large screens
   export const CategoryGrid = ({ category }) => {
   const [subcategories, setSubcategories] = useState([]);
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const getSubcategories = async () => {
@@ -53,6 +60,7 @@ import toast from 'react-hot-toast';
         {subcategories.length > 0 ? (
           subcategories.map((sub) => (
             <button
+            onClick={navigate(`products/sub-category/${sub.id}`)}
               key={sub.id}
               className="px-4 py-2 text-left hover:bg-[#f7f9f7] text-sm cursor-pointer text-gray-700"
             >
