@@ -9,11 +9,11 @@ const CategoryProducts = () => {
   useEffect(() => {
     const fetchCategoriesAndProducts = async () => {
       try {
-        // 1. First fetch categories
+        // Fetching categories
         const categoriesRes = await axiosInstance.get("public/category/all");
         const categories = categoriesRes.data;
 
-        // 2. Then fetch products for each category
+        //  products for each category
         const results = [];
         for (const category of categories) {
           const productRes = await axiosInstance.get(`/products?categoryId=${category.id}`);
@@ -31,7 +31,7 @@ const CategoryProducts = () => {
     };
 
     fetchCategoriesAndProducts();
-  }, []); // Empty dependency array since we only want this to run once on mount
+  }, []); 
 
   return (
     <div>
