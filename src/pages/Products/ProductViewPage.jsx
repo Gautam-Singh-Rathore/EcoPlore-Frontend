@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ProductView from '../../Components/Product/ProductView'
-import Products from '../../Components/Home/Products';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
+import SimilarProducts from '../../Components/Home/SimilarProducts';
 
 
 const ProductViewPage = () => {
@@ -34,6 +34,7 @@ const ProductViewPage = () => {
         setSimilarProducts(response.data);
       }
     } catch (error) {
+      console.log(error);
       return <div>No Product Found</div>;
     }
   }
@@ -49,14 +50,13 @@ const ProductViewPage = () => {
       <ProductView product={productData} />
       </div>
          {/* Similar Products */}
-         <Products products={similarProducts} />
+         <SimilarProducts products={similarProducts} />
     </div>
 
   )
 }
 
 export default ProductViewPage
-
 
 
 

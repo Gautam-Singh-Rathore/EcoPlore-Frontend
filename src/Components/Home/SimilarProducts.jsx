@@ -1,34 +1,15 @@
-import React, { useEffect } from 'react'
-import { Heart } from 'lucide-react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance';
 
   
-  export default function Products({ cat }) {
+  export default function SimilarProducts({ products }) {
+   
     const navigate = useNavigate();
-    const [products , setProducts] = useState([]);
 
-    useEffect(()=>{
-      const getProducts = async()=>{
-           try {
-                const response = await axiosInstance.get(`/public/product/category/${cat.id}`);
-                if(response.status == 200) {
-                  setProducts(response.data)
-                }
-           } catch (error) {
-            console.log(error);
-           }
-      }
-
-      getProducts();
-    } , [])
-    
   return (
     <div className="px-2 md:px-10 py-6 bg-white">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
-          {cat.name}
+          {products[0]?.subCategoryName}
         </h2>
         <button className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline cursor-pointer">
           View All
@@ -43,6 +24,8 @@ import axiosInstance from '../../api/axiosInstance';
             onClick={()=> {navigate(`/product/${product.id}`)}}
           >
             <div className="relative">
+              
+
               {/* Product Image */}
               <img
                 src={product.imageUrl}

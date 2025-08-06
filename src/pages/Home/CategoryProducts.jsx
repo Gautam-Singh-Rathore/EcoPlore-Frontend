@@ -4,45 +4,35 @@ import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 
 const CategoryProducts = () => {
-  const [productsByCategory, setProductsByCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchCategoriesAndProducts = async () => {
+    const fetchCategories = async () => {
       try {
         // Fetching categories
         const categoriesRes = await axiosInstance.get("public/category/all");
-        const categories = categoriesRes.data;
-
-        //  products for each category
-        const results = [];
-        for (const category of categories) {
-          const productRes = await axiosInstance.get(`/products?categoryId=${category.id}`);
-          results.push({
-            ...category,
-            products: productRes.data
-          });
+        if (categoriesRes.status == 200) {
+          setCategories(categoriesRes.data);
         }
-        
-        setProductsByCategory(results);
       } catch (error) {
         console.error(error);
         toast.error("Failed to get Categories");
       }
     };
 
-    fetchCategoriesAndProducts();
-  }, []); 
+    fetchCategories();
+  }, []);
 
   return (
     <div>
-      {productsByCategory.map(category => (
-        <Products 
-          key={category.id}
-          products={category.products}
-        />
-      ))}
+      {/* {productsByCategory.map((category) => (
+        <Products key={category.id} products={category.products} />
+      ))} */}
+      {categories.map((cat)=>{
+        <Products key={cat.id} category={cat}/>
+      })}
     </div>
-  )
-}
+  );
+};
 
 export default CategoryProducts;

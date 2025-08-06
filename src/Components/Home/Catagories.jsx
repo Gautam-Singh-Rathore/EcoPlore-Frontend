@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
     return (
       <div
-      onClick={navigate(`products/category/${category.id}`)}
+      onClick={()=>{navigate(`products/category/${category.id}`)}}
       key={category.index}
       className="flex flex-col items-center justify-center min-w-[80px] text-center"
     >
@@ -60,7 +60,7 @@ import { useNavigate } from 'react-router-dom';
         {subcategories.length > 0 ? (
           subcategories.map((sub) => (
             <button
-            onClick={navigate(`products/sub-category/${sub.id}`)}
+            onClick={()=>{navigate(`products/sub-category/${sub.id}`)}}
               key={sub.id}
               className="px-4 py-2 text-left hover:bg-[#f7f9f7] text-sm cursor-pointer text-gray-700"
             >
