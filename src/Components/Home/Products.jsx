@@ -27,7 +27,7 @@ import axiosInstance from '../../api/axiosInstance';
   return (
     <div className="px-2 md:px-10 py-6 bg-white">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
+        <h2 className="text-[22px]  font-semibold">
           {cat.name}
         </h2>
         <button className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline cursor-pointer">

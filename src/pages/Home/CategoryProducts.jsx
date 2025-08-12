@@ -10,9 +10,9 @@ const CategoryProducts = () => {
     const fetchCategories = async () => {
       try {
         // Fetching categories
-        const categoriesRes = await axiosInstance.get("public/category/all");
-        if (categoriesRes.status == 200) {
-          setCategories(categoriesRes.data);
+        const response = await axiosInstance.get("public/category/all");
+        if (response.status == 200) {
+          setCategories(response.data);
         }
       } catch (error) {
         console.error(error);
@@ -21,16 +21,14 @@ const CategoryProducts = () => {
     };
 
     fetchCategories();
+
   }, []);
 
   return (
     <div>
-      {/* {productsByCategory.map((category) => (
-        <Products key={category.id} products={category.products} />
-      ))} */}
-      {categories.map((cat)=>{
-        <Products key={cat.id} category={cat}/>
-      })}
+      {categories.map((cat)=>(
+        <Products key={cat.id} cat={cat}/>
+      ))}
     </div>
   );
 };
