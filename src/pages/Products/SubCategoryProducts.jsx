@@ -18,6 +18,7 @@ const SubCategoryProducts = () => {
         console.log(data);
       }
     } catch (error) {
+      console.error("Error fetching products:", error);
       return <div>No Product Found</div>;
     } finally {
       setIsLoading(false);
@@ -26,10 +27,22 @@ const SubCategoryProducts = () => {
 
   useEffect(()=>{
     fetchData();
-  },[]);
+  },[id]);
 
-  if(data.length==0){
-    <div>No Product Found</div>;
+  if(isLoading){
+    return (
+      <div>
+        <MyLoader/>
+      </div>
+    )
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="w-full text-center py-10 text-gray-500">
+        No Product Found
+      </div>
+    );
   }
 
   return (

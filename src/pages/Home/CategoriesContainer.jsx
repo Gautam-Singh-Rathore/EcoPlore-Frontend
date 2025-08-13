@@ -20,7 +20,7 @@ export const CategoriesContainer = () => {
         }
       } catch (error) {
         console.error(error);
-        toast.error("Failed to get Categories");
+        
       }
     };
     fetchCategories();

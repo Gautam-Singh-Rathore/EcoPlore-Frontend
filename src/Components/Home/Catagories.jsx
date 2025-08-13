@@ -1,7 +1,6 @@
 import { FaChevronDown } from 'react-icons/fa';
 import axiosInstance from '../../api/axiosInstance';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -43,7 +42,7 @@ import { useNavigate } from 'react-router-dom';
         }
       } catch (error) {
         console.error("Subcategory fetch error:", error);
-        toast.error("Failed to get Subcategories!");
+        
       }
     };
     getSubcategories();

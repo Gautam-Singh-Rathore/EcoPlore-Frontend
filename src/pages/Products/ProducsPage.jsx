@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import IP from "../../assets/Images/Category Images/Indoor Plant/IP 3.jpeg";
 import ProductCard from "../../Components/Product/ProductCard";
 import MyLoader from "../../utils/MyLoader";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 
 const ProductsPage = () => {
@@ -18,6 +18,7 @@ const ProductsPage = () => {
         console.log(data);
       }
     } catch (error) {
+       console.error("Error fetching products:", error);
       return <div>No Product Found</div>;
     } finally {
       setIsLoading(false);
@@ -26,10 +27,22 @@ const ProductsPage = () => {
 
   useEffect(()=>{
     fetchData();
-  },[]);
+  },[id]);
 
-  if(data.length==0){
-    <div>No Product Found</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-10">
+        <MyLoader />
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="w-full text-center py-10 text-gray-500">
+        No Product Found
+      </div>
+    );
   }
 
   return (

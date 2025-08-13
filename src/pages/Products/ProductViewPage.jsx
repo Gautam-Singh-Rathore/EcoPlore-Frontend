@@ -3,6 +3,7 @@ import ProductView from '../../Components/Product/ProductView'
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 import SimilarProducts from '../../Components/Home/SimilarProducts';
+import MyLoader from '../../utils/MyLoader';
 
 
 const ProductViewPage = () => {
@@ -21,38 +22,54 @@ const ProductViewPage = () => {
       }
 
     }catch(error){
+        console.error("Error fetching products:", error);
       return <div>No Product Found</div>;
+
     }finally{
       setIsLoading(false);
     }
   }
 
+  console.log(productData)
   const fetchSimilarProducstData = async(subCategoryId)=>{
     try {
       const response = await axiosInstance.get(`public/product/sub_category/${subCategoryId}`);
       if (response.status == 200) {
-        setSimilarProducts(response.data);
+
+        const filtered = response.data.filter(item => item.id !== id);
+        setSimilarProducts(filtered);
       }
     } catch (error) {
       console.log(error);
       return <div>No Product Found</div>;
     }
   }
-
+  
  useEffect(()=>{
   fetchProductData();
- })
+ },[id])
 
-    
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-10">
+        <MyLoader />
+      </div>
+    );
+  }
+   
+  
+  
+   
   return (
-    <div>
+    
         <div className="p-4 pb-3 lg:pb-12">
       <ProductView product={productData} />
-      </div>
-         {/* Similar Products */}
-         <SimilarProducts products={similarProducts} />
-    </div>
 
+     {similarProducts.length > 0 && (
+       <SimilarProducts products={similarProducts} />
+     )}
+      </div>
+        
   )
 }
 

@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+
 import { Heart } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-  const [wishlist, setWishlist] = useState([]);
+  
   const navigate = useNavigate();
 
-  const toggleWishlist = (id) => {
-    setWishlist((prev) =>
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-    );
-  };
+  
 
   return (
     <div
@@ -18,17 +14,7 @@ const ProductCard = ({ product }) => {
       onClick={()=>{navigate(`/product/${product.id}`)}}
     >
       {/* Wishlist Icon in Top Right */}
-      <button
-        onClick={() => toggleWishlist(product.id)}
-        className="absolute top-2 right-4 sm:right-12 "
-      >
-        {wishlist.includes(product.id) ? (
-          <Heart className="text-green-500" fill="green" size={22} />
-        ) : (
-          <Heart className="text-gray-400" size={22} />
-        )}
-      </button>
-
+      
       {/* Product Image */}
       <div className="flex-shrink-0 w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw]">
   <img

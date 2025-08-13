@@ -24,13 +24,21 @@ import axiosInstance from '../../api/axiosInstance';
       getProducts();
     } , [])
     
+if(products.length == 0){
+  return (
+    <div></div>
+  )
+}
+
   return (
     <div className="px-2 md:px-10 py-6 bg-white">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-[22px]  font-semibold">
           {cat.name}
         </h2>
-        <button className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline cursor-pointer">
+        <button 
+         onClick={()=>{navigate(`products/category/${cat.id}`)}}
+        className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline cursor-pointer">
           View All
         </button>
       </div>
