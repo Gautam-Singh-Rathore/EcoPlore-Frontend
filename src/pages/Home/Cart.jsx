@@ -1,80 +1,112 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CartCard from '../../Components/CartCard';
 import Header from '../../Components/Home/Header';
+import MyLoader from '../../utils/MyLoader';
+import axiosInstance from '../../api/axiosInstance';
+import toast from 'react-hot-toast';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: 'Wireless Headphones',
-      category: 'Electronics',
-      price: 2999,
-      description: 'High quality wireless headphones with noise cancellation.',
-      image: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
-      quantity: 1,
-    },
-    {
-      id: 2,
-      title: 'Smart Watch',
-      category: 'Wearables',
-      price: 4999,
-      description: 'Feature-packed smartwatch with health tracking.',
-      image: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
-      quantity: 1,
-    },
-    {
-      id: 3,
-      title: 'Bluetooth Speaker',
-      category: 'Audio',
-      price: 1999,
-      description: 'Portable Bluetooth speaker with deep bass.',
-      image: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
-      quantity: 1,
-    },
-    {
-      id: 4,
-      title: 'Gaming Mouse',
-      category: 'Accessories',
-      price: 1499,
-      description: 'Ergonomic gaming mouse with RGB lighting.',
-      image: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
-      quantity: 1,
-    },
-    {
-      id: 5,
-      title: 'Laptop Stand',
-      category: 'Office Supplies',
-      price: 999,
-      description: 'Adjustable aluminum laptop stand for better posture.',
-      image: 'https://5.imimg.com/data5/SELLER/Default/2021/4/XM/RR/NM/122175801/oneplus9-1-500x500.jpg',
-      quantity: 1,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoading,setIsLoading] = useState(false);
+ 
 
   // Increase Quantity
-  const handleIncrease = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  const handleIncrease = async (id,itemQuantity) => {
+    setIsLoading(true);
+    try {
+        const response = await axiosInstance.post(`/private/cart/edit`,{
+          id : id,
+          quantity : itemQuantity+1
+        })
+        if(response.status == 200){
+          toast.success(`Item Quantity Updated Successfully`);
+          getCartItems();
+        }
+    } catch (error) {
+      toast.error(error?.response?.data?.msg || "Failed to increase item quantity");
+       console.error("Error in Increasing Cart Item Quantity",error);
+    } 
+    finally{
+      setIsLoading(false);
+    }
   };
 
   // Decrease Quantity (minimum 1)
-  const handleDecrease = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
-          : item
-      )
-    );
+  const handleDecrease = async (id,itemQuantity,cartId) => {
+   setIsLoading(true);
+   if(itemQuantity <=1){
+     return handleRemove(cartId);
+   }
+   try {
+        const response = await axiosInstance.post(`/private/cart/edit`,{
+          id : id,
+          quantity : itemQuantity-1 
+        })
+        if(response.status == 200){
+          toast.success(`Item Quantity Updated Successfully`);
+          getCartItems();
+        }
+   } catch (error) {
+      console.error("Error in Decreasing Cart Item Quantity",error);
+   }finally{
+    setIsLoading(false);
+   }
   };
 
   // Remove Item
-  const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleRemove = async (cartid) => {
+    setIsLoading(true);
+    try {
+          const response = await axiosInstance.delete(`/private/cart/remove/${cartid}`);
+          if(response.status == 200){
+            toast.success("Item Removed Successfully");
+            getCartItems();
+          }
+    } catch (error) {
+        console.error("Error in Removing Cart Item",error);
+    }
+    finally{
+      setIsLoading(false);
+    }
   };
+
+   const getCartItems = async ()=>{
+     setIsLoading(true);
+     try {
+           const response = await axiosInstance.get(`/private/cart/get`);
+           if(response.status == 200){
+             setCartItems(response.data);
+           }
+     } catch (error) {
+       console.error("Error in Fetching Cart Items ",error);
+     }
+     finally{
+      setIsLoading(false);
+     }
+   }
+
+useEffect(()=>{
+   getCartItems();
+},[]);
+
+   if(isLoading){
+    return (
+      <MyLoader/>
+    )
+   }
+
+   if(cartItems.length == 0){
+  
+        return (
+            <div className="w-full text-center py-10 text-gray-500">
+              <div className='mb-12'>
+                      <Header  heading="Cart"/>
+                      </div>
+             <div ></div>
+              No Product Found
+            </div>
+          );
+   }
 
   return (
     <div >
@@ -84,12 +116,12 @@ const Cart = () => {
       <div >
       {cartItems.map((product) => (
         <CartCard
-          key={product.id}
+          key={product.productId}
           product={product}
           quantity={product.quantity}
-          onIncrease={() => handleIncrease(product.id)}
-          onDecrease={() => handleDecrease(product.id)}
-          onRemove={() => handleRemove(product.id)}
+          onIncrease={() => handleIncrease(product.productId,product.quantity)}
+          onDecrease={() => handleDecrease(product.productId,product.quantity,product.cartItemId)}
+          onRemove={() => handleRemove(product.cartItemId)}
         />
       ))}
       </div>

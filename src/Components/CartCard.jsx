@@ -1,16 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
+  const navigate = useNavigate();
+
   return (
     <div
-      key={product.id}
-      className="w-full  lg:w-[80%] xl:w-[70%] 2xl:w-[60%] mx-auto p-4 pt-6 flex justify-center items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200"
+
+      key={product.productId}
+      className="w-full  lg:w-[80%] xl:w-[70%] 2xl:w-[60%] mx-auto p-4 pt-6 flex justify-center items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200 "
     >
       {/* Product Image */}
-      <div className="flex w-[20vw]">
+      <div 
+        onClick={()=>{navigate(`/product/${product.productId}`)}}
+      className="flex w-[20vw] cursor-pointer">
         <img
-          src={product.image}
-          alt={product.title}
+          src={product.imageUrls}
+          alt={product.productName}
           className="w-40 sm:w-40 md:w-60 rounded-xl object-cover"
         />
       </div>
@@ -18,13 +24,13 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
       {/* Product Details */}
       <div className="flex flex-col gap-2 flex-grow w-[60vw]">
         <h2 className="text-base sm:text-lg md:text-xl font-semibold">
-          {product.title}
+          {product.productName}
         </h2>
-        <p className="text-gray-500">{product.category}</p>
+        {/* <p className="text-gray-500">{product.category}</p> */}
         <div className="text-xl sm:text-2xl font-bold text-gray-900">
           ₹{product.price}
         </div>
-        <div className="line-clamp-4">{product.description}</div>
+        {/* <div className="line-clamp-4">{product.description}</div> */}
 
         {/* Quantity and Remove Buttons */}
         <div className="flex justify-between items-center mt-4">
