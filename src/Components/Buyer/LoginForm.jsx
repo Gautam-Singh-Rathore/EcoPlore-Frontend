@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logo from "../../assets/Images/logo.png";
 import toast from 'react-hot-toast';
 import axiosInstance from '../../api/axiosInstance';
 import MyLoader from '../../utils/MyLoader';
+import { UserContext } from '../../context/UserContext';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const [isLoading , setIsLoading] = useState(false);
+  const {setIsLoggedIn} = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ export function LoginForm() {
       
       setEmail('');
       setPassword('');
+      setIsLoggedIn(true);
       navigate('/');
     } catch (error) {
       

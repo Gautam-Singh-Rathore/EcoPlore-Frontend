@@ -26,7 +26,7 @@ export const UserProvider = ({children})=>{
 
     useEffect(()=>{
         fetchUser();
-    },[])
+    },[isLoggedIn])
 
     const value = {userId , userRole, isLoggedIn , setIsLoggedIn}
     console.log(value);
