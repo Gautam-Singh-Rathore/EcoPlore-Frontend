@@ -17,7 +17,7 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
         <img
           src={product.imageUrls}
           alt={product.productName}
-          className="w-40 sm:w-40 md:w-60 rounded-xl object-cover"
+          className="w-40 sm:w-40 md:w-45 rounded-xl object-cover"
         />
       </div>
 

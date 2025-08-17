@@ -57,7 +57,7 @@ if(wishlistItems.length == 0){
                 <Header  heading="Wishlist"/>
                 </div>
        <div ></div>
-        No Product Found
+       Your Wishlist is Empty
       </div>
     );
 }

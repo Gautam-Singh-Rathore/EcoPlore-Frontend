@@ -4,6 +4,7 @@ import Header from "../../Components/Home/Header";
 import MyLoader from "../../utils/MyLoader";
 import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
+import AddressSelector from "./Address";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -100,7 +101,7 @@ const Cart = () => {
           <Header heading="Cart" />
         </div>
         <div></div>
-        No Product Found
+        Your Cart is Empty
       </div>
     );
   }
@@ -111,6 +112,7 @@ const Cart = () => {
         <Header heading="Cart" />
       </div>
       <div>
+        <div><AddressSelector/></div>
         {/* {cartItems.map((product) => (
         <CartCard
           key={product.productId}
@@ -141,21 +143,31 @@ const Cart = () => {
         ))}
 
         {/* Total Price and Checkout Button */}
-        <div className="w-full flex flex-col items-center mt-8">
-          <div className="text-xl sm:text-2xl font-semibold mb-4">
-            Total: ₹
-            {cartItems.reduce(
-              (acc, item) => acc + item.price * item.quantity,
-              0
-            )}
-          </div>
-          <button
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-            onClick={() => alert("Proceeding to checkout...")} // replace with actual logic later
-          >
-            Checkout
-          </button>
-        </div>
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center py-4 md:py-5">
+      {/* Total price on left */}
+      <div className="text-xl sm:text-2xl font-bold text-gray-800">
+        Total: ₹
+        {cartItems.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+        ).toLocaleString('en-IN')}
+      </div>
+      
+      {/* Checkout button on right */}
+      <button
+        className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
+        onClick={() => alert("Proceeding to checkout...")}
+      >
+        Checkout
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );
