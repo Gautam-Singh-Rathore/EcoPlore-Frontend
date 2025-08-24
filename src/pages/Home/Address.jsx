@@ -10,7 +10,7 @@ import {
 import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 
-const AddressSelector = () => {
+const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -18,7 +18,7 @@ const AddressSelector = () => {
 
   // Sample addresses data
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  // const [selectedAddress, setSelectedAddress] = useState(null);
 
   const getAddress = async () => {
     try {

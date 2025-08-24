@@ -9,6 +9,7 @@ import AddressSelector from "./Address";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [total, setTotal] = useState(0);
   // Increase Quantity
   const handleIncrease = async (id, itemQuantity) => {
@@ -164,14 +165,25 @@ const Cart = () => {
         handler: async function (response) {
           toast.success("Payment Successful!");
           console.log("Payment Details:", response);
-          const verifyResponse = await axiosInstance.post("/private/order/payment/verify", {
-            razorpayOrderId: response.razorpay_order_id,
-            razorpayPaymentId: response.razorpay_payment_id,
-            razorpaySignature: response.razorpay_signature,
-          });
-          if(verifyResponse.status==200){
-            //send bacend the item detaisl and create order and shipment 
-            
+          const verifyResponse = await axiosInstance.post(
+            "/private/order/payment/verify",
+            {
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+            }
+          );
+          if (verifyResponse.status == 200) {
+            //send bacend the item detaisl and create order and shipment
+            const response = await axiosInstance.post(`/private/order/create`, {
+              items: cartItems,
+              addressId: selectedAddress.id,
+            });
+            if (response.status == 200) {
+              toast.success("Order placed successfully");
+            } else {
+              toast.error("Something went wrong. Please try again.");
+            }
           }
         },
         prefill: {
@@ -225,7 +237,10 @@ const Cart = () => {
       </div>
       <div>
         <div>
-          <AddressSelector />
+          <AddressSelector
+            selectedAddress={selectedAddress}
+            setSelectedAddress={setSelectedAddress}
+          />
         </div>
         {/* {cartItems.map((product) => (
         <CartCard
