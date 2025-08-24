@@ -9,7 +9,7 @@ import AddressSelector from "./Address";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [total, setTotal] = useState(0);
   // Increase Quantity
   const handleIncrease = async (id, itemQuantity) => {
     setIsLoading(true);
@@ -86,9 +86,121 @@ const Cart = () => {
     }
   };
 
+  // const handleCheckout = async () => {
+  //   try {
+  //     // Fetch orderId from your backend
+  //     const response = await axiosInstance.get(`/private/order/payment/${total*100}`);
+  //     const order_id = response.data;
+  //     console.log(response.data);
+  //     // Razorpay options
+  //     const options = {
+  //       key: "rzp_test_R6Jk7RQhk9fG4F",
+  //       amount: total * 100, // in paise
+  //       currency: "INR",
+  //       name: "Greenplore",
+  //       description: "Order Payment",
+  //       order_id: order_id,
+  //       handler: function (response) {
+  //         // This function handles successful payment
+  //         alert("Payment Successful!");
+  //         console.log("Payment Details:", response);
+  //       },
+  //       prefill: {
+  //         name: "Greenplore",
+  //         email: "infogreenplore@gmail.com",
+  //         // contact: "9999999999"
+  //       },
+  //       theme: {
+  //         color: "#3399cc"
+  //       }
+  //     };
+
+  //     const rzp = new window.Razorpay(options);
+  //     rzp.open();
+
+  //   } catch (error) {
+  //     console.error("Payment Error:", error);
+  //     alert("Failed to initiate payment.");
+  //   }
+  // };
+
+  function loadRazorpayScript() {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true); // Already loaded
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  }
+
+  const handleCheckout = async () => {
+    try {
+      // Load Razorpay script
+      const res = await loadRazorpayScript();
+      if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        return;
+      }
+
+      // Get order ID from backend
+      const response = await axiosInstance.get(
+        `/private/order/payment/${total * 100}`
+      );
+      const order_id = response.data;
+
+      const options = {
+        key: "rzp_test_R6Jk7RQhk9fG4F",
+        amount: total * 100,
+        currency: "INR",
+        name: "Greenplore",
+        description: "Order Payment",
+        order_id: order_id,
+        handler: async function (response) {
+          toast.success("Payment Successful!");
+          console.log("Payment Details:", response);
+          const verifyResponse = await axiosInstance.post("/private/order/payment/verify", {
+            razorpayOrderId: response.razorpay_order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+          });
+          if(verifyResponse.status==200){
+            //send bacend the item detaisl and create order and shipment 
+            
+          }
+        },
+        prefill: {
+          name: "Greenplore",
+          email: "infogreenplore@gmail.com",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("Failed to initiate payment.");
+    }
+  };
+
   useEffect(() => {
     getCartItems();
   }, []);
+
+  useEffect(() => {
+    const totalAmount = cartItems.reduce((acc, item) => {
+      return acc + item.price * item.quantity;
+    }, 0);
+    setTotal(totalAmount);
+  }, [cartItems]);
 
   if (isLoading) {
     return <MyLoader />;
@@ -112,7 +224,9 @@ const Cart = () => {
         <Header heading="Cart" />
       </div>
       <div>
-        <div><AddressSelector/></div>
+        <div>
+          <AddressSelector />
+        </div>
         {/* {cartItems.map((product) => (
         <CartCard
           key={product.productId}
@@ -144,30 +258,37 @@ const Cart = () => {
 
         {/* Total Price and Checkout Button */}
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="flex justify-between items-center py-4 md:py-5">
-      {/* Total price on left */}
-      <div className="text-xl sm:text-2xl font-bold text-gray-800">
-        Total: ₹
-        {cartItems.reduce(
-          (acc, item) => acc + item.price * item.quantity,
-          0
-        ).toLocaleString('en-IN')}
-      </div>
-      
-      {/* Checkout button on right */}
-      <button
-        className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
-        onClick={() => alert("Proceeding to checkout...")}
-      >
-        Checkout
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4 md:py-5">
+              {/* Total price on left */}
+              <div className="text-xl sm:text-2xl font-bold text-gray-800">
+                Total: ₹{total}
+              </div>
+
+              {/* Checkout button on right */}
+              <button
+                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
+                onClick={() => handleCheckout()}
+              >
+                Checkout
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
