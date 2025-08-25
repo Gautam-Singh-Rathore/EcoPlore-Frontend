@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 // for Mobile
-
-
   export const CategorySlider = ({category}) => {
     const navigate = useNavigate();
 
