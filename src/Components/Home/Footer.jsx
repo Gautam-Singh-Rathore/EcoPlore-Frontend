@@ -61,11 +61,11 @@ function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/track-order" className="hover:text-green-300 transition duration-300">
                   Track My Order
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/return-and-refund-policy" className="hover:text-green-300 transition duration-300">
                   Return and Refund Policy
