@@ -11,7 +11,7 @@ const App = () => {
     <>
     <Top />
     <Navbar/>
-    <main className="min-h-screen pt-38 md:pt-30">
+    <main className="min-h-screen pt-38 md:pt-30 ]">
       <Outlet />  {/* All nested routes will render here */}
     </main>
     <Footer />

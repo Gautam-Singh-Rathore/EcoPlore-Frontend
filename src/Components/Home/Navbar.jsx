@@ -1,5 +1,5 @@
 import { FiUser, FiShoppingCart, FiHeart } from "react-icons/fi";
-import logo from "../../assets/Images/logo.png"
+import logo from "../../assets/Images/greenplore.png"
 import { VscAccount } from "react-icons/vsc";
 import { BsCart3 } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
@@ -20,12 +20,12 @@ export default function Navbar(){
           {/* Top Section */}
           <div className="flex justify-between items-center">
             {/* Left icons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center ">
               {/* <div className="text-4xl block sm:hidden">
                 <IoReorderThreeOutline />
               </div> */}
-              <img className="cursor-pointer"  onClick={()=> navigate("/")} src={logo} alt="GreenPlore" width={50} height={50}  />
-              <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div>
+              <img className="cursor-pointer h-10 w-28 md:h-16 md:w-36"  onClick={()=> navigate("/")} src={logo} alt="GreenPlore" width={50} height={50}  />
+              {/* <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div> */}
             </div>
     
             {/* Searchbar - show only on medium and above */}
