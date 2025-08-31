@@ -79,6 +79,28 @@ export default function Navbar(){
               >
                 Be a Seller
               </button>
+
+                 {
+                userId==null ?
+                (
+                  <button
+                type="button"
+                className=" md:hidden  lg:text-xl text-white bg-green-700 hover:bg-green-800 focus:outline-none cursor-pointer  font-medium rounded-full text-sm px-4 py-1.5"
+                onClick={()=> navigate("/login")}
+              >
+                Login
+              </button>
+                ) : (
+                  <VscAccount className="hover:text-green-700 cursor-pointer lg:mx-2 "  
+                  onClick={()=>{
+                    if(userRole=="CUSTOMER")
+                      navigate("/profile")
+                    else if(userRole=="SELLER")
+                      navigate("/seller-profile");
+                  }} />
+                )
+               }
+             
             </div>
           </div>
     
