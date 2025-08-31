@@ -12,7 +12,7 @@ import cart from "../../assets/Images/logo.png";
 function Footer() {
   
   return (
-    <footer className="bg-[#1d1f1e] text-white py-10 px-4 sm:px-8 mt-6">
+    <footer className="bg-[#1d1f1e] text-white py-10 px-4 sm:px-8 ">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
           

@@ -24,7 +24,7 @@ export default function Navbar(){
               {/* <div className="text-4xl block sm:hidden">
                 <IoReorderThreeOutline />
               </div> */}
-              <img className="cursor-pointer h-10 w-28 md:h-16 md:w-36"  onClick={()=> navigate("/")} src={logo} alt="GreenPlore" width={50} height={50}  />
+              <img className="cursor-pointer h-10 w-28 md:h-16 md:w-39"  onClick={()=> navigate("/")} src={logo} alt="GreenPlore" width={50} height={50}  />
               {/* <div className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer" onClick={()=> navigate("/")}>GreenPlore</div> */}
             </div>
     
