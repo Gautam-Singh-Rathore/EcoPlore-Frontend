@@ -20,8 +20,8 @@ export const UserProvider = ({children})=>{
                 setIsLoggedIn(true);
             }
         }catch(error){
-
-        }
+                console.log(error);
+        } 
     };
 
     useEffect(()=>{

@@ -48,8 +48,8 @@ export default function Navbar(){
             {/* Right icons */}
             <div className="flex items-center gap-5 text-xl md:text-2xl lg:text-3xl">
               {/* <VscAccount className="hover:text-green-700 cursor-pointer  "  onClick={()=>{navigate("/profile")}} /> */}
-              <BsCart3  className="hover:text-green-700 cursor-pointer " onClick={()=>{navigate("/cart")}}/>
-              <FaRegHeart className="hover:text-green-700 cursor-pointer  lg:mx-2"  onClick={()=>{navigate("/wishlist")}}/>
+              <BsCart3  className="hover:text-green-700 cursor-pointer " onClick={()=>{userRole=="CUSTOMER" ? navigate("/cart") : navigate("/login")}}/>
+              <FaRegHeart className="hover:text-green-700 cursor-pointer  lg:mx-2"  onClick={()=>{userRole=="CUSTOMER" ? navigate("/wishlist") : navigate("/login")}}/>
                
                {
                 userId==null ?
