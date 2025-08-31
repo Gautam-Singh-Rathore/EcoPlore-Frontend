@@ -14,6 +14,7 @@ import img7 from "../../assets/Images/Slider Images/7.jpg";
 import img8 from "../../assets/Images/Slider Images/8.jpg";
 import img9 from "../../assets/Images/Slider Images/9.jpg";
 import img10 from "../../assets/Images/Slider Images/10.jpg";
+import { color } from 'framer-motion';
 
 
 const images = [
@@ -33,14 +34,17 @@ const images = [
  
 export default function ImageSlider() {
   return (
-    <div className="px-4 sm:px-10 py-6 bg-white">
+    <div className="px-4 sm:px-10 py-6 bg-[#edf1f1]">
       <div className="max-w-5xl mx-auto rounded-xl overflow-hidden">
       <Swiper
-  modules={[Pagination, Autoplay]}
+  modules={[Pagination, Autoplay, ]}
   pagination={{ clickable: true }}
   autoplay={{ delay: 3000, disableOnInteraction: false }}
   loop
   className="w-full aspect-video md:h-[400px] lg:h-[500px]"
+   style={{
+    "--swiper-theme-color": "#008236", // active bullet color
+  }}
 >
   {images.map((src, index) => (
     <SwiperSlide key={index}>

@@ -11,8 +11,6 @@ import {
   RotateCcw, 
   Shield, 
   Search,
-  Phone,
-  FileText,
   CheckCircle,
   AlertCircle
 } from 'lucide-react';
@@ -27,7 +25,7 @@ const CustomerSupport = () => {
       icon: Package,
       title: 'Order Support',
       description: 'Track orders, modify or cancel orders, order status updates',
-      color: 'blue'
+      color: 'green'
     },
     {
       id: 'shipping',
@@ -41,28 +39,28 @@ const CustomerSupport = () => {
       icon: RotateCcw,
       title: 'Returns & Refunds',
       description: 'Return process, refund status, exchange requests',
-      color: 'orange'
+      color: 'green'
     },
     {
       id: 'payments',
       icon: CreditCard,
       title: 'Payment Issues',
       description: 'Payment failures, billing questions, refund queries',
-      color: 'purple'
+      color: 'green'
     },
     {
       id: 'account',
       icon: Shield,
       title: 'Account & Security',
       description: 'Login issues, profile updates, privacy concerns',
-      color: 'red'
+      color: 'green'
     },
     {
       id: 'general',
       icon: HelpCircle,
       title: 'General Inquiries',
       description: 'Product questions, policies, feedback and suggestions',
-      color: 'gray'
+      color: 'green'
     }
   ];
 
@@ -85,7 +83,7 @@ const CustomerSupport = () => {
     },
     {
       question: "How do I return an item?",
-      answer: "Email us at infogreenplore@gmail.com within 3 days of delivery with photos. We'll guide you through the return process."
+      answer: "Email us at Contact@greenplore.com within 3 days of delivery with photos. We'll guide you through the return process."
     }
   ];
 
@@ -94,9 +92,9 @@ const CustomerSupport = () => {
       icon: Mail,
       title: 'Email Support',
       description: 'Get detailed help via email',
-      contact: 'infogreenplore@gmail.com',
+      contact: 'Contact@greenplore.com',
       responseTime: 'Within 24 hours',
-      action: 'mailto:infogreenplore@gmail.com',
+      action: 'mailto:Contact@greenplore.com',
       color: 'green',
       primary: true
     },
@@ -107,7 +105,7 @@ const CustomerSupport = () => {
       contact: 'Self-service support',
       responseTime: 'Instant answers',
       action: '/faqs',
-      color: 'blue',
+      color: 'green',
       primary: false
     }
   ];
@@ -138,48 +136,31 @@ const CustomerSupport = () => {
           <div className="text-2xl font-bold text-green-600 mb-1">24hrs</div>
           <div className="text-sm text-gray-600">Average Response Time</div>
         </div>
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 text-center">
-          <div className="text-2xl font-bold text-blue-600 mb-1">98%</div>
+        <div className="bg-green-50 p-4 rounded-lg border border-green-200 text-center">
+          <div className="text-2xl font-bold text-green-600 mb-1">98%</div>
           <div className="text-sm text-gray-600">Customer Satisfaction</div>
         </div>
-        <div className="bg-purple-50 p-4 rounded-lg border border-purple-200 text-center">
-          <div className="text-2xl font-bold text-purple-600 mb-1">Mon-Sat</div>
+        <div className="bg-green-50 p-4 rounded-lg border border-green-200 text-center">
+          <div className="text-2xl font-bold text-green-600 mb-1">Mon-Sat</div>
           <div className="text-sm text-gray-600">9 AM - 6 PM IST</div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
       <div className="flex flex-wrap justify-center mb-8 border-b border-gray-200">
-        <button
-          onClick={() => setActiveTab('contact')}
-          className={`px-6 py-3 font-medium text-sm transition-colors ${
-            activeTab === 'contact'
-              ? 'text-green-600 border-b-2 border-green-600'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Contact Us
-        </button>
-        <button
-          onClick={() => setActiveTab('categories')}
-          className={`px-6 py-3 font-medium text-sm transition-colors ${
-            activeTab === 'categories'
-              ? 'text-green-600 border-b-2 border-green-600'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Support Categories
-        </button>
-        <button
-          onClick={() => setActiveTab('quick')}
-          className={`px-6 py-3 font-medium text-sm transition-colors ${
-            activeTab === 'quick'
-              ? 'text-green-600 border-b-2 border-green-600'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Quick Solutions
-        </button>
+        {['contact','categories','quick'].map(tab => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-6 py-3 font-medium text-sm transition-colors ${
+              activeTab === tab
+                ? 'text-green-600 border-b-2 border-green-600'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {tab === 'contact' ? 'Contact Us' : tab === 'categories' ? 'Support Categories' : 'Quick Solutions'}
+          </button>
+        ))}
       </div>
 
       {/* Contact Us Tab */}
@@ -193,15 +174,10 @@ const CustomerSupport = () => {
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {contactMethods.map((method, index) => {
               const IconComponent = method.icon;
-              const colorClasses = {
-                green: 'bg-green-50 border-green-200 hover:bg-green-100',
-                blue: 'bg-blue-50 border-blue-200 hover:bg-blue-100'
-              };
-
               return (
                 <div
                   key={index}
-                  className={`p-6 rounded-lg border-2 transition-all cursor-pointer ${colorClasses[method.color]} ${
+                  className={`p-6 rounded-lg border-2 transition-all cursor-pointer bg-green-50 border-green-200 hover:bg-green-100 ${
                     method.primary ? 'ring-2 ring-green-300' : ''
                   }`}
                 >
@@ -213,7 +189,7 @@ const CustomerSupport = () => {
                     </div>
                   )}
                   <div className="flex items-center mb-4">
-                    <IconComponent className={`w-8 h-8 mr-3 text-${method.color}-600`} />
+                    <IconComponent className={`w-8 h-8 mr-3 text-green-600`} />
                     <h3 className="text-xl font-semibold text-gray-900">{method.title}</h3>
                   </div>
                   <p className="text-gray-600 mb-3">{method.description}</p>
@@ -223,7 +199,7 @@ const CustomerSupport = () => {
                   </div>
                   <a
                     href={method.action}
-                    className={`inline-flex items-center px-4 py-2 bg-${method.color}-600 text-white rounded-md hover:bg-${method.color}-700 transition-colors`}
+                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                   >
                     {method.icon === Mail ? (
                       <>
@@ -266,20 +242,11 @@ const CustomerSupport = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {supportCategories.map((category) => {
               const IconComponent = category.icon;
-              const colorClasses = {
-                blue: 'bg-blue-50 border-blue-200 hover:bg-blue-100 text-blue-600',
-                green: 'bg-green-50 border-green-200 hover:bg-green-100 text-green-600',
-                orange: 'bg-orange-50 border-orange-200 hover:bg-orange-100 text-orange-600',
-                purple: 'bg-purple-50 border-purple-200 hover:bg-purple-100 text-purple-600',
-                red: 'bg-red-50 border-red-200 hover:bg-red-100 text-red-600',
-                gray: 'bg-gray-50 border-gray-200 hover:bg-gray-100 text-gray-600'
-              };
-
               return (
                 <div
                   key={category.id}
-                  className={`p-6 rounded-lg border cursor-pointer transition-all ${colorClasses[category.color]}`}
-                  onClick={() => window.location.href = `mailto:infogreenplore@gmail.com?subject=${encodeURIComponent(category.title + ' - Support Request')}`}
+                  className="p-6 rounded-lg border cursor-pointer transition-all bg-green-50 border-green-200 hover:bg-green-100 text-green-600"
+                  onClick={() => window.location.href = `mailto:Contact@greenplore.com?subject=${encodeURIComponent(category.title + ' - Support Request')}`}
                 >
                   <IconComponent className="w-8 h-8 mb-4" />
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{category.title}</h3>
@@ -292,7 +259,7 @@ const CustomerSupport = () => {
           <div className="mt-8 text-center">
             <p className="text-gray-600 mb-4">Don't see your issue listed?</p>
             <a
-              href="mailto:infogreenplore@gmail.com"
+              href="mailto:Contact@greenplore.com"
               className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
             >
               <Mail className="w-4 h-4 mr-2" />
@@ -347,7 +314,7 @@ const CustomerSupport = () => {
               <h3 className="text-lg font-medium text-gray-900 mb-2">No solutions found</h3>
               <p className="text-gray-500 mb-4">Try different keywords or contact our support team directly.</p>
               <a
-                href="mailto:infogreenplore@gmail.com"
+                href="mailto:Contact@greenplore.com"
                 className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
               >
                 <Mail className="w-4 h-4 mr-2" />
@@ -361,7 +328,7 @@ const CustomerSupport = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Still need help?</h3>
             <p className="text-gray-600 mb-4">If you can't find the answer you're looking for, our support team is here to help.</p>
             <a
-              href="mailto:infogreenplore@gmail.com"
+              href="mailto:Contact@greenplore.com"
               className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
             >
               <Mail className="w-4 h-4 mr-2" />
@@ -374,7 +341,7 @@ const CustomerSupport = () => {
       {/* Footer */}
       <div className="text-center mt-12 pt-6 border-t border-gray-200">
         <p className="text-sm text-gray-500 mb-2">
-          Need immediate assistance? Email us at <span className="font-medium text-green-600">infogreenplore@gmail.com</span>
+          Need immediate assistance? Email us at <span className="font-medium text-green-600">Contact@greenplore.com</span>
         </p>
         <p className="text-sm text-gray-500">
           We're committed to providing excellent customer service for all your eco-friendly shopping needs.

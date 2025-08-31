@@ -46,8 +46,8 @@ const ContactUs = () => {
       icon: Mail,
       title: 'Email Us',
       description: 'Send us an email and we\'ll respond within 24 hours',
-      contact: 'infogreenplore@gmail.com',
-      action: 'mailto:infogreenplore@gmail.com',
+      contact: 'Contact@greenplore.com',
+      action: 'mailto:Contact@greenplore.com',
       color: 'green'
     },
     {
@@ -88,14 +88,9 @@ const ContactUs = () => {
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {contactMethods.map((method, index) => {
           const IconComponent = method.icon;
-          const colorClasses = {
-            green: 'bg-green-50 border-green-200 text-green-600',
-            blue: 'bg-blue-50 border-blue-200 text-blue-600',
-            purple: 'bg-purple-50 border-purple-200 text-purple-600'
-          };
           
           return (
-            <div key={index} className={`p-6 rounded-lg border ${colorClasses[method.color]}`}>
+            <div key={index} className={`p-6 rounded-lg border bg-green-50 border-green-200 text-green-600`}>
               <div className="flex items-center mb-4">
                 <IconComponent className="w-8 h-8 mr-3" />
                 <h3 className="text-lg font-semibold text-gray-900">{method.title}</h3>
@@ -135,6 +130,7 @@ const ContactUs = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name & Email */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -168,6 +164,7 @@ const ContactUs = () => {
               </div>
             </div>
 
+            {/* Phone & Category */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
@@ -206,6 +203,7 @@ const ContactUs = () => {
               </div>
             </div>
 
+            {/* Subject */}
             <div>
               <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
                 Subject *
@@ -222,6 +220,7 @@ const ContactUs = () => {
               />
             </div>
 
+            {/* Message */}
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                 Message *
@@ -238,6 +237,7 @@ const ContactUs = () => {
               />
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
@@ -303,16 +303,6 @@ const ContactUs = () => {
               Browse FAQs
             </a>
           </div>
-
-         
-           {/* <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-blue-800 mb-2">Response Time</h3>
-            <ul className="text-blue-700 text-sm space-y-1">
-              <li>• Email inquiries: Within 24 hours</li>
-              <li>• Order issues: Within 12 hours</li>
-              <li>• Urgent matters: Same business day</li>
-            </ul>
-          </div> */}
         </div>
       </div>
 
@@ -325,7 +315,7 @@ const ContactUs = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a 
-              href="mailto:infogreenplore@gmail.com"
+              href="mailto:Contact@greenplore.com"
               className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
             >
               <Mail className="w-4 h-4 mr-2" />

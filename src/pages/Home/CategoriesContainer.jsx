@@ -29,7 +29,7 @@ export const CategoriesContainer = () => {
   return (
     <>
       {/* Mobile Version */}
-      <div className="overflow-x-auto whitespace-nowrap px-3 py-4 md:hidden bg-white">
+      <div className="overflow-x-auto whitespace-nowrap px-3 py-4 md:hidden bg-[#edf1f1]">
         <div className="flex space-x-4 sm:space-x-12 md:space-x-10 lg:space-x-12">
           {categories.map((category) => (
             <CategorySlider category={category} key={category.id} />
@@ -38,7 +38,7 @@ export const CategoriesContainer = () => {
       </div>
 
       {/* Desktop Version */}
-      <div className="hidden md:flex justify-center bg-white py-6">
+      <div className="hidden md:flex justify-center bg-[#edf1f1] py-6">
         <div className="flex justify-center gap-14">
           {categories.map((category) => (
             <CategoryGrid category={category} key={category.id} />

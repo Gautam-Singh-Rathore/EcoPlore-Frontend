@@ -16,7 +16,7 @@ export default function Navbar(){
     const navigate = useNavigate();
 
     return (
-        <div className=" fixed w-full z-50 py-4 mt-9 sm:py-6 px-4 bg-white ">
+        <div className=" fixed w-full z-50 py-4 mt-9 sm:py-6 px-4 bg-[#edf1f1] ">
           {/* Top Section */}
           <div className="flex justify-between items-center">
             {/* Left icons */}

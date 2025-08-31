@@ -47,7 +47,7 @@ const Marquee = () => {
 };
 
 const Header = ({ title }) => (
-  <div className="flex flex-col justify-center items-center bg-[#EDF1F1] pt-4 pb-4">
+  <div className="flex flex-col justify-center items-center bg-[#edf1f1] pt-4 pb-4">
     {/* Mobile Header */}
     <h1
       className="text-3xl md:hidden flex justify-center items-center text-[#1b4130] -mb-[5px]"

@@ -123,7 +123,7 @@ const FAQPage = () => {
       {
         id: 20,
         question: "Can I delete my account?",
-        answer: "Yes, you can request account deletion by contacting us at infogreenplore@gmail.com. We'll process your request within 7 business days and permanently delete your personal data as per our Privacy Policy."
+        answer: "Yes, you can request account deletion by contacting us at Contact@greenplore.com. We'll process your request within 7 business days and permanently delete your personal data as per our Privacy Policy."
       },
       {
         id: 21,
@@ -135,7 +135,7 @@ const FAQPage = () => {
       {
         id: 22,
         question: "What is your return policy?",
-        answer: "We offer returns within 7-15 days of delivery depending on the product category. Items must be unused, in original packaging, and accompanied by the original invoice. Perishable and personalized items cannot be returned."
+        answer: "We offer returns within 7 days of delivery depending on the product category. Items must be unused, in original packaging, and accompanied by the original invoice. Perishable and personalized items cannot be returned."
       },
       {
         id: 23,
@@ -284,7 +284,7 @@ const FAQPage = () => {
               Email Support
             </a>
             <a
-              href="mailto:infogreenplore@gmail.com"
+              href="mailto:Contact@greenplore.com"
               className="inline-flex items-center px-4 py-2 bg-white text-green-600 border border-green-600 rounded-md hover:bg-green-50 transition-colors"
             >
               <HelpCircle className="w-4 h-4 mr-2" />

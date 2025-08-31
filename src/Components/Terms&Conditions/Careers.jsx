@@ -23,12 +23,12 @@ const Careers = () => {
     {
       icon: Heart,
       title: "Health & Wellness",
-      description: "Comprehensive health insurance, mental wellness support, and fitness allowances"
+      description: " mental wellness support, and fitness allowances"
     },
     {
       icon: Leaf,
       title: "Eco-Friendly Perks",
-      description: "Sustainable transport allowance, green office spaces, and eco-product discounts"
+      description: " green office spaces, and eco-product discounts"
     },
     {
       icon: BookOpen,
@@ -38,7 +38,7 @@ const Careers = () => {
     {
       icon: Coffee,
       title: "Work-Life Balance",
-      description: "Flexible hours, remote work options, and unlimited leaves policy"
+      description: "Flexible hours, remote work options"
     },
     {
       icon: Gift,

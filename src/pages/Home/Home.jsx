@@ -8,7 +8,7 @@ import CategoryProducts from './CategoryProducts';
 
 const Home = () => {
     return (
-        <div className='bg-[#f7f9f7]' >
+        <div className='bg-[#edf1f1]' >
             
             <CategoriesContainer/>
             <ImageSlider/>
