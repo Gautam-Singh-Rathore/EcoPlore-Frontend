@@ -1,7 +1,7 @@
 import Products from "../../Components/Home/Products";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
-import toast from "react-hot-toast";
+
 
 const CategoryProducts = () => {
   const [categories, setCategories] = useState([]);

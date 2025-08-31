@@ -31,7 +31,7 @@ if(products.length == 0){
 }
 
   return (
-    <div className="px-2 md:px-10 py-6 bg-white">
+    <div className="px-2 md:px-10 py-6 bg-[#edf1f1]">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-[22px]  font-semibold">
           {cat.name}
