@@ -4,6 +4,7 @@ import Header from '../../Components/Home/Header';
 import MyLoader from '../../utils/MyLoader';
 import axiosInstance from '../../api/axiosInstance';
 import toast from 'react-hot-toast';
+import { WishlistEmpty } from '../../Components/Home/EmptyState';
 
 const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -56,8 +57,10 @@ if(wishlistItems.length == 0){
         <div className='mb-12'>
                 <Header  heading="Wishlist"/>
                 </div>
-       <div ></div>
-       Your Wishlist is Empty
+       <div >
+        <WishlistEmpty/>
+       </div>
+       
       </div>
     );
 }

@@ -71,6 +71,7 @@ export default function Navbar(){
                   }} />
                 )
                }
+               
               
               <button
                 type="button"

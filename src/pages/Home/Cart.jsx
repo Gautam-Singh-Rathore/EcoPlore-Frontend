@@ -5,6 +5,7 @@ import MyLoader from "../../utils/MyLoader";
 import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 import AddressSelector from "./Address";
+import { CartEmpty } from "../../Components/Home/EmptyState";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -224,8 +225,10 @@ const Cart = () => {
         <div className="mb-12">
           <Header heading="Cart" />
         </div>
-        <div></div>
-        Your Cart is Empty
+        <div>
+          <CartEmpty/>
+        </div>
+       
       </div>
     );
   }
