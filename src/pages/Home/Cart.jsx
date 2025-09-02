@@ -169,9 +169,9 @@ const Cart = () => {
           const verifyResponse = await axiosInstance.post(
             "/private/order/payment/verify",
             {
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
+              razorpayOrderId: response.data.razorpay_order_id,
+              razorpayPaymentId: response.data.razorpay_payment_id,
+              razorpaySignature: response.data.razorpay_signature,
             }
           );
           if (verifyResponse.status == 200) {
