@@ -157,7 +157,7 @@ const Cart = () => {
       const order_id = response.data;
 
       const options = {
-        key: "rzp_test_R6Jk7RQhk9fG4F",
+        key: "rzp_live_RCemjVt0zfY8v2",
         amount: total * 100,
         currency: "INR",
         name: "Greenplore",

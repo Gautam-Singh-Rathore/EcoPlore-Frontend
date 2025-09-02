@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
         alt={category.name}
         className="w-12 h-12 object-contain rounded-full border border-gray-200 shadow-2xl shadow-slate-100"
       />
-      <span className="text-sm mt-1">{category.name}</span>
+      <div className="text-sm mt-1">{category.name}</div>
+      <span ></span>
     </div>
     )
   }
