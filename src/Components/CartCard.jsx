@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom';
 const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
   const navigate = useNavigate();
 
+  const handleProductClick = (e) => {
+    e.preventDefault();
+    navigate(`/product/${product.productId}`);
+  };
+
   return (
     <div
 
@@ -12,7 +17,7 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
     >
       {/* Product Image */}
       <div 
-        onClick={()=>{navigate(`/product/${product.productId}`)}}
+         onClick={handleProductClick}
       className="flex w-[20vw] cursor-pointer">
         <img
           src={product.imageUrls}
@@ -37,6 +42,7 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
           {/* Quantity Control */}
           <div className="flex items-center gap-2">
             <button
+            type="button" 
               onClick={onDecrease}
               className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
             >
@@ -44,6 +50,7 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
             </button>
             <span className="text-lg font-semibold">{quantity}</span>
             <button
+            type="button" 
               onClick={onIncrease}
               className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
             >
@@ -53,6 +60,7 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
 
           {/* Remove Button */}
           <button
+          type="button" 
             onClick={onRemove}
             className="bg-red-500 text-white px-4 py-1 cursor-pointer rounded hover:bg-red-600"
           >

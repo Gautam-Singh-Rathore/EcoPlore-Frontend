@@ -13,8 +13,8 @@ const Cart = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [total, setTotal] = useState(0);
   // Increase Quantity
+
   const handleIncrease = async (id, itemQuantity) => {
-    setIsLoading(true);
     try {
       const response = await axiosInstance.post(`/private/cart/edit`, {
         id: id,
@@ -29,14 +29,11 @@ const Cart = () => {
         error?.response?.data?.msg || "Failed to increase item quantity"
       );
       console.error("Error in Increasing Cart Item Quantity", error);
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
 
   // Decrease Quantity (minimum 1)
   const handleDecrease = async (id, itemQuantity, cartId) => {
-    setIsLoading(true);
     if (itemQuantity <= 1) {
       return handleRemove(cartId);
     }
@@ -51,14 +48,12 @@ const Cart = () => {
       }
     } catch (error) {
       console.error("Error in Decreasing Cart Item Quantity", error);
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
 
   // Remove Item
   const handleRemove = async (cartid) => {
-    setIsLoading(true);
+    
     try {
       const response = await axiosInstance.delete(
         `/private/cart/remove/${cartid}`
@@ -69,9 +64,7 @@ const Cart = () => {
       }
     } catch (error) {
       console.error("Error in Removing Cart Item", error);
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
 
   const getCartItems = async () => {
