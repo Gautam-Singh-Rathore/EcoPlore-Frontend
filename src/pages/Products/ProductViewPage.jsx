@@ -57,8 +57,7 @@ const ProductViewPage = () => {
     );
   }
    
-  
-  
+
    
   return (
     

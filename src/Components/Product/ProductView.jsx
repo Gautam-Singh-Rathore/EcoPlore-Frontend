@@ -14,12 +14,16 @@ const ProductView = ({ product }) => {
   );
   const [inWishlist, setInWishlist] = useState(false);
   const [inCart, setInCart] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-   const {userId  } = useContext(UserContext);
+  
+  // Separate loading states
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [cartLoading, setCartLoading] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  
+  const { userId } = useContext(UserContext);
   const navigate = useNavigate();
 
   const cartExistanceCheck = async () => {
-    setIsLoading(true);
     try {
       const response = await axiosInstance.get(
         `/private/cart/product-exists/${id}`
@@ -29,32 +33,30 @@ const ProductView = ({ product }) => {
       }
     } catch (error) {
       console.error("Error in fetching cartExistance", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const addToCart = async ()=>{
-    setIsLoading(true);
+  const addToCart = async (e) => {
+    if (e) e.preventDefault();
+    setCartLoading(true);
     try {
-           const response = await axiosInstance.post(`/private/cart/add`,{
-            id : id,
-            quantity : 1
-           })
-           if(response.status == 200){
-             setInCart(true);
-             toast.success("Product Added to Cart")
-           }
+      const response = await axiosInstance.post(`/private/cart/add`, {
+        id: id,
+        quantity: 1
+      });
+      if (response.status == 200) {
+        setInCart(true);
+        toast.success("Product Added to Cart");
+      }
     } catch (error) {
-        console.log("Error in Adding to Cart", error);
+      console.log("Error in Adding to Cart", error);
+      toast.error("Failed to add to cart");
+    } finally {
+      setCartLoading(false);
     }
-    finally{
-      setIsLoading(false);
-    }
-  }
+  };
 
   const wishlistExistanceCheck = async () => {
-    setIsLoading(true);
     try {
       console.log("Product id is", id);
       const response = await axiosInstance.get(
@@ -65,13 +67,12 @@ const ProductView = ({ product }) => {
       }
     } catch (error) {
       console.error("Error in fetching wishlistExistance : ", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const addToWishlist = async () => {
-    setIsLoading(true);
+  const addToWishlist = async (e) => {
+    if (e) e.preventDefault();
+    setWishlistLoading(true);
     try {
       const response = await axiosInstance.get(`/private/wishlist/add/${id}`);
       if (response.status == 200) {
@@ -82,20 +83,44 @@ const ProductView = ({ product }) => {
       console.error("Error in Adding Wishlist : ", error);
       toast.error("Failed to Add in Wishlist");
     } finally {
-      setIsLoading(false);
+      setWishlistLoading(false);
+    }
+  };
+
+  // Handle cart button click
+  const handleCartClick = (e) => {
+    e.preventDefault();
+    if (userId === null) {
+      navigate("/login");
+    } else {
+      addToCart(e);
+    }
+  };
+
+  // Handle wishlist button click
+  const handleWishlistClick = (e) => {
+    e.preventDefault();
+    if (userId === null) {
+      navigate("/login");
+    } else {
+      addToWishlist(e);
     }
   };
 
   useEffect(() => {
-    wishlistExistanceCheck();
-    cartExistanceCheck();
+    const fetchInitialData = async () => {
+      await Promise.all([wishlistExistanceCheck(), cartExistanceCheck()]);
+      setInitialLoading(false);
+    };
+    
+    fetchInitialData();
   }, [product]);
 
   if (!product.images || product.images.length === 0) {
     return <p className="text-gray-500">No images available</p>;
   }
 
-  if (isLoading) {
+  if (initialLoading) {
     return <MyLoader />;
   }
 
@@ -147,8 +172,9 @@ const ProductView = ({ product }) => {
         <div className="hidden lg:flex gap-4 mt-6">
           {inCart ? (
             <button
-             type="button"
-              onClick={() => { 
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
                 navigate("/cart");
               }}
               className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
@@ -157,17 +183,20 @@ const ProductView = ({ product }) => {
             </button>
           ) : (
             <button
-             type="button"
-             onClick={()=>(userId === null ? navigate("/login"): addToCart())}
-            className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
-              Add to Cart
+              type="button"
+              onClick={handleCartClick}
+              disabled={cartLoading}
+              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer disabled:opacity-50"
+            >
+              {cartLoading ? "Adding..." : "Add to Cart"}
             </button>
           )}
 
           {inWishlist ? (
             <button
-             type="button"
-              onClick={() => {
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
                 navigate("/wishlist");
               }}
               className="px-6 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer"
@@ -176,11 +205,12 @@ const ProductView = ({ product }) => {
             </button>
           ) : (
             <button
-             type="button"
-              onClick={()=>(userId === null ? navigate("/login"): addToWishlist())}
-              className="px-6 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer"
+              type="button"
+              onClick={handleWishlistClick}
+              disabled={wishlistLoading}
+              className="px-6 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer disabled:opacity-50"
             >
-              Add to Wishlist
+              {wishlistLoading ? "Adding..." : "Add to Wishlist"}
             </button>
           )}
         </div>
@@ -200,8 +230,9 @@ const ProductView = ({ product }) => {
       <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around p-4 border-t border-gray-300 z-50">
         {inCart ? (
           <button
-           type="button"
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
               navigate("/cart");
             }}
             className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
@@ -210,17 +241,20 @@ const ProductView = ({ product }) => {
           </button>
         ) : (
           <button
-           type="button"
-            onClick={()=>(userId === null ? navigate("/login"): addToCart())}
-          className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
-            Add to Cart
+            type="button"
+            onClick={handleCartClick}
+            disabled={cartLoading}
+            className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer disabled:opacity-50"
+          >
+            {cartLoading ? "Adding..." : "Add to Cart"}
           </button>
         )}
 
         {inWishlist ? (
           <button
-           type="button"
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
               navigate("/wishlist");
             }}
             className="w-[45%] py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer"
@@ -228,11 +262,13 @@ const ProductView = ({ product }) => {
             View in Wishlist
           </button>
         ) : (
-          <button 
-           type="button"
-                        onClick={()=>(userId === null ? navigate("/login"): addToWishlist())}
-          className="w-[45%] py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer">
-            Add to Wishlist
+          <button
+            type="button"
+            onClick={handleWishlistClick}
+            disabled={wishlistLoading}
+            className="w-[45%] py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer disabled:opacity-50"
+          >
+            {wishlistLoading ? "Adding..." : "Add to Wishlist"}
           </button>
         )}
       </div>
