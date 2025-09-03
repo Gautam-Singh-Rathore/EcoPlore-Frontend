@@ -9,15 +9,12 @@ import { CartEmpty } from "../../Components/Home/EmptyState";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  // ✅ CHANGE 1: Split loading states
-  const [isInitialLoading, setIsInitialLoading] = useState(false);
-  const [isOperationLoading, setIsOperationLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [total, setTotal] = useState(0);
 
-  // ✅ CHANGE 2: Add operation loading to handleIncrease
+  // Increase Quantity
   const handleIncrease = async (id, itemQuantity) => {
-    setIsOperationLoading(true);
     try {
       const response = await axiosInstance.post(`/private/cart/edit`, {
         id: id,
@@ -32,14 +29,11 @@ const Cart = () => {
         error?.response?.data?.msg || "Failed to increase item quantity"
       );
       console.error("Error in Increasing Cart Item Quantity", error);
-    } finally {
-      setIsOperationLoading(false);
-    }
+    } 
   };
 
-  // ✅ CHANGE 3: Add operation loading to handleDecrease
+  // Decrease Quantity (minimum 1)
   const handleDecrease = async (id, itemQuantity, cartId) => {
-    setIsOperationLoading(true);
     if (itemQuantity <= 1) {
       return handleRemove(cartId);
     }
@@ -54,14 +48,12 @@ const Cart = () => {
       }
     } catch (error) {
       console.error("Error in Decreasing Cart Item Quantity", error);
-    } finally {
-      setIsOperationLoading(false);
-    }
+    } 
   };
 
-  // ✅ CHANGE 4: Add operation loading to handleRemove
+  // Remove Item
   const handleRemove = async (cartid) => {
-    setIsOperationLoading(true);
+    
     try {
       const response = await axiosInstance.delete(
         `/private/cart/remove/${cartid}`
@@ -72,14 +64,11 @@ const Cart = () => {
       }
     } catch (error) {
       console.error("Error in Removing Cart Item", error);
-    } finally {
-      setIsOperationLoading(false);
-    }
+    } 
   };
 
-  // ✅ CHANGE 5: Use initial loading for getCartItems
   const getCartItems = async () => {
-    setIsInitialLoading(true);
+    setIsLoading(true);
     try {
       const response = await axiosInstance.get(`/private/cart/get`);
       if (response.status == 200) {
@@ -88,14 +77,52 @@ const Cart = () => {
     } catch (error) {
       console.error("Error in Fetching Cart Items ", error);
     } finally {
-      setIsInitialLoading(false);
+      setIsLoading(false);
     }
   };
+
+  // const handleCheckout = async () => {
+  //   try {
+  //     // Fetch orderId from your backend
+  //     const response = await axiosInstance.get(`/private/order/payment/${total*100}`);
+  //     const order_id = response.data;
+  //     console.log(response.data);
+  //     // Razorpay options
+  //     const options = {
+  //       key: "rzp_test_R6Jk7RQhk9fG4F",
+  //       amount: total * 100, // in paise
+  //       currency: "INR",
+  //       name: "Greenplore",
+  //       description: "Order Payment",
+  //       order_id: order_id,
+  //       handler: function (response) {
+  //         // This function handles successful payment
+  //         alert("Payment Successful!");
+  //         console.log("Payment Details:", response);
+  //       },
+  //       prefill: {
+  //         name: "Greenplore",
+  //         email: "infogreenplore@gmail.com",
+  //         // contact: "9999999999"
+  //       },
+  //       theme: {
+  //         color: "#3399cc"
+  //       }
+  //     };
+
+  //     const rzp = new window.Razorpay(options);
+  //     rzp.open();
+
+  //   } catch (error) {
+  //     console.error("Payment Error:", error);
+  //     alert("Failed to initiate payment.");
+  //   }
+  // };
 
   function loadRazorpayScript() {
     return new Promise((resolve) => {
       if (window.Razorpay) {
-        resolve(true);
+        resolve(true); // Already loaded
         return;
       }
 
@@ -109,12 +136,14 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     try {
+      // Load Razorpay script
       const res = await loadRazorpayScript();
       if (!res) {
         alert("Razorpay SDK failed to load. Are you online?");
         return;
       }
 
+      // Get order ID from backend
       const response = await axiosInstance.get(
         `/private/order/payment/${total * 100}`
       );
@@ -139,6 +168,7 @@ const Cart = () => {
             }
           );
           if (verifyResponse.status == 200) {
+            //send bacend the item detaisl and create order and shipment
             const response = await axiosInstance.post(`/private/order/create`, {
               items: cartItems,
               addressId: selectedAddress.id,
@@ -178,8 +208,7 @@ const Cart = () => {
     setTotal(totalAmount);
   }, [cartItems]);
 
-  // ✅ CHANGE 6: Only show loader for initial loading
-  if (isInitialLoading) {
+  if (isLoading) {
     return <MyLoader />;
   }
 
@@ -192,6 +221,7 @@ const Cart = () => {
         <div>
           <CartEmpty/>
         </div>
+       
       </div>
     );
   }
@@ -208,14 +238,21 @@ const Cart = () => {
             setSelectedAddress={setSelectedAddress}
           />
         </div>
-        
+        {/* {cartItems.map((product) => (
+        <CartCard
+          key={product.productId}
+          product={product}
+          quantity={product.quantity}
+          onIncrease={() => handleIncrease(product.productId,product.quantity)}
+          onDecrease={() => handleDecrease(product.productId,product.quantity,product.cartItemId)}
+          onRemove={() => handleRemove(product.cartItemId)}
+        />
+      ))} */}
         {cartItems.map((product) => (
           <CartCard
             key={product.productId}
             product={product}
             quantity={product.quantity}
-            // ✅ CHANGE 7: Pass operation loading state
-            isLoading={isOperationLoading}
             onIncrease={() =>
               handleIncrease(product.productId, product.quantity)
             }
@@ -230,21 +267,23 @@ const Cart = () => {
           />
         ))}
 
+        {/* Total Price and Checkout Button */}
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4 md:py-5">
+              {/* Total price on left */}
               <div className="text-xl sm:text-2xl font-bold text-gray-800">
                 Total: ₹{total}
               </div>
 
+              {/* Checkout button on right */}
               <button
-                // ✅ CHANGE 8: Add button type and event prevention
-                type="button"
+               type="button"
+                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
                 onClick={(e) => {
                   e.preventDefault();
                   handleCheckout();
                 }}
-                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
               >
                 Checkout
                 <svg

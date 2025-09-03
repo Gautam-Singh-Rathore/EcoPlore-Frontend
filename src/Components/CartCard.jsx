@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove, isLoading }) => {
+const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove }) => {
   const navigate = useNavigate();
 
   const handleProductClick = (e) => {
@@ -9,31 +9,16 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove, isLoadi
     navigate(`/product/${product.productId}`);
   };
 
-  // ✅ ADD: Event handlers with preventDefault to avoid page reloads
-  const handleIncrease = (e) => {
-    e.preventDefault();
-    onIncrease();
-  };
-
-  const handleDecrease = (e) => {
-    e.preventDefault();
-    onDecrease();
-  };
-
-  const handleRemove = (e) => {
-    e.preventDefault();
-    onRemove();
-  };
-
   return (
     <div
-      className="w-full lg:w-[80%] xl:w-[70%] 2xl:w-[60%] mx-auto p-4 pt-6 flex justify-center items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200"
+
+      key={product.productId}
+      className="w-full  lg:w-[80%] xl:w-[70%] 2xl:w-[60%] mx-auto p-4 pt-6 flex justify-center items-start gap-4 sm:flex-nowrap border-t-[1px] border-gray-200 "
     >
       {/* Product Image */}
       <div 
-        onClick={handleProductClick}
-        className="flex w-[20vw] cursor-pointer"
-      >
+         onClick={handleProductClick}
+      className="flex w-[20vw] cursor-pointer">
         <img
           src={product.imageUrls}
           alt={product.productName}
@@ -46,31 +31,28 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove, isLoadi
         <h2 className="text-base sm:text-lg md:text-xl font-semibold">
           {product.productName}
         </h2>
-        
+        {/* <p className="text-gray-500">{product.category}</p> */}
         <div className="text-xl sm:text-2xl font-bold text-gray-900">
           ₹{product.price}
         </div>
+        {/* <div className="line-clamp-4">{product.description}</div> */}
 
         {/* Quantity and Remove Buttons */}
         <div className="flex justify-between items-center mt-4">
           {/* Quantity Control */}
           <div className="flex items-center gap-2">
             <button
-              type="button" 
-              onClick={handleDecrease}
-              // ✅ ADD: Disable button during loading
-              disabled={isLoading}
-              className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            type="button" 
+              onClick={onDecrease}
+              className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
             >
               -
             </button>
             <span className="text-lg font-semibold">{quantity}</span>
             <button
-              type="button" 
-              onClick={handleIncrease}
-              // ✅ ADD: Disable button during loading
-              disabled={isLoading}
-              className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            type="button" 
+              onClick={onIncrease}
+              className="bg-gray-200 cursor-pointer text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
             >
               +
             </button>
@@ -78,19 +60,15 @@ const CartCard = ({ product, quantity, onIncrease, onDecrease, onRemove, isLoadi
 
           {/* Remove Button */}
           <button
-            type="button" 
-            onClick={handleRemove}
-            // ✅ ADD: Disable button during loading and show loading text
-            disabled={isLoading}
-            className="bg-red-500 text-white px-4 py-1 cursor-pointer rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          type="button" 
+            onClick={onRemove}
+            className="bg-red-500 text-white px-4 py-1 cursor-pointer rounded hover:bg-red-600"
           >
-            {/* ✅ ADD: Show different text during loading */}
-            {isLoading ? "..." : "Remove"}
+            Remove
           </button>
         </div>
       </div>
     </div>
   );
 };
-
 export default CartCard;
