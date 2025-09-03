@@ -156,7 +156,7 @@ const ProductView = ({ product }) => {
             </button>
           ) : (
             <button
-             onClick={()=>{userId === null ? navigate("/login"): addToCart }}
+             onClick={()=>(userId === null ? navigate("/login"): addToCart())}
             className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
               Add to Cart
             </button>
@@ -173,7 +173,7 @@ const ProductView = ({ product }) => {
             </button>
           ) : (
             <button
-              onClick={()=>{userId === null ? navigate("/login"): addToWishlist}}
+              onClick={()=>(userId === null ? navigate("/login"): addToWishlist())}
               className="px-6 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer"
             >
               Add to Wishlist
@@ -205,7 +205,7 @@ const ProductView = ({ product }) => {
           </button>
         ) : (
           <button
-            onClick={()=>{userId === null ? navigate("/login"): addToCart}}
+            onClick={()=>(userId === null ? navigate("/login"): addToCart())}
           className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
             Add to Cart
           </button>
@@ -222,7 +222,7 @@ const ProductView = ({ product }) => {
           </button>
         ) : (
           <button 
-                        onClick={()=>{userId === null ? navigate("/login"): addToWishlist}}
+                        onClick={()=>(userId === null ? navigate("/login"): addToWishlist())}
           className="w-[45%] py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer">
             Add to Wishlist
           </button>
