@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import MyLoader from "../../utils/MyLoader";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 const ProductView = ({ product }) => {
   const { id } = useParams();
@@ -13,6 +15,7 @@ const ProductView = ({ product }) => {
   const [inWishlist, setInWishlist] = useState(false);
   const [inCart, setInCart] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+   const {userId  } = useContext(UserContext);
   const navigate = useNavigate();
 
   const cartExistanceCheck = async () => {
@@ -144,7 +147,7 @@ const ProductView = ({ product }) => {
         <div className="hidden lg:flex gap-4 mt-6">
           {inCart ? (
             <button
-              onClick={() => {
+              onClick={() => { 
                 navigate("/cart");
               }}
               className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
@@ -153,7 +156,7 @@ const ProductView = ({ product }) => {
             </button>
           ) : (
             <button
-             onClick={addToCart}
+             onClick={()=>{userId === null ? navigate("/login"): addToCart }}
             className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
               Add to Cart
             </button>
@@ -170,7 +173,7 @@ const ProductView = ({ product }) => {
             </button>
           ) : (
             <button
-              onClick={addToWishlist}
+              onClick={()=>{userId === null ? navigate("/login"): addToWishlist}}
               className="px-6 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer"
             >
               Add to Wishlist
@@ -202,7 +205,7 @@ const ProductView = ({ product }) => {
           </button>
         ) : (
           <button
-            onClick={addToCart}
+            onClick={()=>{userId === null ? navigate("/login"): addToCart}}
           className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
             Add to Cart
           </button>
@@ -219,7 +222,7 @@ const ProductView = ({ product }) => {
           </button>
         ) : (
           <button 
-                        onClick={addToWishlist}
+                        onClick={()=>{userId === null ? navigate("/login"): addToWishlist}}
           className="w-[45%] py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer">
             Add to Wishlist
           </button>
