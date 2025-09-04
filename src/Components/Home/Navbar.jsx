@@ -4,6 +4,7 @@ import { VscAccount } from "react-icons/vsc";
 import { BsCart3 } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import { IoReorderThreeOutline } from "react-icons/io5";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -49,7 +50,7 @@ export default function Navbar(){
             <div className="flex items-center gap-5 text-xl md:text-2xl lg:text-3xl">
               {/* <VscAccount className="hover:text-green-700 cursor-pointer  "  onClick={()=>{navigate("/profile")}} /> */}
               <BsCart3  className="hover:text-green-700 cursor-pointer " onClick={()=>{userRole=="CUSTOMER" ? navigate("/cart") : navigate("/login")}}/>
-              <FaRegHeart className="hover:text-green-700 cursor-pointer  lg:mx-2"  onClick={()=>{userRole=="CUSTOMER" ? navigate("/wishlist") : navigate("/login")}}/>
+              <IoMdHeartEmpty className="hover:text-green-700 cursor-pointer  lg:mx-2"  onClick={()=>{userRole=="CUSTOMER" ? navigate("/wishlist") : navigate("/login")}}/>
                
                {
                 userId==null ?

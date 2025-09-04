@@ -28,7 +28,7 @@ export const CategoriesContainer = () => {
   return (
     <>
       {/* Mobile Version */}
-      <div className="overflow-x-auto  px-3 py-4 md:hidden bg-[#edf1f1]">
+      <div className="overflow-x-auto  px-3 py-4 md:hidden bg-[#edf1f1] ">
         <div className="flex space-x-4 sm:space-x-12 md:space-x-10 lg:space-x-12">
           {categories.map((category) => (
             <CategorySlider category={category} key={category.id} />
