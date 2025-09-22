@@ -4,6 +4,7 @@ import Marquee from '../../Components/Home/Marquee';
 import Products from '../../Components/Home/Products';
 import { CategoriesContainer } from './CategoriesContainer';
 import CategoryProducts from './CategoryProducts';
+import AboveFooter from '../../Components/Home/AboveFooter';
   
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
             <ImageSlider/>
              <CategoryProducts/>
              <Marquee/>
+             <AboveFooter/>
       
         </div>
       )

@@ -195,6 +195,7 @@ console.log(response);
               type="text"
               inputMode="numeric" 
               pattern="[0-9]*" 
+              minLength={10}
               maxLength={10}
               value={mobile}
               onChange={(e) => {

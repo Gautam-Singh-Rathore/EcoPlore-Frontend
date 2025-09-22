@@ -171,9 +171,16 @@ console.log(response);
 <input
   name="mobileNo"
   value={formData.mobileNo}
-  onChange={handleChange}
+  onChange={(e) => {
+    
+    const val = e.target.value.replace(/\D/g, "").slice(0, 10);
+    handleChange({ target: { name: "mobileNo", value: val } });
+  }}
   placeholder="Phone Number"
   type="tel"
+  inputMode="numeric"
+  minLength={10}
+  maxLength={10}
   required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
@@ -256,13 +263,19 @@ console.log(response);
 <input
   name="pinCode"
   value={formData.pinCode}
-  onChange={handleChange}
+  onChange={(e) => {
+    // keep only digits and max 6 chars
+    const val = e.target.value.replace(/\D/g, "").slice(0, 6);
+    handleChange({ target: { name: "pinCode", value: val } });
+  }}
   placeholder="Pin Code"
-  type="text"
+  type="tel"
+  inputMode="numeric"
+  minLength={6}
+  maxLength={6}
   required
   className="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
 />
-
 <select
   name="state"
   value={formData.state}
