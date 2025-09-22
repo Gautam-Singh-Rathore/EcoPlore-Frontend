@@ -29,6 +29,8 @@ import TermsAndConditions from "../Components/Terms&Conditions/TermsAndCondition
 import CustomerSupport from "../Components/Terms&Conditions/CustomerSupport";
 import AboutUs from "../Components/Terms&Conditions/AboutUs";
 import Careers from "../Components/Terms&Conditions/Careers";
+import VerifyOTP from "../Components/VerifyOTP";
+import ResetPassword from "../Components/ResetPassword";
 
 
 const myRoute = createBrowserRouter(
@@ -44,6 +46,7 @@ const myRoute = createBrowserRouter(
       <Route path="/addproduct" element={<AddProduct/>} />
       <Route path="/seller-profile" element={<SellerProfile />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/reset-password" element={<ResetPassword/>} />
 
       {/* Routes WITH Header & Footer via App */}
       <Route path="/" element={<App />}>

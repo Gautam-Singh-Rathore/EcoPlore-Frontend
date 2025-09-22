@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../../api/axiosInstance';
 import MyLoader from '../../utils/MyLoader';
 import { UserContext } from '../../context/UserContext';
+import VerifyOTP from '../VerifyOTP';
+import ResetPassword from '../ResetPassword';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -13,42 +15,112 @@ export function LoginForm() {
   const navigate = useNavigate();
   const [isLoading , setIsLoading] = useState(false);
   const {setIsLoggedIn} = useContext(UserContext);
+  const [showOTP, setShowOTP] = useState(false);
+  
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    if (!email || !password) {
-      toast.error('Email and password are required!');
-      setIsLoading(false);
-      return;
+
+
+  // otp verification 
+    const handleVerifyOTP = async (otp) => {
+  
+  try {
+    const response = await axiosInstance.post("/auth/verify-otp", {
+      email: email, 
+      otp: otp,
+    });
+console.log(response);
+    
+    if (response.status === 200) {
+      console.log("OTP Verification Response:", response.data);
+      toast.success(response.data);
+     setEmail('');
+      setPassword('');
+      setIsLoggedIn(true);
+      navigate('/');
     }
-
-    try {
-      setIsLoading(true)
-      const response = await axiosInstance.post('/auth/login', {
-        email,
-        password
-      });
-
-      if(response.status==200){
-        toast.success('User Logged In');
-      }
+  } catch (error) {
+    
+    if (error.response) {
       
+      console.error("Server Error:", error.response.data);
+      toast.error(error.response.data || "Failed to verify OTP");
+    } else if (error.request) {
+      
+      console.error("No response from server:", error.request);
+      toast.error("No response from server. Please try again.");
+    } else {
+      
+      console.error("Error:", error.message);
+      toast.error("Failed to verify OTP: " + error.message);
+    }
+  }
+};
+
+  const handleResendOTP = async () => {
+  try {
+    const response = await axiosInstance.post("/auth/resend-otp", {
+      email: email
+    });
+
+    if (response.status === 200) {
+      toast.success(response.data);
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data || "Failed to resend OTP");
+    } else if (error.request) {
+      toast.error("No response from server. Please try again.");
+    } else {
+      toast.error("Failed to resend OTP: " + error.message);
+    }
+  }
+};
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  if (!email || !password) {
+    toast.error('Email and password are required!');
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const response = await axiosInstance.post('/auth/login', {
+      email,
+      password
+    });
+
+    if (response.status === 200) {
+      toast.success('User Logged In');
       setEmail('');
       setPassword('');
       setIsLoggedIn(true);
       navigate('/');
-    } catch (error) {
-      
-      toast.error(error?.response?.data?.msg || 'Login failed');
-    } finally {
-    setIsLoading(false); // ensures loading is always turned off
-  }
-  };
+    }
+  } catch (error) {
+    console.error(error);
 
+    if (error?.response?.status === 400) {
+      // Open OTP verify component
+      handleResendOTP();
+      setShowOTP(true);
+      toast.error(error?.response?.data || 'Please verify your email');
+    } else {
+      const message =
+        error?.response?.data?.msg ||
+        error?.response?.data ||
+        'Login failed';
+      toast.error(message);
+    }
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">  
+   <div>
+     <div className="min-h-screen flex items-center justify-center bg-green-50">  
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
         {/* Logo and Heading */}
         <div className="flex items-center justify-center mb-6">
@@ -84,8 +156,9 @@ export function LoginForm() {
 
         {/* Links */}
         <div className="flex justify-between items-center text-sm text-green-600 mt-4">
-          <Link to="#" className="hover:underline">Forgot your password?</Link>
-          <Link to="/register" className="hover:underline">Create Account</Link>
+          <button  onClick={()=>(navigate("/reset-password"))} className="hover:underline cursor-pointer" >Forgot your password?</button>
+          {/* <Link onClick={()=>{setshowResetPassword(true)}} className="hover:underline">Forgot your password?</Link> */}
+          <Link to="/register" className="hover:underline cursor-pointer">Create Account</Link>
         </div>
 
         {/* Divider */}
@@ -129,5 +202,22 @@ export function LoginForm() {
         )
       }
     </div>
+     <div>
+     
+      
+    
+     </div>
+   <div>
+     {showOTP && (
+        <VerifyOTP
+          onVerify={handleVerifyOTP}
+          onResend={handleResendOTP}
+          onClose={() => setShowOTP(false)}
+        />
+      )}
+   </div>
+
+    
+   </div>
   );
 }

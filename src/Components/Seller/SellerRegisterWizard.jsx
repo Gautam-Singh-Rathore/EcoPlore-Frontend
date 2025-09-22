@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import logo from "../../assets/Images/logo.png";
 import { ArrowLeft } from "lucide-react";
-import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
+import MyLoader from "../../utils/MyLoader";
+import VerifyOTP from "../VerifyOTP";
 
 const SellerRegisterWizard = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [loading,setIsLoading] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+
+//otp verification
+
+
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -27,24 +35,86 @@ const SellerRegisterWizard = () => {
     IFSCCode: ""
   });
 
+//verify otp
+
+ const handleVerifyOTP = async (otp) => {
+  
+  try {
+    const response = await axiosInstance.post("/auth/verify-otp", {
+      email: formData.email, 
+      otp: otp,
+    });
+console.log(response);
+    
+    if (response.status === 200) {
+      console.log("OTP Verification Response:", response.data);
+      toast.success(response.data);
+      navigate("/login");
+    }
+  } catch (error) {
+    
+    if (error.response) {
+      
+      console.error("Server Error:", error.response.data);
+      toast.error(error.response.data || "Failed to verify OTP");
+    } else if (error.request) {
+      
+      console.error("No response from server:", error.request);
+      toast.error("No response from server. Please try again.");
+    } else {
+      
+      console.error("Error:", error.message);
+      toast.error("Failed to verify OTP: " + error.message);
+    }
+  }
+};
+
+  const handleResendOTP = async () => {
+  try {
+    const response = await axiosInstance.post("/auth/resend-otp", {
+      email: formData.email
+    });
+
+    if (response.status === 200) {
+      toast.success(response.data);
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data || "Failed to resend OTP");
+    } else if (error.request) {
+      toast.error("No response from server. Please try again.");
+    } else {
+      toast.error("Failed to resend OTP: " + error.message);
+    }
+  }
+};
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       const response = await axiosInstance.post(
         "/auth/seller/signup",
         formData
       );
+      if (response.status == 200) {
+        toast.success(
+          "Seller registered successfully. Please check your email for OTP verification."
+        );
+        setShowOTP(true);
+      }
       console.log("✅ Registered successfully:", response.data);
-      toast.success("Seller registered!");
-      navigate("/");
+      
     } catch (error) {
       console.error("❌ Registration failed:", error);
       toast.error(error?.response?.data?.msg || "Registration failed." )
       
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -276,7 +346,8 @@ const SellerRegisterWizard = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">
+   <div>
+     <div className="min-h-screen flex items-center justify-center bg-green-50">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg relative">
         {/* Logo and Back */}
         <div className="absolute top-4 left-4">
@@ -329,6 +400,17 @@ const SellerRegisterWizard = () => {
         
       </div>
     </div>
+    {showOTP && (
+        <VerifyOTP
+          onVerify={handleVerifyOTP}
+          onResend={handleResendOTP}
+          onClose={() => setShowOTP(false)}
+        />
+      )}
+    {loading && (
+      <MyLoader/>
+    )}
+   </div>
   );
 };
 
