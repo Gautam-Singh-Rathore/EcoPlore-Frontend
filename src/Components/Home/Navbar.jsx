@@ -17,7 +17,7 @@ export default function Navbar(){
     const [searchQuery, setSearchQuery] = useState("");
     
 const handleSearch = (e) => {
-  e.preventDefault();                  // prevent page reload
+  e.preventDefault();
   if (searchQuery.trim() !== "") {
     navigate(`/search/${encodeURIComponent(searchQuery.trim())}`);
   }
