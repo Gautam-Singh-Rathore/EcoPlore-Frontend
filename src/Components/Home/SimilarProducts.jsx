@@ -11,11 +11,11 @@ import { useNavigate } from 'react-router-dom';
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
           {products[0]?.subCategoryName}
         </h2>
-        <button 
+        {/* <button 
       
         className="text-green-600 text-sm sm:text-base md:text-lg font-medium hover:underline cursor-pointer">
           View All
-        </button>
+        </button> */}
       </div>
 
       <div className="flex overflow-x-auto space-x-4 scrollbar-hide pb-2">
