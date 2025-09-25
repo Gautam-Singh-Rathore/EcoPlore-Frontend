@@ -31,6 +31,8 @@ import AboutUs from "../Components/Terms&Conditions/AboutUs";
 import Careers from "../Components/Terms&Conditions/Careers";
 import VerifyOTP from "../Components/VerifyOTP";
 import ResetPassword from "../Components/ResetPassword";
+import SearchProducts from "../pages/Products/SearchProducts";
+import ScrollToTop from "../Components/ScrollTop";
 
 
 const myRoute = createBrowserRouter(
@@ -63,6 +65,7 @@ const myRoute = createBrowserRouter(
         <Route path="/support" element={<CustomerSupport/>} />
         <Route path="/about" element={<AboutUs/>} />
         <Route path="/careers" element={<Careers/>} />
+         <Route path="/search/:name" element={<SearchProducts />} />
         
       
       </Route>

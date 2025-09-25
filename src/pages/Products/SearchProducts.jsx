@@ -1,42 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../../Components/Product/ProductCard";
 import MyLoader from "../../utils/MyLoader";
-import { useParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
+import { useParams } from "react-router-dom";
 
-const SubCategoryProducts = () => {
-  const { id } = useParams();
-  const [data, setData] = useState([]);
+const SearchProducts = () => {
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const fetchData = async() => {
+  const { name } = useParams();
+
+  const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(`public/product/sub_category/${id}`);
-      if (response.status == 200) {
-        setData(response.data);
-        console.log(data);
+      const response = await axiosInstance.get(`public/product/search/${name}`);
+      if (response.status === 200) {
+        setProducts(response.data);
       }
     } catch (error) {
       console.error("Error fetching products:", error);
-      return <div>No Product Found</div>;
+      setProducts([]); // ensures "No Product Found" message
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[id]);
+  }, [name]);
 
-  if(isLoading){
-    return (
-      <div>
-        <MyLoader/>
-      </div>
-    )
+  if (isLoading) {
+    return <MyLoader />;
   }
 
-  if (data.length === 0) {
+  if (products.length === 0) {
     return (
       <div className="w-full text-center py-10 text-gray-500">
         No Product Found
@@ -46,11 +42,11 @@ const SubCategoryProducts = () => {
 
   return (
     <div className="flex flex-col gap-4 pt-4">
-      {data.map((product) => (
+      {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );
 };
 
-export default SubCategoryProducts;
+export default SearchProducts;

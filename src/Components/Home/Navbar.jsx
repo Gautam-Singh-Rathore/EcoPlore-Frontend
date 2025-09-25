@@ -7,13 +7,21 @@ import { IoReorderThreeOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+
 
 
 export default function Navbar(){
     const {userId , userRole } = useContext(UserContext);
-
+    const [searchQuery, setSearchQuery] = useState("");
+    
+const handleSearch = (e) => {
+  e.preventDefault();                  // prevent page reload
+  if (searchQuery.trim() !== "") {
+    navigate(`/search/${encodeURIComponent(searchQuery.trim())}`);
+  }
+};
     const navigate = useNavigate();
 
     return (
@@ -31,9 +39,10 @@ export default function Navbar(){
     
             {/* Searchbar - show only on medium and above */}
             <div className="hidden md:flex flex-grow px-6">
-              <form className="flex w-full max-w-2xl mx-auto">
+              <form className="flex w-full max-w-2xl mx-auto" onSubmit={handleSearch}>
                 <input
                   type="text"
+                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search..."
                   className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md  outline-none "
                 />
@@ -100,9 +109,10 @@ export default function Navbar(){
     
           {/* Searchbar on small screens (mobile) */}
           <div className="md:hidden mt-2 ">
-            <form className="flex w-full ">
+            <form className="flex w-full " onSubmit={handleSearch}>
               <input
                 type="text"
+                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search..."
                 className="flex-grow px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
