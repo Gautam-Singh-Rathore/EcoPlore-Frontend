@@ -3,7 +3,7 @@ import { Leaf, Recycle, Footprints } from "lucide-react";
 
 const AboveFooter = () => {
   return (
-    <section className="w-full bg-green-50 py-8 px-3 sm:py-10 sm:px-4">
+    <section className="w-full bg-[#edf1f1] py-8 px-3 sm:py-10 sm:px-4">
       {/* Heading */}
       <h2 className="text-center text-xl sm:text-2xl md:text-3xl font-semibold text-green-900 mb-6 sm:mb-8">
         Shop Only Sustainable Products
