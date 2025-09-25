@@ -340,8 +340,8 @@ const ProductInfo = ({ product }) => {
       <strong className="text-green-800">Sold By:</strong> {product.sellerCompany}
     </p>
 
-    {/* Optional: Add a subtle divider at the bottom */}
-    <div className="border-t border-green-100 mt-4"></div>
+   
+   
   </div>
 );
 };
