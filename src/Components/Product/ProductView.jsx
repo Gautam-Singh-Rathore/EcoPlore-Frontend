@@ -24,6 +24,10 @@ const ProductView = ({ product }) => {
   const { userId } = useContext(UserContext);
   const navigate = useNavigate();
 
+  if(product.noOfUnits === 0){
+    setoutOfStock(true);
+  }
+
   const cartExistanceCheck = async () => {
     try {
       const response = await axiosInstance.get(
@@ -36,6 +40,8 @@ const ProductView = ({ product }) => {
       console.error("Error in fetching cartExistance", error);
     }
   };
+
+
 
   const addToCart = async (e) => {
     if (e) e.preventDefault();
@@ -171,27 +177,35 @@ const ProductView = ({ product }) => {
 
         {/* Buttons for large screens */}
         <div className="hidden lg:flex gap-4 mt-6">
-          {inCart ? (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/cart");
-              }}
-              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
-            >
-              View in Cart
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleCartClick}
-              disabled={cartLoading}
-              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer disabled:opacity-50"
-            >
-              {cartLoading ? "Adding..." : "Add to Cart"}
-            </button>
-          )}
+         {outOfStock ? (
+  <button
+    type="button"
+    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+  >
+    Out of Stock
+  </button>
+) : inCart ? (
+  <button
+    type="button"
+    onClick={(e) => {
+      e.preventDefault();
+      navigate("/cart");
+    }}
+    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+  >
+    View in Cart
+  </button>
+) : (
+  <button
+    type="button"
+    onClick={handleCartClick}
+    disabled={cartLoading}
+    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer disabled:opacity-50"
+  >
+    {cartLoading ? "Adding..." : "Add to Cart"}
+  </button>
+)}
+          
 
           {inWishlist ? (
             <button
@@ -229,7 +243,15 @@ const ProductView = ({ product }) => {
 
       {/* Fixed Buttons at bottom for mobile/small screens */}
       <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around p-4 border-t border-gray-300 z-50">
-        {inCart ? (
+        {outOfStock ? (
+          <button
+            type="button"
+            
+            className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+          >
+            Out of Stock
+          </button>
+        ) : inCart ? (
           <button
             type="button"
             onClick={(e) => {
@@ -249,7 +271,8 @@ const ProductView = ({ product }) => {
           >
             {cartLoading ? "Adding..." : "Add to Cart"}
           </button>
-        )}
+        ) }
+        
 
         {inWishlist ? (
           <button
@@ -280,41 +303,47 @@ const ProductView = ({ product }) => {
 const ProductInfo = ({ product }) => {
   const descRef = useRef(null);
 
-  return (
-    <div className="p-4 bg-white space-y-4 min-h-fit">
-      {/* Product Name */}
-      <h2 className="text-2xl font-bold lg:text-3xl">{product.name}</h2>
+ return (
+  <div className="p-6 bg-white rounded-xl shadow-md space-y-6 min-h-fit border border-green-100">
+    
+    {/* Product Name */}
+    <h2 className="text-3xl lg:text-4xl font-extrabold text-green-800 tracking-tight">
+      {product.name}
+    </h2>
 
-      {/* Product Price */}
-      <p className="text-xl lg:text-2xl text-green-600 font-semibold py-1">
-        ₹{product.price}
-      </p>
+    {/* Product Price */}
+    <p className="text-2xl lg:text-3xl text-green-600 font-bold py-1">
+      ₹{product.price}
+    </p>
 
-      {/* Units left in red if < 10 */}
-      {product.noOfUnits < 10 && (
-        <p className="text-red-500">{product.noOfUnits} items left!</p>
-      )}
+    {/* Units left in red if < 10 */}
+    {product.noOfUnits < 10 && (
+      <p className="text-red-600 font-semibold">{product.noOfUnits} items left!</p>
+    )}
 
-      {/* Product Details */}
-      <div className="bg-slate-50 py-1 my-2 lg:my-4 lg:text-xl font-medium">
-        Details:
-      </div>
-      <p className="text-gray-700">{product.details}</p>
-
-      {/* Product Description */}
-      <div className="bg-slate-50 py-1 my-2 lg:my-4 lg:text-xl font-medium">
-        Description:
-      </div>
-      <p ref={descRef} className="text-gray-600">
-        {product.description}
-      </p>
-
-      {/* Seller Company */}
-      <p className="text-gray-700 text-sm mt-2 py-3">
-        <strong>Sold By:</strong> {product.sellerCompany}
-      </p>
+    {/* Product Details */}
+    <div className="bg-green-50 py-2 px-3 rounded-md lg:my-2 text-green-700 font-semibold text-lg">
+      Details
     </div>
-  );
+    <p className="text-gray-700 text-base lg:text-lg">{product.details}</p>
+
+    {/* Product Description */}
+    <div className="bg-green-50 py-2 px-3 rounded-md lg:my-2 text-green-700 font-semibold text-lg">
+      Description
+    </div>
+    <p ref={descRef} className="text-gray-600 text-base lg:text-lg leading-relaxed">
+      {product.description}
+    </p>
+
+    {/* Seller Company */}
+    <p className="text-gray-700 text-sm lg:text-base mt-3 py-2">
+      <strong className="text-green-800">Sold By:</strong> {product.sellerCompany}
+    </p>
+
+    {/* Optional: Add a subtle divider at the bottom */}
+    <div className="border-t border-green-100 mt-4"></div>
+  </div>
+);
 };
 
 export default ProductView;
