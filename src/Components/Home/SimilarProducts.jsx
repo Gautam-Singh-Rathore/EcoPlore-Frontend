@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
     const navigate = useNavigate();
    
   return (
-    <div className="px-2 md:px-10 py-6 bg-[#edf1f1]">
+    <div className="px-2 md:px-10 py-6 pt-8 md:pt-10 bg-[#edf1f1]">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
           {products[0]?.subCategoryName}
