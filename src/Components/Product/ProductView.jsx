@@ -19,6 +19,7 @@ const ProductView = ({ product }) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
+  const [outOfStock, setoutOfStock] = useState(false);
   
   const { userId } = useContext(UserContext);
   const navigate = useNavigate();
