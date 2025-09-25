@@ -8,6 +8,7 @@ import { CategoryGrid, CategorySlider } from '../../Components/Home/Catagories';
 
 export const CategoriesContainer = () => {
   const [categories, setCategories] = useState([]);
+  const [subcategories,setSubcategories] = useState([]);
   
 
   useEffect(() => {
@@ -16,6 +17,11 @@ export const CategoriesContainer = () => {
         const response = await axiosInstance.get("public/category/all");
         if (response.status === 200) {
           setCategories(response.data);
+        }
+        const subresponse = await axiosInstance.get("public/category/sub/all");
+        if(subresponse.status == 200){
+          setSubcategories(subresponse.data);
+          console.log(subresponse)
         }
       } catch (error) {
         console.error(error);
@@ -30,7 +36,7 @@ export const CategoriesContainer = () => {
       {/* Mobile Version */}
       <div className="overflow-x-auto  px-3 py-4 md:hidden bg-[#edf1f1] ">
         <div className="flex space-x-4 sm:space-x-12 md:space-x-10 lg:space-x-12">
-          {categories.map((category) => (
+          {subcategories.map((category) => (
             <CategorySlider category={category} key={category.id} />
           ))}
         </div>

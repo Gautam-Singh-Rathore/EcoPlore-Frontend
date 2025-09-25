@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
     return (
        <div
       onClick={() => {
-        navigate(`products/category/${category.id}`);
+        navigate(`products/sub-category/${category.id}`);
       }}
       key={category.id}
       className="flex flex-col items-center justify-center min-w-[80px] max-w-[100px] text-center"
     >
       <img
-        src={category.img}
+        src={category.imageUrl}
         alt={category.name}
         className="w-12 h-12 object-contain rounded-full border border-gray-200 shadow-2xl shadow-slate-100"
       />

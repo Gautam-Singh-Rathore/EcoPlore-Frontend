@@ -110,10 +110,15 @@ console.log(response);
       console.log("✅ Registered successfully:", response.data);
       
     } catch (error) {
-      console.error("❌ Registration failed:", error);
-      toast.error(error?.response?.data?.msg || "Registration failed." )
-      
-    }finally{
+  console.error("❌ Registration failed:", error);
+
+  const backendMsg = 
+    typeof error?.response?.data === "string"
+      ? error.response.data
+      : error?.response?.data?.msg;
+
+  toast.error(backendMsg || "Registration failed.");
+}finally{
       setIsLoading(false);
     }
   };
