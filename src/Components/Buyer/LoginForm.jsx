@@ -101,7 +101,7 @@ const handleLogin = async (e) => {
   } catch (error) {
     console.error(error);
 
-    if (error?.response?.status === 400) {
+    if (error?.response?.status === 401) {
       // Open OTP verify component
       handleResendOTP();
       setShowOTP(true);
