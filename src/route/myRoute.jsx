@@ -33,6 +33,8 @@ import VerifyOTP from "../Components/VerifyOTP";
 import ResetPassword from "../Components/ResetPassword";
 import SearchProducts from "../pages/Products/SearchProducts";
 import ScrollToTop from "../Components/ScrollTop";
+import Dashboard from "../pages/Seller/Dashboard";
+import ProfileNew from "../pages/Seller/SellerProfileNew";
 
 
 const myRoute = createBrowserRouter(
@@ -41,7 +43,7 @@ const myRoute = createBrowserRouter(
       {/* Routes WITHOUT Header & Footer */}
       <Route path="/login" element={<LoginForm />} />
       <Route path="/register" element={<RegisterForm />} />
-      <Route path="/seller-login" element={<SellerLogin />} />
+      {/* <Route path="/seller-login" element={<SellerLogin />} /> */}
       <Route path="/register-seller" element={<SellerRegisterWizard />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/wishlist" element={<Wishlist />} />
@@ -49,6 +51,9 @@ const myRoute = createBrowserRouter(
       <Route path="/seller-profile" element={<SellerProfile />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/reset-password" element={<ResetPassword/>} />
+      {/* new  */}
+      <Route path="/seller-dashboard" element={<Dashboard/>} />
+      <Route path="/seller-profile1" element={<ProfileNew/>} />
 
       {/* Routes WITH Header & Footer via App */}
       <Route path="/" element={<App />}>

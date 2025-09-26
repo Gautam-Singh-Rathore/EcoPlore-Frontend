@@ -57,7 +57,6 @@ const Profile = () => {
           <BoxCard icon={Heart} label="Wishlist" onClick={() => handleNavigation('wishlist')} />
         </div>
         <OptionsCard label="Cart" onClick={() => handleNavigation('cart')} />
-        <OptionsCard label="Address" onClick={() => handleNavigation('address')} />
         <OptionsCard label="Logout" onClick={() => navigate("/logout")} />
       </div>
 
