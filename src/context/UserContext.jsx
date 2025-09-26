@@ -28,7 +28,7 @@ export const UserProvider = ({children})=>{
         fetchUser();
     },[isLoggedIn])
 
-    const value = {userId , userRole, isLoggedIn , setIsLoggedIn}
+    const value = {userId , userRole, isLoggedIn , setIsLoggedIn, setUserId,setUserRole }
     console.log(value);
 
     return(

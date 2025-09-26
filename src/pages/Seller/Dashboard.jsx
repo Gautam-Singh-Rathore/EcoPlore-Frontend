@@ -5,8 +5,42 @@ import { Leaf, BarChart3, Package, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Home,Plus, User } from "lucide-react";
 import logo from '../../assets/Images/greenplore.png'
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
+import MyLoader from "../../utils/MyLoader";
+import axiosInstance from "../../api/axiosInstance";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const {userId, setIsLoggedIn, setUserId,setUserRole} = useContext(UserContext);
+  const [isLoading , setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async ()=> {
+    setIsLoading(true);
+    try {
+        const response = await axiosInstance.post('/auth/logout');
+        if(response.status === 200){
+          setIsLoggedIn(false);
+          setUserId(null);
+          setUserRole(null);
+          toast.success("Logged out Successfully!")
+          navigate('/login')
+          
+        }
+    } catch (error) {
+      const message =
+        error?.response?.data?.msg ||
+        error?.response?.data ||
+        'Login failed';
+      toast.error(message);
+    }finally{
+      setIsLoading(false);
+    }
+  }
+
      const features = [
     {
       icon: Home,
@@ -37,6 +71,13 @@ const Dashboard = () => {
       color: "bg-green-500"
     }
   ];
+
+  if(isLoading){
+    return(
+      <MyLoader/>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[#edf1f1] from-green-100 to-green-50">
       {/* Header */}
@@ -49,13 +90,15 @@ const Dashboard = () => {
             </div>
 <div className="flex items-center gap-3">
   <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-green-600 rounded-full flex items-center justify-center">
-    <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-white">JS</span>
+    <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-white">{userId?.charAt(0).toUpperCase()}</span>
   </div>
   <div className="hidden sm:block">
-    <p className="text-sm md:text-base font-medium text-gray-900">John Seller</p>
-    <p className="text-xs md:text-sm text-gray-500">Seller</p>
+    <p className="text-sm md:text-base font-medium text-gray-900">{userId}</p>
+    {/* <p className="text-xs md:text-sm text-gray-500">Seller</p> */}
   </div>
-  <button className="px-3 py-1 sm:ml-2 md:ml-4 lg:ml-6 text-sm font-medium bg-green-600 text-white rounded-md hover:bg-red-600 transition-colors">
+  <button
+   onClick={handleLogout}
+  className="px-3 py-1 sm:ml-2 md:ml-4 lg:ml-6 text-sm font-medium bg-green-600 text-white rounded-md hover:bg-red-600 transition-colors">
     Logout
   </button>
 </div>

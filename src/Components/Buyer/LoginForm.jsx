@@ -92,11 +92,13 @@ const handleLogin = async (e) => {
     });
 
     if (response.status === 200) {
-      toast.success('User Logged In');
+      
       setEmail('');
       setPassword('');
       setIsLoggedIn(true);
-      navigate('/');
+      console.log(response.data);
+      handleNavigate();
+      
     }
   } catch (error) {
     console.error(error);
@@ -117,6 +119,28 @@ const handleLogin = async (e) => {
     setIsLoading(false);
   }
 };
+
+const handleNavigate = async ()=>{
+  setIsLoading(true);
+  try {
+      const response = await axiosInstance.get("/private/me");
+      if(response.data.role === 'SELLER'){
+        toast.success('Seller Logged In');
+         navigate('/seller-dashboard')
+      }else{
+        toast.success('User Logged In');
+        navigate('/');
+      }
+  } catch (error) {
+    const message =
+        error?.response?.data?.msg ||
+        error?.response?.data ||
+        'Login failed';
+      toast.error(message);
+  }finally {
+    setIsLoading(false);
+  }
+}
 
   return (
    <div>
