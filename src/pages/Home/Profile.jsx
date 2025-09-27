@@ -6,6 +6,11 @@ import BoxCard from '../../Components/Profile/BoxCard'
 import { Package,Heart } from 'lucide-react';
 import Cart from '../Home/Cart'
 import Wishlist from '../Home/Wishlist'
+import MyLoader from '../../utils/MyLoader'
+import { useContext } from 'react'
+import { UserContext } from '../../context/UserContext'
+import toast from 'react-hot-toast'
+import axiosInstance from '../../api/axiosInstance'
 
 
 // Dummy components for right-side content
@@ -19,6 +24,9 @@ const AddressPage = () => <div>Address Page Content</div>;
 const Profile = () => {
   const navigate = useNavigate();
   const [selectedPage, setSelectedPage] = useState('orders');
+  const { setIsLoggedIn, setUserId,setUserRole} = useContext(UserContext);
+    const [isLoading , setIsLoading] = useState(false);
+    
 
 
   const renderPage = () => {
@@ -39,6 +47,36 @@ const Profile = () => {
     }
   };
 
+  const handleLogout = async ()=> {
+    setIsLoading(true);
+    try {
+        const response = await axiosInstance.post('/auth/logout');
+        if(response.status === 200){
+          setIsLoggedIn(false);
+          setUserId(null);
+          setUserRole(null);
+          toast.success("Logged out Successfully!")
+          navigate('/login')
+          
+        }
+    } catch (error) {
+      const message =
+        error?.response?.data?.msg ||
+        error?.response?.data ||
+        'Login failed';
+      toast.error(message);
+    }finally{
+      setIsLoading(false);
+    }
+  }
+
+
+  if(isLoading){
+    return(
+      <MyLoader/>
+    )
+  }
+  
   return (
     <div className='flex h-screen bg-slate-50 overflow-hidden'>
 
@@ -57,7 +95,7 @@ const Profile = () => {
           <BoxCard icon={Heart} label="Wishlist" onClick={() => handleNavigation('wishlist')} />
         </div>
         <OptionsCard label="Cart" onClick={() => handleNavigation('cart')} />
-        <OptionsCard label="Logout" onClick={() => navigate("/logout")} />
+        <OptionsCard label="Logout" onClick={handleLogout} />
       </div>
 
       {/* Right Content Area - only visible on large screens */}
