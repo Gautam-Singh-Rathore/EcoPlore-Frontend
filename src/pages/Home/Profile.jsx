@@ -25,7 +25,7 @@ const CartPage = () => <div><Cart/></div>;
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [selectedPage, setSelectedPage] = useState('orders');
+  const [selectedPage, setSelectedPage] = useState('my-orders');
   const { setIsLoggedIn, setUserId,setUserRole} = useContext(UserContext);
   const [isLoading , setIsLoading] = useState(false);
   const [editMoode, setEditMode] = useState(false);
@@ -39,7 +39,7 @@ const Profile = () => {
 
   const renderPage = () => {
     switch (selectedPage) {
-      case 'orders': return <OrdersPage />;
+      case 'my-orders': return <OrdersPage />;
       case 'wishlist': return <WishlistPage />;
       case 'cart': return <CartPage />;
       case 'address': return <AddressPage />;
@@ -149,7 +149,7 @@ const handleEditProfile = async (updatedData)=>{
         />
 
         <div className="flex items-center justify-center p-4 px-2 gap-2">
-          <BoxCard icon={Package} label="Orders" onClick={() => handleNavigation('orders')} />
+          <BoxCard icon={Package} label="Orders" onClick={() => handleNavigation('my-orders')} />
           <BoxCard icon={Heart} label="Wishlist" onClick={() => handleNavigation('wishlist')} />
         </div>
          <OptionsCard label="Edit Profile" onClick={()=>{setEditMode(true)}} />

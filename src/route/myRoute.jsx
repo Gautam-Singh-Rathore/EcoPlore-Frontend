@@ -64,6 +64,7 @@ const myRoute = createBrowserRouter(
       <Route path="/edit-product/:productId" element={<EditProduct/>} />
       <Route path="/seller-product-view/:id" element={<SellerProductViewPage/>} />
       <Route path="/manage-orders" element={<ManageOrders/>}/>
+        <Route path="/my-orders" element={<BuyerOrders/>} />
      
 
       {/* Routes WITH Header & Footer via App */}
@@ -82,7 +83,7 @@ const myRoute = createBrowserRouter(
         <Route path="/about" element={<AboutUs/>} />
         <Route path="/careers" element={<Careers/>} />
          <Route path="/search/:name" element={<SearchProducts />} />
-          <Route path="/my-orders" element={<BuyerOrders/>} />
+        
 
       </Route>
     </>
