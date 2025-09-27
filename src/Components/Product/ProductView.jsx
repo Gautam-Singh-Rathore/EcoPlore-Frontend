@@ -14,19 +14,26 @@ const ProductView = ({ product }) => {
   );
   const [inWishlist, setInWishlist] = useState(false);
   const [inCart, setInCart] = useState(false);
-  
+
   // Separate loading states
   const [initialLoading, setInitialLoading] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
-  const [outOfStock, setoutOfStock] = useState(false);
-  
+  const [outOfStock, setOutOfStock] = useState(false); // Corrected state name
+
   const { userId } = useContext(UserContext);
   const navigate = useNavigate();
 
-  if(product.noOfUnits === 0){
-    setoutOfStock(true);
-  }
+  // MODIFICATION: Set the outOfStock state using useEffect.
+  // This correctly handles state updates when the product prop changes.
+  useEffect(() => {
+    if (product && product.noOfUnits <= 0) {
+      setOutOfStock(true);
+    } else {
+      setOutOfStock(false);
+    }
+  }, [product]);
+
 
   const cartExistanceCheck = async () => {
     try {
@@ -40,8 +47,6 @@ const ProductView = ({ product }) => {
       console.error("Error in fetching cartExistance", error);
     }
   };
-
-
 
   const addToCart = async (e) => {
     if (e) e.preventDefault();
@@ -65,7 +70,6 @@ const ProductView = ({ product }) => {
 
   const wishlistExistanceCheck = async () => {
     try {
-      console.log("Product id is", id);
       const response = await axiosInstance.get(
         `/private/wishlist/product-exists/${id}`
       );
@@ -116,14 +120,17 @@ const ProductView = ({ product }) => {
 
   useEffect(() => {
     const fetchInitialData = async () => {
-      await Promise.all([wishlistExistanceCheck(), cartExistanceCheck()]);
+      // Only check if user is logged in
+      if (userId) {
+        await Promise.all([wishlistExistanceCheck(), cartExistanceCheck()]);
+      }
       setInitialLoading(false);
     };
-    
-    fetchInitialData();
-  }, [product]);
 
-  if (!product.images || product.images.length === 0) {
+    fetchInitialData();
+  }, [product, userId]); // Add userId as a dependency
+
+  if (!product || !product.images || product.images.length === 0) {
     return <p className="text-gray-500">No images available</p>;
   }
 
@@ -178,35 +185,35 @@ const ProductView = ({ product }) => {
         {/* Buttons for large screens */}
         <div className="hidden lg:flex gap-4 mt-6">
          {outOfStock ? (
-  <button
-    type="button"
-    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
-  >
-    Out of Stock
-  </button>
-) : inCart ? (
-  <button
-    type="button"
-    onClick={(e) => {
-      e.preventDefault();
-      navigate("/cart");
-    }}
-    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
-  >
-    View in Cart
-  </button>
-) : (
-  <button
-    type="button"
-    onClick={handleCartClick}
-    disabled={cartLoading}
-    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer disabled:opacity-50"
-  >
-    {cartLoading ? "Adding..." : "Add to Cart"}
-  </button>
-)}
+          <button
+            type="button"
+            disabled
+            className="px-6 py-2 bg-gray-400 text-white rounded cursor-not-allowed"
+          >
+            Out of Stock
+          </button>
+        ) : inCart ? (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/cart");
+            }}
+            className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+          >
+            View in Cart
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleCartClick}
+            disabled={cartLoading}
+            className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer disabled:opacity-50"
+          >
+            {cartLoading ? "Adding..." : "Add to Cart"}
+          </button>
+        )}
           
-
           {inWishlist ? (
             <button
               type="button"
@@ -246,8 +253,8 @@ const ProductView = ({ product }) => {
         {outOfStock ? (
           <button
             type="button"
-            
-            className="w-[45%] py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
+            disabled
+            className="w-[45%] py-2 bg-gray-400 text-white rounded cursor-not-allowed"
           >
             Out of Stock
           </button>
@@ -273,7 +280,6 @@ const ProductView = ({ product }) => {
           </button>
         ) }
         
-
         {inWishlist ? (
           <button
             type="button"
@@ -316,8 +322,8 @@ const ProductInfo = ({ product }) => {
       ₹{product.price}
     </p>
 
-    {/* Units left in red if < 10 */}
-    {product.noOfUnits < 10 && (
+    {/* Units left in red if < 10 and not out of stock */}
+    {product.noOfUnits > 0 && product.noOfUnits < 10 && (
       <p className="text-red-600 font-semibold">{product.noOfUnits} items left!</p>
     )}
 
@@ -339,8 +345,6 @@ const ProductInfo = ({ product }) => {
     <p className="text-gray-700 text-sm lg:text-base mt-3 py-2">
       <strong className="text-green-800">Sold By:</strong> {product.sellerCompany}
     </p>
-
-   
    
   </div>
 );

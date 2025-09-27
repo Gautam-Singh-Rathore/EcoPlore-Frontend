@@ -27,7 +27,7 @@ const WishlistCard = ({ product, onRemove }) => {
         <div className="text-xl sm:text-2xl font-bold text-gray-900">
           ₹{product.price}
         </div>
-        <div className="line-clamp-4">{product.description}</div>
+        <div className="line-clamp-2">{product.description}</div>
 
         {/* Remove Button - bottom right */}
         <div className="flex justify-end mt-4">
