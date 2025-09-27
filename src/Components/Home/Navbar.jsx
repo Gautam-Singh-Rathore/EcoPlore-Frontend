@@ -74,10 +74,11 @@ const handleSearch = (e) => {
                 ) : (
                   <VscAccount className="hover:text-green-700 cursor-pointer lg:mx-2 "  
                   onClick={()=>{
-                    if(userRole=="CUSTOMER")
-                      navigate("/profile")
-                    else if(userRole=="SELLER")
-                      navigate("/seller-profile");
+                    // if(userRole=="CUSTOMER")
+                    //   navigate("/profile")
+                    // else if(userRole=="SELLER")
+                    //   navigate("/seller-profile");
+                    navigate('/profile');
                   }} />
                 )
                }

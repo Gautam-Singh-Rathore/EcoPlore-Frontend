@@ -67,7 +67,7 @@ const Dashboard = () => {
       icon: User,
       title: "Profile Management",
       description: "Update your seller profile and store settings",
-      link: "/dashboard/profile",
+      link: "/seller-profile",
       color: "bg-green-500"
     }
   ];

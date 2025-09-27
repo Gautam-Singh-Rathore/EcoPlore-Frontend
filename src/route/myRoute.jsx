@@ -48,12 +48,12 @@ const myRoute = createBrowserRouter(
       <Route path="/cart" element={<Cart />} />
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/addproduct" element={<AddProduct/>} />
-      <Route path="/seller-profile" element={<SellerProfile />} />
+      {/* <Route path="/seller-profile" element={<SellerProfile />} /> */}
       <Route path="/profile" element={<Profile />} />
       <Route path="/reset-password" element={<ResetPassword/>} />
       {/* new  */}
       <Route path="/seller-dashboard" element={<Dashboard/>} />
-      <Route path="/seller-profile1" element={<ProfileNew/>} />
+      <Route path="/seller-profile" element={<ProfileNew/>} />
 
       {/* Routes WITH Header & Footer via App */}
       <Route path="/" element={<App />}>
