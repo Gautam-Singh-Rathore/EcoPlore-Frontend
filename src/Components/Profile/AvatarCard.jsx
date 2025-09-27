@@ -1,6 +1,6 @@
 const AvatarCard = ({ firstName, lastName, mobile, email, createdAt }) => {
   // Calculate initials from firstName and lastName
-  const initials = `${firstName[0] || ''}${lastName[0] || ''}`;
+  const initials = `${firstName?.[0] || ''}${lastName?.[0] || ''}`;
 
   return (
     <div className="relative bg-white rounded-lg  w-full   p-4 pt-28  "> {/* increased pt-16 to pt-28 */}
