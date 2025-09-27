@@ -138,7 +138,7 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
   return (
     <div className="w-full">
       {/* Top Address Bar */}
-      <div className="bg-white shadow-md py-3 px-4 flex items-center justify-between sticky top-0 z-10 md:px-12">
+      <div className="bg-[#edf1f1]  py-3 px-4 flex items-center justify-between sticky top-0 z-10 md:px-12">
         <div className="flex items-center gap-3 min-w-0 ">
           <div className="bg-blue-50 p-2 rounded-full shrink-0">
             <FiMapPin className="text-green-600 text-xl" />

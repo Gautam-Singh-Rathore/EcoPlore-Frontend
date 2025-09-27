@@ -12,14 +12,15 @@ import { UserContext } from '../../context/UserContext'
 import toast from 'react-hot-toast'
 import axiosInstance from '../../api/axiosInstance'
 import ProfileEditForm from '../../Components/Buyer/ProfileEditForm'
+import BuyerOrders from './BuyerOrders'
 
 
 // Dummy components for right-side content
 
-const OrdersPage = () => <div>Orders Page Content</div>;
+const OrdersPage = () => <div><BuyerOrders/></div>;
 const WishlistPage = () => <div><Wishlist/></div>;
 const CartPage = () => <div><Cart/></div>;
-const AddressPage = () => <div>Address Page Content</div>;
+
 
 
 const Profile = () => {
@@ -123,7 +124,7 @@ const handleEditProfile = async (updatedData)=>{
   }
   
   return (
-    <div className='flex h-screen bg-slate-50 overflow-hidden'>
+    <div className='flex h-screen bg-[#edf1f1] overflow-hidden'>
 
       
 

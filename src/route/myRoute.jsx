@@ -39,6 +39,8 @@ import ManageProducts from "../pages/Products/ManageProducts";
 import EditProduct from "../pages/Products/EditProduct";
 import SellerProductView from "../Components/Product/SellerProductView";
 import SellerProductViewPage from "../pages/Products/SellerProductViewPage";
+import ManageOrders from "../pages/Products/ManageOrders";
+import BuyerOrders from "../pages/Home/BuyerOrders";
 
 
 const myRoute = createBrowserRouter(
@@ -60,7 +62,9 @@ const myRoute = createBrowserRouter(
       <Route path="/seller-profile" element={<ProfileNew/>} />
       <Route path="/manage-products" element={<ManageProducts/>} />
       <Route path="/edit-product/:productId" element={<EditProduct/>} />
-      <Route path="seller-product-view/:id" element={<SellerProductViewPage/>} />
+      <Route path="/seller-product-view/:id" element={<SellerProductViewPage/>} />
+      <Route path="/manage-orders" element={<ManageOrders/>}/>
+     
 
       {/* Routes WITH Header & Footer via App */}
       <Route path="/" element={<App />}>
@@ -78,6 +82,7 @@ const myRoute = createBrowserRouter(
         <Route path="/about" element={<AboutUs/>} />
         <Route path="/careers" element={<Careers/>} />
          <Route path="/search/:name" element={<SearchProducts />} />
+          <Route path="/my-orders" element={<BuyerOrders/>} />
 
       </Route>
     </>

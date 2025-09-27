@@ -6,8 +6,8 @@ import MyLoader from "../../utils/MyLoader";
 import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
-// MODIFICATION: InputField component moved outside of the AddProduct component.
-// This prevents it from being re-created on every render, which fixes the focus issue.
+
+
 const InputField = ({ label, value, setValue, type = "text", placeholder }) => (
   <div>
     <label className="block mb-2 text-sm font-medium text-gray-700">{label}</label>

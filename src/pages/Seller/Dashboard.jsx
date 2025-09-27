@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../../Components/SellerDashboard/buttonVariants";
 import { Card, CardContent } from "../../Components/SellerDashboard/Card";
-import { Leaf, BarChart3, Package, Shield,LayoutDashboard } from "lucide-react";
+import { Leaf, BarChart3, Package, Shield,LayoutDashboard,Truck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Home, Plus, User } from "lucide-react";
 import logo from "../../assets/Images/greenplore.png";
@@ -41,12 +41,12 @@ const Dashboard = () => {
 
   const features = [
     {
-      icon: Home,
-      title: "Dashboard Overview",
-      description: "View sales analytics, recent orders, and business insights",
-      link: "/dashboard",
-      color: "bg-green-600",
-    },
+  icon: Truck, 
+  title: "Manage Orders",
+  description: "Track, process, and update the status of all incoming customer orders.",
+  link: "/manage-orders",
+  color: "bg-green-400", 
+},
     {
       icon: Package,
       title: "Manage Products",
@@ -59,14 +59,14 @@ const Dashboard = () => {
       title: "Add New Product",
       description: "Create new eco-friendly product listings",
       link: "/addproduct",
-      color: "bg-green-700",
+      color: "bg-green-400",
     },
     {
       icon: User,
       title: "Profile Management",
       description: "Update your seller profile and store settings",
       link: "/seller-profile",
-      color: "bg-green-500",
+      color: "bg-green-400",
     },
   ];
 
