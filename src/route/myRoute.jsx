@@ -41,6 +41,11 @@ import SellerProductView from "../Components/Product/SellerProductView";
 import SellerProductViewPage from "../pages/Products/SellerProductViewPage";
 import ManageOrders from "../pages/Products/ManageOrders";
 import BuyerOrders from "../pages/Home/BuyerOrders";
+import AdminDashboard from "../Admin/Pages/AdminDashboard";
+import AllSellers from "../Admin/Pages/AllSellers";
+import AllOrders from "../Admin/Pages/AllOrders";
+import AllCustomers from "../Admin/Pages/AllCustomers";
+import SellerOrders from "../Admin/Pages/SellerOrders";
 
 
 const myRoute = createBrowserRouter(
@@ -57,14 +62,22 @@ const myRoute = createBrowserRouter(
       {/* <Route path="/seller-profile" element={<SellerProfile />} /> */}
       <Route path="/profile" element={<Profile />} />
       <Route path="/reset-password" element={<ResetPassword/>} />
-      {/* new  */}
+
+      {/* Seller Dashboard  */}
       <Route path="/seller-dashboard" element={<Dashboard/>} />
       <Route path="/seller-profile" element={<ProfileNew/>} />
       <Route path="/manage-products" element={<ManageProducts/>} />
       <Route path="/edit-product/:productId" element={<EditProduct/>} />
       <Route path="/seller-product-view/:id" element={<SellerProductViewPage/>} />
       <Route path="/manage-orders" element={<ManageOrders/>}/>
-        <Route path="/my-orders" element={<BuyerOrders/>} />
+      <Route path="/my-orders" element={<BuyerOrders/>} />
+
+        {/* Admin router */}
+        <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+        <Route path="/admin-allsellers" element={<AllSellers/>} />
+        <Route path="/admin-allorders" element={<AllOrders/>} />
+        <Route path="/admin-allcustomers" element={<AllCustomers/>} />
+        <Route path="/admin-seller-orders/:email" element={<SellerOrders/>} />
      
 
       {/* Routes WITH Header & Footer via App */}

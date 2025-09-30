@@ -61,6 +61,7 @@ const ManageOrdersCard = ({ order }) => {
     deliveryDate, // New field from the updated schema
   } = order;
 
+  
   // MODIFICATION: Switched from an array (imageUrl[0]) to a single string (imageUrl).
   const productImageUrl = product?.imageUrl || `https://placehold.co/100x100/EBF8F0/166534?text=Image`;
 
@@ -137,6 +138,7 @@ const ManageOrdersCard = ({ order }) => {
           <div className="lg:col-span-2 lg:border-l lg:pl-6 border-gray-200">
               <h4 className="text-md font-semibold text-gray-700 mb-3">Delivery Address</h4>
               {/* MODIFICATION: Removed fullName and mobile as they are not in the new schema */}
+              
               <div className="text-sm text-gray-800 bg-green-50 p-4 rounded-lg border border-green-200 space-y-1">
                   <p>{deliveryAddress?.street}</p>
                   <p>{deliveryAddress?.city}, {deliveryAddress?.state} - {deliveryAddress?.pinCode}</p>

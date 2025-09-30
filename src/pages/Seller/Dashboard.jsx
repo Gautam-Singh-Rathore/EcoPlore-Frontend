@@ -12,6 +12,7 @@ import axiosInstance from "../../api/axiosInstance";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../Components/Home/Footer";
 
 const Dashboard = () => {
   const { userId, setIsLoggedIn, setUserId, setUserRole } =
@@ -250,6 +251,7 @@ const Dashboard = () => {
           </Link>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 };
