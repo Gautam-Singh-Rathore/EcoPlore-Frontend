@@ -93,7 +93,7 @@ const Careers = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:infogreenplore@gmail.com?subject=Career Interest - Join GreenPlore Team"
+                href="mailto:contact@greenlore.com?subject=Career Interest - Join GreenPlore Team"
                 className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
               >
                 <Mail className="w-4 h-4 mr-2" />
@@ -293,14 +293,14 @@ const Careers = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:infogreenplore@gmail.com?subject=Career Interest - Future Opportunities&body=Dear GreenPlore Team,%0D%0A%0D%0AI am interested in joining your mission for a sustainable future. Please find my resume attached.%0D%0A%0D%0ABest regards"
+              href="mailto:contact@greenlore.com?subject=Career Interest - Future Opportunities&body=Dear GreenPlore Team,%0D%0A%0D%0AI am interested in joining your mission for a sustainable future. Please find my resume attached.%0D%0A%0D%0ABest regards"
               className="inline-flex items-center px-6 py-3 bg-white text-green-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               <Mail className="w-4 h-4 mr-2" />
               Send Your Resume
             </a>
             <a
-              href="mailto:infogreenplore@gmail.com?subject=Career Questions"
+              href="mailto:contact@greenlore.com?subject=Career Questions"
               className="inline-flex items-center px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors font-medium"
             >
               <Users className="w-4 h-4 mr-2" />
@@ -318,14 +318,14 @@ const Careers = () => {
             Our team is here to help with any questions about opportunities at GreenPlore.
           </p>
           <a
-            href="mailto:infogreenplore@gmail.com"
+            href="mailto:contact@greenlore.com"
             className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
           >
             <Mail className="w-4 h-4 mr-2" />
             Contact Us
           </a>
           <p className="text-sm text-gray-500 mt-4">
-            Email: infogreenplore@gmail.com
+            Email: contact@greenlore.com
           </p>
         </div>
       </div>

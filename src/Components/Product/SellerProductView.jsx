@@ -134,11 +134,11 @@ const ProductInfo = ({ product }) => {
       <div className="bg-green-50 py-2 px-3 rounded-md lg:my-2 text-green-700 font-semibold text-lg">
         Details
       </div>
-      <p className="text-gray-700 text-base lg:text-lg">{product.details}</p>
+      <p className="text-gray-700 text-base lg:text-lg whitespace-pre-line">{product.details}</p>
       <div className="bg-green-50 py-2 px-3 rounded-md lg:my-2 text-green-700 font-semibold text-lg">
         Description
       </div>
-      <p ref={descRef} className="text-gray-600 text-base lg:text-lg leading-relaxed">
+      <p ref={descRef} className="text-gray-600 text-base lg:text-lg leading-relaxed whitespace-pre-line">
         {product.description}
       </p>
       <p className="text-gray-700 text-sm lg:text-base mt-3 py-2">

@@ -16,7 +16,13 @@ const Cart = () => {
   // Increase Quantity
   const handleIncrease = async (id, itemQuantity) => {
     try {
-      const response = await axiosInstance.post(`/private/cart/edit`, {
+       const productData = await axiosInstance.get(`/public/product/${id}`);
+       const unitsLeft = productData.data.noOfUnits;
+       console.log(itemQuantity)
+       console.log(unitsLeft)
+
+       if((unitsLeft-(itemQuantity))>0){
+          const response = await axiosInstance.post(`/private/cart/edit`, {
         id: id,
         quantity: itemQuantity + 1,
       });
@@ -24,6 +30,10 @@ const Cart = () => {
         toast.success(`Item Quantity Updated Successfully`);
         getCartItems();
       }
+       }else{
+        toast.error("Max limit reached");
+       }
+
     } catch (error) {
       toast.error(
         error?.response?.data?.msg || "Failed to increase item quantity"

@@ -153,6 +153,7 @@ const Dashboard = () => {
       );
       if (response.status == 200) {
         toast.success("Catogary added Successfully");
+        setNewCategory("");
         getAllcategories();
       }
     } catch (error) {
@@ -544,7 +545,7 @@ const Dashboard = () => {
                 <Button
                   onClick={addSubCategory}
                   className="w-full bg-green-600 hover:bg-green-700"
-                  disabled={!newSubcategory.trim() || !parentCategory}
+                  disabled={!newSubcategory.trim() || !parentCategory || !newSubcategoryImage.trim()}
                 >
                   Add Subcategory
                 </Button>

@@ -10,7 +10,7 @@ const EmptyState = ({ type }) => {
     : "Your wishlist is waiting 🌿. Save items you love for later!";
 
   return (
-    <div className="flex flex-col items-center justify-center text-center py-12 px-6 bg-white ">
+    <div className="flex flex-col items-center justify-center text-center py-12 px-6 bg-[#edf1f1] ">
       <div className="flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
         {isCart ? (
           <ShoppingCart className="text-green-700 w-10 h-10" />

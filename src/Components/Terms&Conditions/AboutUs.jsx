@@ -306,7 +306,7 @@ const AboutUs = () => {
               Start Shopping Now
             </button>
             <a
-              href="mailto:infogreenplore@gmail.com"
+              href="mailto:contact@greenlore.com"
               className="inline-flex items-center px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors font-medium"
             >
               <Mail className="w-4 h-4 mr-2" />
@@ -324,14 +324,14 @@ const AboutUs = () => {
             We'd love to hear from you. Reach out to us for any questions, suggestions, or partnerships.
           </p>
           <a
-            href="mailto:infogreenplore@gmail.com"
+            href="mailto:contact@greenlore.com"
             className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
           >
             <Mail className="w-4 h-4 mr-2" />
             Contact Us
           </a>
           <p className="text-sm text-gray-500 mt-4">
-            Email: infogreenplore@gmail.com
+            Email: contact@greenlore.com
           </p>
         </div>
       </div>
