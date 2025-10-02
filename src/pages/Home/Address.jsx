@@ -212,12 +212,12 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
                                 <FiEdit />
                               </button>
 
-                              <button
+                              {/* <button
                                 onClick={() => handleDeleteAddress(address.id)}
                                 className="p-1.5 rounded hover:bg-red-50 text-red-600"
                               >
                                 <FiTrash2 />
-                              </button>
+                              </button> */}
                             </div>
 
                             <button

@@ -13,33 +13,34 @@ const Cart = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [total, setTotal] = useState(0);
 
+
+
   // Increase Quantity
   const handleIncrease = async (id, itemQuantity) => {
     try {
-       const productData = await axiosInstance.get(`/public/product/${id}`);
-       const unitsLeft = productData.data.noOfUnits;
-       console.log(itemQuantity)
-       console.log(unitsLeft)
+      const productData = await axiosInstance.get(`/public/product/${id}`);
+      const unitsLeft = productData.data.noOfUnits;
+      console.log(itemQuantity);
+      console.log(unitsLeft);
 
-       if((unitsLeft-(itemQuantity))>0){
-          const response = await axiosInstance.post(`/private/cart/edit`, {
-        id: id,
-        quantity: itemQuantity + 1,
-      });
-      if (response.status == 200) {
-        toast.success(`Item Quantity Updated Successfully`);
-        getCartItems();
-      }
-       }else{
+      if (unitsLeft - itemQuantity > 0) {
+        const response = await axiosInstance.post(`/private/cart/edit`, {
+          id: id,
+          quantity: itemQuantity + 1,
+        });
+        if (response.status == 200) {
+          toast.success(`Item Quantity Updated Successfully`);
+          getCartItems();
+        }
+      } else {
         toast.error("Max limit reached");
-       }
-
+      }
     } catch (error) {
       toast.error(
         error?.response?.data?.msg || "Failed to increase item quantity"
       );
       console.error("Error in Increasing Cart Item Quantity", error);
-    } 
+    }
   };
 
   // Decrease Quantity (minimum 1)
@@ -58,12 +59,11 @@ const Cart = () => {
       }
     } catch (error) {
       console.error("Error in Decreasing Cart Item Quantity", error);
-    } 
+    }
   };
 
   // Remove Item
   const handleRemove = async (cartid) => {
-    
     try {
       const response = await axiosInstance.delete(
         `/private/cart/remove/${cartid}`
@@ -74,7 +74,7 @@ const Cart = () => {
       }
     } catch (error) {
       console.error("Error in Removing Cart Item", error);
-    } 
+    }
   };
 
   const getCartItems = async () => {
@@ -144,6 +144,32 @@ const Cart = () => {
     });
   }
 
+  const handlepreCheckout = async () => {
+    try {
+      const response = await axiosInstance.post(
+        "/private/order/check",
+        cartItems
+      );
+      console.log(response.data);
+      const { msg, status } = response.data;
+      const isSuccess = status === "true";
+
+      if (!isSuccess) {
+        toast.error(msg);
+      } else {
+         if (selectedAddress === null) {
+        toast.error("Please select Delivery address");
+      } else {
+        handleCheckout();
+      }
+      }
+
+    } catch (error) {
+      console.error("Failed to place order", error);
+      toast.error("Failed to place order");
+    }
+  };
+
   const handleCheckout = async () => {
     try {
       // Load Razorpay script
@@ -155,13 +181,13 @@ const Cart = () => {
 
       // Get order ID from backend
       const response = await axiosInstance.get(
-        `/private/order/payment/${total * 100}`
+        `/private/order/payment/${total * 100 + cartItems.length * 50}`
       );
       const order_id = response.data;
 
       const options = {
         key: "rzp_live_RCemjVt0zfY8v2",
-        amount: total * 100,
+        amount: total * 100 + cartItems.length * 50,
         currency: "INR",
         name: "Greenplore",
         description: "Order Payment",
@@ -172,9 +198,9 @@ const Cart = () => {
           const verifyResponse = await axiosInstance.post(
             "/private/order/payment/verify",
             {
-              razorpayOrderId: response.data.razorpay_order_id,
-              razorpayPaymentId: response.data.razorpay_payment_id,
-              razorpaySignature: response.data.razorpay_signature,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
             }
           );
           if (verifyResponse.status == 200) {
@@ -190,10 +216,10 @@ const Cart = () => {
             }
           }
         },
-        prefill: {
-          name: "Greenplore",
-          email: "infogreenplore@gmail.com",
-        },
+        // prefill: {
+        //   name: "Greenplore",
+        //   email: "infogreenplore@gmail.com",
+        // },
         theme: {
           color: "#3399cc",
         },
@@ -229,9 +255,8 @@ const Cart = () => {
           <Header heading="Cart" />
         </div>
         <div>
-          <CartEmpty/>
+          <CartEmpty />
         </div>
-       
       </div>
     );
   }
@@ -288,11 +313,11 @@ const Cart = () => {
 
               {/* Checkout button on right */}
               <button
-               type="button"
-                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
+                type="button"
+                className="cursor-pointer bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleCheckout();
+                  handlepreCheckout();
                 }}
               >
                 Checkout
