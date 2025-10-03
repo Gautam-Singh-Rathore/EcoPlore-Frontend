@@ -443,7 +443,7 @@ const Dashboard = () => {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">
-                          ${order.amount}
+                          ₹{order.amount}
                         </p>
                       </div>
                     </div>
