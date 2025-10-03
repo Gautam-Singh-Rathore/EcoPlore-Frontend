@@ -235,7 +235,7 @@ const Careers = () => {
                 1
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Send Resume</h3>
-              <p className="text-gray-600 text-sm">Email your resume to infogreenplore@gmail.com</p>
+              <p className="text-gray-600 text-sm">Email your resume to contact@greenlore.com</p>
             </div>
             
             <div className="text-center">

@@ -175,12 +175,12 @@ const Cart = () => {
   };
 
   const handleCheckout = async () => {
-    setIsLoading(true);
     try {
       // Load Razorpay script
       const res = await loadRazorpayScript();
       if (!res) {
         alert("Razorpay SDK failed to load. Are you online?");
+        setIsLoading(false);
         return;
       }
 
@@ -199,6 +199,7 @@ const Cart = () => {
         order_id: order_id,
         handler: async function (response) {
           toast.success("Payment Successful!");
+          setIsLoading(true);
           console.log("Payment Details:", response);
           const verifyResponse = await axiosInstance.post(
             "/private/order/payment/verify",
@@ -216,6 +217,7 @@ const Cart = () => {
             });
             if (response.status == 200) {
               toast.success("Order placed successfully");
+              setIsLoading(false);
             } else {
               toast.error("Something went wrong. Please try again.");
             }
@@ -251,9 +253,9 @@ const Cart = () => {
     setTotal(totalAmount);
   }, [cartItems]);
 
-  // if (isLoading) {
-  //   return <MyLoader />;
-  // }
+  if (isLoading) {
+    return <MyLoader />;
+  }
 
   if (cartItems.length == 0) {
     return (
@@ -347,9 +349,6 @@ const Cart = () => {
           </div>
         </div>
       </div>
-       {isLoading && (
-        <div><MyLoader/></div>
-       )}
     </div>
   );
 };
