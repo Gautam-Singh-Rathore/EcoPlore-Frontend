@@ -6,6 +6,8 @@ import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 import AddressSelector from "./Address";
 import { CartEmpty } from "../../Components/Home/EmptyState";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 
 const Cart = () => {
@@ -13,6 +15,31 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [total, setTotal] = useState(0);
+  const [profile,setProfile] = useState({firstName: "",
+    lastName: "",
+    mobile: "",
+    email: "",
+    createdAt: "",});
+
+
+ const navigate = useNavigate();
+
+ //get customer data
+  const getProfile = async ()=>{
+  try {
+     const response = await axiosInstance.get('/private/profile');
+
+     if(response.status === 200){
+      setProfile(response.data);
+     }
+  } catch (error) {
+      const message =
+        error?.response?.data?.msg ||
+        error?.response?.data ||
+        ' failed to get profile data'
+      console.error(message);
+    }
+}
 
 
 
@@ -218,15 +245,18 @@ const Cart = () => {
             if (response.status == 200) {
               toast.success("Order placed successfully");
               setIsLoading(false);
+              navigate("/");
+              
             } else {
               toast.error("Something went wrong. Please try again.");
             }
           }
         },
-        // prefill: {
-        //   name: "Greenplore",
-        //   email: "infogreenplore@gmail.com",
-        // },
+         prefill: {
+            name: profile.firstName,       
+            email: profile.email,     
+            contact: profile.mobile 
+        },
         theme: {
           color: "#3399cc",
         },
@@ -244,6 +274,7 @@ const Cart = () => {
 
   useEffect(() => {
     getCartItems();
+    getProfile();
   }, []);
 
   useEffect(() => {
