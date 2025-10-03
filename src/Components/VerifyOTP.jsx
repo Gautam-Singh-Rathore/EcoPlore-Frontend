@@ -126,7 +126,7 @@ const VerifyOTP = ({ onVerify, onResend, onClose }) => {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Verify OTP</h2>
-          <p className="text-gray-600">Enter the 6-digit code sent to your device</p>
+          <p className="text-gray-600">Enter the 6-digit code sent to your Mail</p>
         </div>
 
         {/* Timer */}
