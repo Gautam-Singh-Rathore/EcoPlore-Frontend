@@ -112,9 +112,7 @@ const Cart = () => {
       const response = await axiosInstance.get(`/private/cart/get`);
       if (response.status == 200) {
         setCartItems(response.data);
-        const cartData = response.data;
-        const units = cartData.reduce((acc, item) => acc + item.quantity, 0);
-        setNoOfItems(units);
+        setNoOfItems(response.data.length);
       }
     } catch (error) {
       console.error("Error in Fetching Cart Items ", error);
@@ -219,13 +217,13 @@ const Cart = () => {
 
       // Get order ID from backend
       const response = await axiosInstance.get(
-        `/private/order/payment/${(total + (noOfItems * 50))*100}`
+        `/private/order/payment/${(total*100 + (noOfItems * 50))}`
       );
       const order_id = response.data;
 
       const options = {
         key: "rzp_live_RCemjVt0zfY8v2",
-        amount: (total + (noOfItems * 50))*100,
+        amount: (total*100 + (noOfItems * 50)),
         currency: "INR",
         name: "Greenplore",
         description: "Order Payment",
@@ -355,8 +353,8 @@ const Cart = () => {
       
       {/* Price Breakdown */}
       <div className="text-sm sm:text-base text-gray-700">
-        <div className="font-medium">Subtotal: ₹{total}</div>
-        <div className="font-medium">Shipping: ₹{noOfItems * 50}</div>
+        <div className="font-medium">Subtotal: {total}</div>
+        <div className="font-medium">Shipping: 50x{noOfItems} = {noOfItems * 50}</div>
         <div className="text-lg sm:text-xl font-bold text-gray-900 mt-1">
           Total: ₹{total + (noOfItems * 50)}
         </div>

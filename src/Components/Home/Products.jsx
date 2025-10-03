@@ -86,7 +86,7 @@ if(products.length == 0){
             </p>
 
             {/* Product Description */}
-            <p className="text-gray-600 text-xs sm:text-sm line-clamp-2 mt-1 px-1">
+            <p className="text-gray-600 text-xs sm:text-sm line-clamp-1 mt-1 px-1">
               {product.description}
             </p>
           </div>
