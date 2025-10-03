@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import AddressSelector from "./Address";
 import { CartEmpty } from "../../Components/Home/EmptyState";
 
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -145,6 +146,7 @@ const Cart = () => {
   }
 
   const handlepreCheckout = async () => {
+    setIsLoading(true);
     try {
       const response = await axiosInstance.post(
         "/private/order/check",
@@ -167,10 +169,13 @@ const Cart = () => {
     } catch (error) {
       console.error("Failed to place order", error);
       toast.error("Failed to place order");
+    }finally{
+      setIsLoading(false);
     }
   };
 
   const handleCheckout = async () => {
+    setIsLoading(true);
     try {
       // Load Razorpay script
       const res = await loadRazorpayScript();
@@ -230,6 +235,8 @@ const Cart = () => {
     } catch (error) {
       console.error("Payment Error:", error);
       alert("Failed to initiate payment.");
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -244,9 +251,9 @@ const Cart = () => {
     setTotal(totalAmount);
   }, [cartItems]);
 
-  if (isLoading) {
-    return <MyLoader />;
-  }
+  // if (isLoading) {
+  //   return <MyLoader />;
+  // }
 
   if (cartItems.length == 0) {
     return (
@@ -340,6 +347,9 @@ const Cart = () => {
           </div>
         </div>
       </div>
+       {isLoading && (
+        <div><MyLoader/></div>
+       )}
     </div>
   );
 };
