@@ -215,7 +215,8 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-green-50 to-teal-100">
+   <div>
+     <div className="w-full min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-green-50 to-teal-100">
       <div className="w-full max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-2xl relative">
         <button
           type="button"
@@ -310,7 +311,7 @@ const AddProduct = () => {
         {/* Image Upload Section */}
         <div className="mt-8">
           <label className="block mb-2 text-sm font-medium text-gray-700">Product Images</label>
-          {loading && <MyLoader />}
+          {/* {loading && <MyLoader />} */}
           <label
             htmlFor="dropzone-file"
             className="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-green-50 hover:border-green-500 transition-all duration-300"
@@ -367,6 +368,10 @@ const AddProduct = () => {
         </button>
       </div>
     </div>
+    {loading && (
+      <MyLoader/>
+    )}
+   </div>
   );
 };
 

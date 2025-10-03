@@ -11,7 +11,7 @@ const SellerOrders = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
-  const email = useParams();
+ const { email } = useParams();
 
   
   useEffect(() => {
@@ -30,7 +30,7 @@ const SellerOrders = () => {
     };
 
     fetchOrders();
-  }, []); 
+  }, [email]); 
 
   
   if(isLoading){

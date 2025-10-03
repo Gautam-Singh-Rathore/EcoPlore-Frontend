@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import AddressSelector from "./Address";
 import { CartEmpty } from "../../Components/Home/EmptyState";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+
 
 
 const Cart = () => {
