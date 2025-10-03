@@ -15,6 +15,7 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [total, setTotal] = useState(0);
+  const [noOfItems,setNoOfItems] = useState(0);
   const [profile,setProfile] = useState({firstName: "",
     lastName: "",
     mobile: "",
@@ -111,6 +112,9 @@ const Cart = () => {
       const response = await axiosInstance.get(`/private/cart/get`);
       if (response.status == 200) {
         setCartItems(response.data);
+        const cartData = response.data;
+        const units = cartData.reduce((acc, item) => acc + item.quantity, 0);
+        setNoOfItems(units);
       }
     } catch (error) {
       console.error("Error in Fetching Cart Items ", error);
@@ -119,6 +123,8 @@ const Cart = () => {
     }
   };
 
+   
+   
   // const handleCheckout = async () => {
   //   try {
   //     // Fetch orderId from your backend
@@ -213,13 +219,13 @@ const Cart = () => {
 
       // Get order ID from backend
       const response = await axiosInstance.get(
-        `/private/order/payment/${total * 100 + cartItems.length * 50}`
+        `/private/order/payment/${(total + (noOfItems * 50))*100}`
       );
       const order_id = response.data;
 
       const options = {
         key: "rzp_live_RCemjVt0zfY8v2",
-        amount: total * 100 + cartItems.length * 50,
+        amount: (total + (noOfItems * 50))*100,
         currency: "INR",
         name: "Greenplore",
         description: "Order Payment",
@@ -343,42 +349,47 @@ const Cart = () => {
         ))}
 
         {/* Total Price and Checkout Button */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4 md:py-5">
-              {/* Total price on left */}
-              <div className="text-xl sm:text-2xl font-bold text-gray-800">
-                Total: ₹{total}
-              </div>
-
-              {/* Checkout button on right */}
-              <button
-                type="button"
-                className="cursor-pointer bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handlepreCheckout();
-                }}
-              >
-                Checkout
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 ml-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
+       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center py-4 md:py-5 w-full">
+      
+      {/* Price Breakdown */}
+      <div className="text-sm sm:text-base text-gray-700">
+        <div className="font-medium">Subtotal: ₹{total}</div>
+        <div className="font-medium">Shipping: ₹{noOfItems * 50}</div>
+        <div className="text-lg sm:text-xl font-bold text-gray-900 mt-1">
+          Total: ₹{total + (noOfItems * 50)}
         </div>
+      </div>
+
+      {/* Checkout button */}
+      <button
+        type="button"
+        className="cursor-pointer bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
+        onClick={(e) => {
+          e.preventDefault();
+          handlepreCheckout();
+        }}
+      >
+        Checkout
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 ml-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );
