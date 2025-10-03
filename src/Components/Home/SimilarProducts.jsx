@@ -1,10 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-  
-  export default function SimilarProducts({ products }) {
-   
-    const navigate = useNavigate();
-   
+export default function SimilarProducts({ products }) {
+  const navigate = useNavigate();
+
   return (
     <div className="px-2 md:px-10 py-6 pt-8 md:pt-10 bg-[#edf1f1]">
       <div className="flex justify-between items-center mb-4">
@@ -23,17 +21,19 @@ import { useNavigate } from 'react-router-dom';
           <div
             key={product.id}
             className="flex-shrink-0 cursor-pointer w-36 sm:w-44 md:w-52 bg-white rounded-lg text-center pb-6 relative  hover:shadow-lg  duration-300 p-2 hover:scale-105 transition-all"
-            onClick={()=> {navigate(`/product/${product.id}`)}}
+            onClick={() => {
+              navigate(`/product/${product.id}`);
+            }}
           >
             <div className="relative">
-              
-
               {/* Product Image */}
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="flex-shrink-0 w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw]"
-              />
+              <div className="w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw] aspect-[4/3] overflow-hidden rounded-lg">
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
               {/* "Items left" or placeholder to maintain symmetry */}
               <div className="h-4 mt-1 flex items-center justify-center">
@@ -71,4 +71,4 @@ import { useNavigate } from 'react-router-dom';
       </div>
     </div>
   );
-  }
+}
