@@ -16,13 +16,13 @@ const ProductCard = ({ product }) => {
       {/* Wishlist Icon in Top Right */}
       
       {/* Product Image */}
-      <div className="flex-shrink-0 w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw]">
+    <div className="flex-shrink-0 w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw] aspect-[4/3] overflow-hidden rounded-xl">
   <img
     src={product.imageUrl}
     alt={product.name}
-    className="w-full h-auto rounded-xl object-cover"
+    className="w-full h-full object-cover"
   />
-</div> 
+</div>
 
       {/* Product Details */}
       <div className="flex flex-col gap-2 flex-grow w-[60vw]">
