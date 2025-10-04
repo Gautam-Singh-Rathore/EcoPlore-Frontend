@@ -77,7 +77,7 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
         ...formData,
       };
 
-      console.log(newAddress);
+     
       const response = await axiosInstance.post("/private/address/add", {
         street: newAddress.street,
         city: newAddress.city,
@@ -360,7 +360,8 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
                       </label>
                       <input
                         type="text"
-                        name="pincode"
+                        name="pinCode"
+                        maxLength="6"
                         value={formData.pinCode}
                         onChange={handleInputChange}
                         pattern="[0-9]{6}"
