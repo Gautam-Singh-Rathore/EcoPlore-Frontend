@@ -204,6 +204,8 @@ console.log(response);
   name="GSTNumber"
   value={formData.GSTNumber}
   onChange={handleChange}
+  minLength={15}
+  maxLength={15}
   placeholder="GST Number"
   type="text"
   required
