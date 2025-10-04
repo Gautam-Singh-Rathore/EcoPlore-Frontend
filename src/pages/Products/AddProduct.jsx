@@ -118,11 +118,11 @@ const AddProduct = () => {
   const uploadImageToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "greenplore_unsigned");
+    formData.append("upload_preset", "greenplore");
 
     try {
       const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dbkbync4n/image/upload",
+        "https://api.cloudinary.com/v1_1/dlquj7lby/image/upload",
         formData,
         {
           headers: {

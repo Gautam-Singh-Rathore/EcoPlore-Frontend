@@ -87,7 +87,7 @@ const handleLogin = async (e) => {
   try {
 
      if(email === "greenploreadmin@gmail.com" && password === "YvChRjA%JT8_F8ko"){
-      navigate("/admin-dashboard")
+      navigate("/123e4567-e89b-12d3-a456-426614174000")
       toast.success("Admin Login Success");
      }
      else{

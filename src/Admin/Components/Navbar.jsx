@@ -12,14 +12,14 @@ const navigate = useNavigate();
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
                         <img 
-                         onClick={()=>{navigate("/admin-dashboard")}}
+                         onClick={()=>{navigate("/123e4567-e89b-12d3-a456-426614174000")}}
                         className="cursor-pointer h-10 w-28 md:h-15 md:w-44"   src={logo} alt="GreenPlore" width={50} height={50}  />
                     </div>
                   
 <div className="flex items-center gap-2 md:gap-4">
     {/* All Sellers Button */}
     <Button
-        onClick={()=>{navigate("/admin-allsellers")}}
+        onClick={()=>{navigate("/f81d4fae-7dec-11d0-a765-00a0c91e6bf6")}}
         variant="outline"
         className="p-2 text-green-700 hover:bg-green-50 md:px-4 md:py-2 cursor-pointer "
         title="All Sellers"
@@ -32,7 +32,7 @@ const navigate = useNavigate();
 
     {/* All Customers Button */}
     <Button
-        onClick={()=>{navigate("/admin-allcustomers")}}
+        onClick={()=>{navigate("/988c5a5c-6b39-4675-9a84-08a38343353b")}}
         variant="outline"
         className="p-2 text-green-700 hover:bg-green-50 md:px-4 md:py-2 cursor-pointer"
         title="All Customers"
@@ -45,7 +45,7 @@ const navigate = useNavigate();
 
     {/* All Orders Button */}
     <Button
-        onClick={()=>{navigate("/admin-allorders")}}
+        onClick={()=>{navigate("/c6a4a1a0-3818-4055-9a99-4a46a5f7f8a8")}}
         className="p-2 bg-green-600 text-white shadow-md hover:bg-green-700 md:px-4 md:py-2 cursor-pointer"
         title="All Orders"
     >

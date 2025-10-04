@@ -73,10 +73,10 @@ const myRoute = createBrowserRouter(
       <Route path="/my-orders" element={<BuyerOrders/>} />
 
         {/* Admin router */}
-        <Route path="/admin-dashboard" element={<AdminDashboard/>} />
-        <Route path="/admin-allsellers" element={<AllSellers/>} />
-        <Route path="/admin-allorders" element={<AllOrders/>} />
-        <Route path="/admin-allcustomers" element={<AllCustomers/>} />
+        <Route path="/123e4567-e89b-12d3-a456-426614174000" element={<AdminDashboard/>} />
+        <Route path="/f81d4fae-7dec-11d0-a765-00a0c91e6bf6" element={<AllSellers/>} />
+        <Route path="/c6a4a1a0-3818-4055-9a99-4a46a5f7f8a8" element={<AllOrders/>} />
+        <Route path="/988c5a5c-6b39-4675-9a84-08a38343353b" element={<AllCustomers/>} />
         <Route path="/admin-seller-orders/:email" element={<SellerOrders/>} />
      
 
