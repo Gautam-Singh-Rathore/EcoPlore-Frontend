@@ -30,7 +30,7 @@ export default function Products({ cat }) {
   }
 
   return (
-    <div className="px-2 md:px-10 py-6 bg-[#edf1f1]">
+    <div className="px-2 md:px-10 py-6 bg-[#edf1f1] ">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-[22px]  font-semibold">{cat.name}</h2>
         <button
@@ -47,14 +47,15 @@ export default function Products({ cat }) {
         {products.map((product) => (
           <div
             key={product.id}
-            className="flex-shrink-0 cursor-pointer w-36 sm:w-44 md:w-52 bg-white rounded-lg text-center pb-6 relative  hover:shadow-lg  duration-300 p-2 hover:scale-105 transition-all"
+            className="flex-shrink-0 cursor-pointer w-36 sm:w-44 md:w-52 bg-white rounded-lg text-center pb-6 relative  hover:shadow-lg  duration-300 p-2 hover:scale-105 transition-all "
             onClick={() => {
               navigate(`/product/${product.id}`);
             }}
           >
+            {/* w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw] */}
             <div className="relative">
               {/* Product Image */}
-              <div className="w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw] aspect-[4/3] overflow-hidden rounded-lg m-auto">
+              <div className=" aspect-[1/1] overflow-hidden rounded-lg m-auto w-full">
                 <img
                   src={product.imageUrl}
                   alt={product.name}

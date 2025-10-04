@@ -61,7 +61,7 @@ const ProductViewPage = () => {
    
   return (
     
-        <div className="p-4 pb-3 lg:pb-12">
+        <div className="p-4 pt-6 pb-3 lg:pb-12">
       <ProductView product={productData} />
 
      {similarProducts.length > 0 && (
