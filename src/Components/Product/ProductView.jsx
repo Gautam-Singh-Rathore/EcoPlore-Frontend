@@ -1,31 +1,33 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 import MyLoader from "../../utils/MyLoader";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-import { useContext } from "react";
+
+// NEW: Import Swiper components and styles
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const ProductView = ({ product }) => {
   const { id } = useParams();
   const [selectedImage, setSelectedImage] = useState(
     product.images?.[0] || null
   );
+  
+  // NEW: Add state to hold the Swiper instance for programmatic control
+  const [swiperInstance, setSwiperInstance] = useState(null);
+
   const [inWishlist, setInWishlist] = useState(false);
   const [inCart, setInCart] = useState(false);
-
-  // Separate loading states
   const [initialLoading, setInitialLoading] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
-  const [outOfStock, setOutOfStock] = useState(false); // Corrected state name
+  const [outOfStock, setOutOfStock] = useState(false);
 
   const { userId } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // MODIFICATION: Set the outOfStock state using useEffect.
-  // This correctly handles state updates when the product prop changes.
   useEffect(() => {
     if (product && product.noOfUnits <= 0) {
       setOutOfStock(true);
@@ -34,13 +36,24 @@ const ProductView = ({ product }) => {
     }
   }, [product]);
 
+  // NEW: This effect syncs the swiper if the selectedImage changes 
+  // from other sources (like thumbnail clicks on any screen size).
+  useEffect(() => {
+    if (swiperInstance && product.images) {
+      const selectedIndex = product.images.indexOf(selectedImage);
+      if (selectedIndex !== -1 && swiperInstance.activeIndex !== selectedIndex) {
+        swiperInstance.slideTo(selectedIndex);
+      }
+    }
+  }, [selectedImage, product.images, swiperInstance]);
+
 
   const cartExistanceCheck = async () => {
     try {
       const response = await axiosInstance.get(
         `/private/cart/product-exists/${id}`
       );
-      if (response.status == 200) {
+      if (response.status === 200) {
         setInCart(response.data);
       }
     } catch (error) {
@@ -56,7 +69,7 @@ const ProductView = ({ product }) => {
         id: id,
         quantity: 1
       });
-      if (response.status == 200) {
+      if (response.status === 200) {
         setInCart(true);
         toast.success("Product Added to Cart");
       }
@@ -73,7 +86,7 @@ const ProductView = ({ product }) => {
       const response = await axiosInstance.get(
         `/private/wishlist/product-exists/${id}`
       );
-      if (response.status == 200) {
+      if (response.status === 200) {
         setInWishlist(response.data);
       }
     } catch (error) {
@@ -86,7 +99,7 @@ const ProductView = ({ product }) => {
     setWishlistLoading(true);
     try {
       const response = await axiosInstance.get(`/private/wishlist/add/${id}`);
-      if (response.status == 200) {
+      if (response.status === 200) {
         setInWishlist(true);
         toast.success("Product Added to Wishlist");
       }
@@ -98,7 +111,6 @@ const ProductView = ({ product }) => {
     }
   };
 
-  // Handle cart button click
   const handleCartClick = (e) => {
     e.preventDefault();
     if (userId === null) {
@@ -108,7 +120,6 @@ const ProductView = ({ product }) => {
     }
   };
 
-  // Handle wishlist button click
   const handleWishlistClick = (e) => {
     e.preventDefault();
     if (userId === null) {
@@ -120,7 +131,6 @@ const ProductView = ({ product }) => {
 
   useEffect(() => {
     const fetchInitialData = async () => {
-      // Only check if user is logged in
       if (userId) {
         await Promise.all([wishlistExistanceCheck(), cartExistanceCheck()]);
       }
@@ -128,7 +138,7 @@ const ProductView = ({ product }) => {
     };
 
     fetchInitialData();
-  }, [product, userId]); // Add userId as a dependency
+  }, [product, userId]);
 
   if (!product || !product.images || product.images.length === 0) {
     return <p className="text-gray-500">No images available</p>;
@@ -159,21 +169,37 @@ const ProductView = ({ product }) => {
 
       {/* Main Image + Buttons for large screens */}
       <div className="flex-1 flex flex-col items-center sticky top-0">
-        <img
-          src={selectedImage}
-          alt="Selected"
-          className="w-full max-w-md h-[400px] object-contain"
-        />
+        {/* NEW: Replaced the static main image with the Swiper carousel */}
+        <Swiper
+          onSwiper={setSwiperInstance}
+          onSlideChange={(swiper) => {
+            // Update the selectedImage state when the user swipes
+            setSelectedImage(product.images[swiper.activeIndex]);
+          }}
+          className="w-full max-w-md"
+          spaceBetween={10}
+          slidesPerView={1}
+        >
+          {product.images.map((img, idx) => (
+            <SwiperSlide key={idx}>
+              <img
+                src={img}
+                alt={`Product image ${idx + 1}`}
+                className="w-full h-[400px] object-contain"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
         {/* Thumbnails for mobile */}
-        <div className="flex lg:hidden gap-2 mt-2 overflow-x-auto">
+        <div className="flex lg:hidden gap-2 mt-2 overflow-x-auto p-2">
           {product.images.map((img, idx) => (
             <img
               key={idx}
               src={img}
               alt={`Mobile Thumbnail ${idx + 1}`}
-              onClick={() => setSelectedImage(img)}
-              className={`w-16 h-16 object-cover rounded cursor-pointer border-2 ${
+              onClick={() => setSelectedImage(img)} // This onClick now works with the swiper via the new useEffect
+              className={`w-16 h-16 object-cover rounded cursor-pointer border-2 flex-shrink-0 ${
                 selectedImage === img
                   ? "border-green-500 shadow-md"
                   : "border-slate-300"
@@ -306,34 +332,30 @@ const ProductView = ({ product }) => {
   );
 };
 
+// The ProductInfo component remains completely unchanged
 const ProductInfo = ({ product }) => {
   const descRef = useRef(null);
 
  return (
   <div className="p-6 bg-white rounded-xl shadow-md space-y-6 min-h-fit border border-green-100">
     
-    {/* Product Name */}
     <h2 className="text-3xl lg:text-4xl font-extrabold text-green-800 tracking-tight">
       {product.name}
     </h2>
 
-    {/* Product Price */}
     <p className="text-2xl lg:text-3xl text-green-600 font-bold py-1">
       ₹{product.price}
     </p>
 
-    {/* Units left in red if < 10 and not out of stock */}
     {product.noOfUnits > 0 && product.noOfUnits < 10 && (
       <p className="text-red-600 font-semibold">{product.noOfUnits} items left!</p>
     )}
 
-    {/* Product Details */}
     <div className="bg-green-50 py-2 px-3 rounded-md lg:my-2 text-green-700 font-semibold text-lg ">
       Details
     </div>
     <p className="text-gray-700 text-base lg:text-lg whitespace-pre-line">{product.details}</p>
 
-    {/* Product Description */}
     <div className="bg-green-50 py-2 px-3 rounded-md lg:my-2 text-green-700 font-semibold text-lg ">
       Description
     </div>
@@ -341,7 +363,6 @@ const ProductInfo = ({ product }) => {
       {product.description}
     </p>
 
-    {/* Seller Company */}
     <p className="text-gray-700 text-sm lg:text-base mt-3 py-2">
       <strong className="text-green-800">Sold By:</strong> {product.sellerCompany}
     </p>
