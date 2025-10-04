@@ -10,7 +10,7 @@ import {
 import axiosInstance from "../../api/axiosInstance";
 import toast from "react-hot-toast";
 
-const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
+const AddressSelector = ({ selectedAddress, setSelectedAddress }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -23,6 +23,7 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
   const getAddress = async () => {
     try {
       const response = await axiosInstance.get("/private/address/get");
+      console.log(response.data);
       if (response.status == 200) {
         setAddresses(response.data);
       } else {
@@ -37,18 +38,26 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
     getAddress();
   }, []);
 
+  useEffect(() => {
+    const defaultAddress = addresses.find(
+      (address) => address.isDefault === true
+    );
+
+    if (defaultAddress) {
+      setSelectedAddress(defaultAddress);
+    } else if (addresses.length > 0) {
+      setSelectedAddress(addresses[0]);
+    } else {
+      setSelectedAddress(null);
+    }
+  }, [addresses, setSelectedAddress]);
+
   const [formData, setFormData] = useState({
     street: "",
     city: "",
     state: "",
     pinCode: "",
   });
-
-  useEffect(() => {
-    if (addresses.length > 0) {
-      setSelectedAddress(addresses[0]);
-    }
-  }, [addresses]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -63,10 +72,20 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
 
     if (editMode) {
       // Update existing address
-      const updatedAddresses = addresses.map((address) =>
-        address.id === editId ? { ...formData, id: editId } : address
+      // const updatedAddresses = addresses.map((address) =>
+      //   address.id === editId ? { ...formData, id: editId } : address
+      // );
+      const resposne = await axiosInstance.post(
+        `/private/address/edit/${editId}`,
+        {
+          ...formData, // Send the form data directly
+        }
       );
-      setAddresses(updatedAddresses);
+
+      if (resposne.status == 200) {
+        toast.success("Address updated successfully");
+        getAddress();
+      }
 
       if (formData.isDefault) {
         setSelectedAddress({ ...formData, id: editId });
@@ -77,17 +96,15 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
         ...formData,
       };
 
-     
       const response = await axiosInstance.post("/private/address/add", {
         street: newAddress.street,
         city: newAddress.city,
         state: newAddress.state,
-        pinCode: newAddress.pincode,
+        pinCode: newAddress.pinCode,
       });
       if (response.status == 200) {
-        setAddresses(newAddress);
-        getAddress();
         toast.success("Address added successfully");
+        getAddress();
       } else {
         toast.error("Failed to add new address");
       }
@@ -107,26 +124,49 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
   };
 
   const handleEditAddress = (address) => {
-    console.log("Edit version" , address.pinCode)
+    console.log("Edit version", address.pinCode);
     setFormData({
       street: address.street,
       city: address.city,
       state: address.state,
-      pinCode: address.pinCode
+      pinCode: address.pinCode,
     });
     setEditMode(true);
     setEditId(address.id);
     setShowForm(true);
   };
 
-  const handleDeleteAddress = (id) => {
+  const handleDeleteAddress = async (id) => {
     if (addresses.length <= 1) return;
 
-    const updatedAddresses = addresses.filter((address) => address.id !== id);
-    setAddresses(updatedAddresses);
+    try {
+      const response = await axiosInstance.post(
+        `/private/address/delete/${id}`
+      );
+      if (response.status == 200) {
+        toast.success("Address deleted successfully");
+        getAddress();
+      }
+    } catch (error) {
+      console.error("failed to delete address", error);
+      toast.error("Failed to delete address");
+    }
+  };
 
-    if (selectedAddress.id === id) {
-      setSelectedAddress(updatedAddresses[0]);
+  const handleSetDefaultAddress = async (id) => {
+    console.log("Defauld address id", id);
+    try {
+      const resposne = await axiosInstance.post(
+        `/private/address/make-default/${id}`
+      );
+      if (resposne.status == 200) {
+        console.log(resposne.data);
+        toast.success("Address set as Default Successfully");
+        getAddress();
+      }
+    } catch (error) {
+      console.error("Failed to set address as default", error);
+      toast.error("Failed to set address as default");
     }
   };
 
@@ -212,22 +252,29 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
                                 <FiEdit />
                               </button>
 
-                              {/* <button
+                              <button
                                 onClick={() => handleDeleteAddress(address.id)}
                                 className="p-1.5 rounded hover:bg-red-50 text-red-600"
                               >
                                 <FiTrash2 />
-                              </button> */}
+                              </button>
                             </div>
 
                             <button
-                              onClick={() => {
-                                setSelectedAddress(address);
+                              onClick={async () => {
+                                if (!address.isDefault) {
+                                  await handleSetDefaultAddress(address.id);
+                                }
+
                                 setIsModalOpen(false);
                               }}
-                              className="text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded font-medium "
+                              className={`text-sm text-white px-3 py-1 rounded font-medium cursor-pointer ${
+                                address.isDefault
+                                  ? "bg-gray-400" // class if true
+                                  : "bg-green-600 hover:bg-green-700" // class if false
+                              }`}
                             >
-                              Deliver Here
+                             {address.isDefault ? 'Selected Address' : 'Deliver Here'}
                             </button>
                           </div>
                         </div>
@@ -246,7 +293,7 @@ const AddressSelector = ({selectedAddress,setSelectedAddress}) => {
                         street: "",
                         city: "",
                         state: "Rajasthan",
-                        pincode: "",
+                        pinCode: "",
                       });
                     }}
                     className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-center text-green-600 hover:bg-blue-50 transition-colors"

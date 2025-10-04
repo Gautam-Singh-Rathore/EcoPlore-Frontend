@@ -50,7 +50,7 @@ const ProductCard = ({ product }) => {
           )}
         </div>
 
-        <div className="text-gray-600 text-sm sm:text-md line-clamp-2 font-sans  ">{product.description}</div>
+        <div className="text-gray-600 text-sm sm:text-md line-clamp-1 font-sans  ">{product.description}</div>
 
         
       </div>

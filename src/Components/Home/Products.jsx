@@ -54,7 +54,7 @@ export default function Products({ cat }) {
           >
             <div className="relative">
               {/* Product Image */}
-              <div className="w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw] aspect-[4/3] overflow-hidden rounded-lg">
+              <div className="w-[30vw] sm:w-[30vw] md:w-[20vw] lg:w-[15vw] xl:w-[12vw] aspect-[4/3] overflow-hidden rounded-lg m-auto">
                 <img
                   src={product.imageUrl}
                   alt={product.name}
